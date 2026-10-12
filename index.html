@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Waldlauf</title>
-<meta name="description" content="Waldlauf: kostenloser Endlos-Runner durch 12 Waldwelten mit 17 Tieren, Bosskämpfen, Events und eigenem Soundtrack von Penta. Läuft im Browser am PC und Handy.">
+<meta name="description" content="Waldlauf: kostenloser Endlos-Runner durch 16 Welten mit 36 Tieren aus aller Welt, Bosskämpfen, Events und eigenem Soundtrack von Penta. Läuft im Browser am PC und Handy.">
 <meta property="og:title" content="Waldlauf: Renn um dein Fell!">
 <meta property="og:image" content="img/s-menu.jpg">
 <link rel="icon" href="icon-192.png">
@@ -91,7 +91,7 @@ section+section{border-top:1px solid var(--line)}
 .ani em{display:block;font-style:normal;font-weight:800;font-size:.8rem;color:var(--gold);margin-top:2px}
 .ani small{display:block;font-size:.78rem;color:var(--sage);line-height:1.35;margin-top:4px}
 .tag{position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:999px;font:800 .66rem/1.5 var(--body);letter-spacing:.06em;text-transform:uppercase;background:#ff5a9a;color:#fff}
-.tag.start{background:#3f9a4a}.tag.box{background:#3a6ad0}.tag.season{background:#c8961f}
+.tag.start{background:#3f9a4a}.tag.world{background:#c8501f}.tag.box{background:#3a6ad0}.tag.season{background:#c8961f}
 
 /* ---------- Welten */
 .worlds{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:28px}
@@ -175,8 +175,8 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 
 <main>
   <div class="wrap facts" aria-label="Waldlauf in Zahlen">
-    <div class="fact"><b>12</b><span>Welten</span></div>
-    <div class="fact"><b>17</b><span>Tiere mit Fähigkeiten</span></div>
+    <div class="fact"><b>16</b><span>Welten</span></div>
+    <div class="fact"><b>36</b><span>Tiere mit Fähigkeiten</span></div>
     <div class="fact"><b>40+</b><span>Outfits und Rahmen</span></div>
     <div class="fact"><b>9</b><span>eigene Songs</span></div>
     <div class="fact"><b>5.000 m</b><span>bis zum ersten Boss</span></div>
@@ -203,24 +203,24 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 
   <section id="tiere"><div class="wrap">
     <p class="eyebrow">Deine Läufer</p>
-    <h2>17 Tiere, jedes kann etwas anderes</h2>
-    <p class="lead">Mit jedem Lauf sammelt dein Tier Sterne. Fünf Sterne bringen goldenen Glitzer und mehr Münzen.</p>
+    <h2>36 Tiere aus aller Welt, jedes kann etwas anderes</h2>
+    <p class="lead">Vom Fuchs aus dem Sommerwald bis zum Eisbär aus der Arktis. Löwe, Tiger, Känguru und Jaguar bewachen ihre Welten und schließen sich dir an, wenn du sie erreichst. Mit jedem Lauf sammelt dein Tier Sterne. Fünf Sterne bringen goldenen Glitzer und mehr Münzen.</p>
     <div class="zoo" id="zoo"></div>
   </div></section>
 
   <section id="welten"><div class="wrap">
     <p class="eyebrow">Alle 1.000 m eine neue Welt</p>
-    <h2>Vom Herbstwald bis ins Wolkenland</h2>
-    <p class="lead">Jede Welt hat eigenes Wetter, eigene Hindernisse und ihren eigenen Song. Ab 10.000 m warten zwei Welten, die die meisten nie sehen.</p>
+    <h2>Von der Savanne bis ins Wolkenland</h2>
+    <p class="lead">Jede Welt hat eigenes Wetter, eigene Hindernisse und ihren eigenen Song. Neu dabei: Savanne, Bambuswald, Outback und Dschungel. Ganz hinten warten zwei Welten, die die meisten nie sehen.</p>
     <div class="worlds">
       <figure class="w big"><img src="img/s-herbst.jpg" alt="Herbstwald" loading="lazy"><figcaption><b>Herbstwald</b><span>Goldenes Licht und rote Blätter</span></figcaption></figure>
       <figure class="w big"><img src="img/s-boss.jpg" alt="Bosskampf im Kirschblütenhain" loading="lazy"><figcaption><b>Kirschblütenhain mit Oberjäger</b><span>Zwei Spuren sind rot. Nur eine ist sicher.</span></figcaption></figure>
-      <figure class="w mid"><img src="img/s-polar.jpg" alt="Polarlicht" loading="lazy"><figcaption><b>Polarlicht</b><span>Nordlichter über dem Schnee</span></figcaption></figure>
-      <figure class="w mid"><img src="img/s-kristall.jpg" alt="Kristallhöhle" loading="lazy"><figcaption><b>Kristallhöhle</b><span>Erst ab 10.000 m</span></figcaption></figure>
-      <figure class="w mid"><img src="img/s-shop.jpg" alt="Shop mit Kisten" loading="lazy"><figcaption><b>Shop</b><span>Kisten mit Tieren, Outfits und Rahmen</span></figcaption></figure>
+      <figure class="w mid"><img src="img/s-savanne.jpg" alt="Savanne mit Löwe" loading="lazy"><figcaption><b>Savanne</b><span>Akazien, Termitenhügel und der Löwe</span></figcaption></figure>
+      <figure class="w mid"><img src="img/s-kristall.jpg" alt="Kristallhöhle" loading="lazy"><figcaption><b>Kristallhöhle</b><span>Erst ab 14.000 m</span></figcaption></figure>
+      <figure class="w mid"><img src="img/s-dschungel.jpg" alt="Dschungel mit Jaguar" loading="lazy"><figcaption><b>Dschungel</b><span>Lianen, Glühwürmchen und der Jaguar</span></figcaption></figure>
     </div>
     <div class="wlist" aria-label="Alle Welten">
-      <span><b>0 m</b> Sommerwald</span><span><b>1.000 m</b> Herbstwald</span><span><b>2.000 m</b> Winterwald</span><span><b>3.000 m</b> Mondwald</span><span><b>4.000 m</b> Wüste</span><span><b>5.000 m</b> Kirschblütenhain</span><span><b>6.000 m</b> Sumpf</span><span><b>7.000 m</b> Vulkan</span><span><b>8.000 m</b> Polarlicht</span><span><b>9.000 m</b> Zauberwald</span><span><b>10.000 m</b> Kristallhöhle</span><span><b>11.000 m</b> Wolkenland</span>
+      <span><b>0 m</b> Sommerwald</span><span><b>1.000 m</b> Savanne</span><span><b>2.000 m</b> Herbstwald</span><span><b>3.000 m</b> Bambuswald</span><span><b>4.000 m</b> Winterwald</span><span><b>5.000 m</b> Outback</span><span><b>6.000 m</b> Mondwald</span><span><b>7.000 m</b> Dschungel</span><span><b>8.000 m</b> Wüste</span><span><b>9.000 m</b> Kirschblütenhain</span><span><b>10.000 m</b> Sumpf</span><span><b>11.000 m</b> Vulkan</span><span><b>12.000 m</b> Polarlicht</span><span><b>13.000 m</b> Zauberwald</span><span><b>14.000 m</b> Kristallhöhle</span><span><b>15.000 m</b> Wolkenland</span>
     </div>
   </div></section>
 
@@ -299,12 +299,12 @@ const PLAY='spiel.html';
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 document.querySelectorAll('#play1,#play2').forEach(a=>a.href=PLAY);
 
-const ANI=[['Fuchs','Schlaufuchs','Jede 10. Münze zählt doppelt.','start'],['Hase','Sprungfeder','Springt höher als alle anderen.','box'],['Waschbär','Langfinger','Der Magnet hält 30 % länger.','box'],['Katze','Samtpfoten','Das Gewehr zielt langsamer.','box'],['Eichhörnchen','Vorratskammer','Der Apfel-Turbo hält 40 % länger.','box'],['Wolf','Rudelstart','Startet mit 3 Sekunden Turbo.','box'],['Bär','Bärenkraft','Übersteht einmal pro Lauf einen Treffer.','box'],['Panda','Dickes Fell','Die Weste hält 3 statt 2 Treffer.','box'],['Rotkehlchen','Frühaufsteher','Extras erscheinen öfter.','box'],['Eule','Segelflug','Gleitet langsamer zu Boden.','box'],['Papagei','Plappermagnet','Magnet mit größerer Reichweite.','box'],['Pinguin','Eisrutscher','Rutscht länger unter Ästen durch.','box'],['Goldpilz','Goldglanz','Jede 7. Münze zählt doppelt.','season'],['Habt-euch-alle-lieb-Panda','Herzschild','Übersteht einen Treffer und spuckt Herzen.','event'],['Rehkitz','Leichtfuß','Springt etwas höher, mehr Extras.','start'],['Flatter-Fledermaus','Nachtflug','Gleitet sanft und leuchtet im Dunkeln.','event'],['Polarfuchs Frosti','Schneegestöber','Rutscht länger, Magnet hält länger.','event']];
-const TAG={start:'Start',box:'Tier-Kiste',season:'Season',event:'Event'};
-const order=[0,14,1,2,3,4,5,6,7,8,9,10,11,12,13,15,16];
+const ANI=[['Fuchs','Schlaufuchs','Jede 10. Münze zählt doppelt.','start'],['Hase','Sprungfeder','Springt höher als alle anderen.','box'],['Waschbär','Langfinger','Der Magnet hält 30 % länger.','box'],['Katze','Samtpfoten','Das Gewehr zielt langsamer.','box'],['Eichhörnchen','Vorratskammer','Der Apfel-Turbo hält 40 % länger.','box'],['Wolf','Rudelstart','Startet mit 3 Sekunden Turbo.','box'],['Bär','Bärenkraft','Übersteht einmal pro Lauf einen Treffer.','box'],['Panda','Dickes Fell','Die Weste hält 3 statt 2 Treffer.','box'],['Rotkehlchen','Frühaufsteher','Extras erscheinen öfter.','box'],['Eule','Segelflug','Gleitet langsamer zu Boden.','box'],['Papagei','Plappermagnet','Magnet mit größerer Reichweite.','box'],['Pinguin','Eisrutscher','Rutscht länger unter Ästen durch.','box'],['Goldpilz','Goldglanz','Jede 7. Münze zählt doppelt.','season'],['Habt-euch-alle-lieb-Panda','Herzschild','Übersteht einen Treffer und spuckt Herzen.','event'],['Rehkitz','Leichtfuß','Springt etwas höher, mehr Extras.','start'],['Flatter-Fledermaus','Nachtflug','Gleitet sanft und leuchtet im Dunkeln.','event'],['Polarfuchs Frosti','Schneegestöber','Rutscht länger, Magnet hält länger.','event'],['Löwe', 'Königsbrüllen', '2 Sekunden Turbo und ein Schutz-Treffer.', 'world'], ['Zebra', 'Streifentarnung', 'Das Gewehr zielt langsamer.', 'box'], ['Giraffe', 'Langer Hals', 'Magnet mit größerer Reichweite.', 'box'], ['Erdmännchen', 'Wachposten', 'Gewehr langsamer, jede 15. Münze doppelt.', 'box'], ['Tiger', 'Tigersprung', 'Springt höher, 3 Sekunden Turbo.', 'world'], ['Roter Panda', 'Kletterkünstler', 'Gleitet sanft, jede 15. Münze doppelt.', 'box'], ['Schneeleopard', 'Bergläufer', 'Rutscht länger, Weste hält 3 Treffer.', 'box'], ['Pfau', 'Prachtfeder', 'Jede 8. Münze doppelt, längerer Turbo.', 'box'], ['Känguru', 'Riesensprung', 'Springt so hoch wie kein anderes Tier.', 'world'], ['Koala', 'Eukalyptus-Kraft', 'Ein Schutz-Treffer, längerer Turbo.', 'box'], ['Wombat', 'Panzerpo', 'Weste hält 3 Treffer, jede 14. Münze doppelt.', 'box'], ['Schnabeltier', 'Tauchprofi', 'Rutscht länger, mehr Extras.', 'box'], ['Faultier', 'Gemütlichkeit', 'Turbo hält 50 % länger, gleitet sanft.', 'box'], ['Alpaka', 'Wollpolster', 'Ein Schutz-Treffer, Magnet hält länger.', 'box'], ['Jaguar', 'Dschungelkönig', 'Gewehr viel langsamer, jede 9. Münze doppelt.', 'world'], ['Tukan', 'Fruchtschnabel', 'Viel mehr Extras, längerer Turbo.', 'box'], ['Robbe', 'Bauchrutscher', 'Rutscht am längsten von allen.', 'box'], ['Eisbär', 'Polarpanzer', 'Schutz-Treffer, rutscht länger, Magnet hält länger.', 'box'], ['Elefant', 'Rüsselmagnet', 'Große Magnet-Reichweite, Weste hält 3 Treffer.', 'box']];
+const TAG={start:'Start',box:'Tier-Kiste',season:'Season',event:'Event',world:'Welt-Wächter'};
+const order=[0,14,1,2,3,4,5,6,7,8,9,10,11,17,21,25,31,18,19,20,22,23,24,35,26,27,28,29,30,32,33,34,12,13,15,16];
 document.getElementById('zoo').innerHTML=order.map(i=>{const a=ANI[i];return '<div class="ani"><span class="tag '+a[3]+'">'+TAG[a[3]]+'</span><img src="img/a'+i+'.png" alt="'+esc(a[0])+'" loading="lazy"><b>'+esc(a[0])+'</b><em>✨ '+esc(a[1])+'</em><small>'+esc(a[2])+'</small></div>'}).join('');
 
-const TR=[['Waldlauf Soundtrack','Hauptmenü','waldlauf-soundtrack.mp3'],['Forward Momentum','Sommerwald','forward-momentum.mp3'],['Golden Sunset Run','Herbstwald','golden-sunset-run.mp3'],['Arcade Frost','Winterwald und Polarlicht','arcade-frost.mp3'],['Neon Runner','Mondwald und Zauberwald','neon-runner.mp3'],['Treasure Hunt Groove','Wüste','treasure-hunt-groove.mp3'],['Coin Collecting Groove','Kirschblütenhain','coin-collecting-groove.mp3'],['Tropical Rush','Sumpf','tropical-rush.mp3'],['Boosting Groove','Vulkan','boosting-groove.mp3']];
+const TR=[['Waldlauf Soundtrack','Hauptmenü','waldlauf-soundtrack.mp3'],['Forward Momentum','Sommerwald','forward-momentum.mp3'],['Golden Sunset Run','Herbstwald und Savanne','golden-sunset-run.mp3'],['Arcade Frost','Winterwald und Polarlicht','arcade-frost.mp3'],['Neon Runner','Mondwald und Zauberwald','neon-runner.mp3'],['Treasure Hunt Groove','Wüste und Bambuswald','treasure-hunt-groove.mp3'],['Coin Collecting Groove','Kirschblütenhain und Outback','coin-collecting-groove.mp3'],['Tropical Rush','Sumpf und Dschungel','tropical-rush.mp3'],['Boosting Groove','Vulkan','boosting-groove.mp3']];
 const au=document.getElementById('au'),T=document.getElementById('tracks'),V=document.getElementById('vinyl');let cur=-1;
 T.innerHTML=TR.map((t,i)=>'<li><button data-i="'+i+'" aria-label="'+esc(t[0])+' abspielen"><i>▶</i><span>'+esc(t[0])+'<br><small>'+esc(t[1])+'</small></span><small>Penta</small></button></li>').join('');
 const ui=()=>{T.querySelectorAll('button').forEach((b,i)=>{const on=i===cur&&!au.paused;b.classList.toggle('on',i===cur);b.querySelector('i').textContent=on?'❚❚':'▶'});V.classList.toggle('on',!au.paused)};
