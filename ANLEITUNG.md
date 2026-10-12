@@ -17,6 +17,7 @@ Im Paket:
 - `supabase-update-07.sql`: Herausforderungen unter Freunden und Rudel (Clans)
 - `supabase-update-08.sql`: Wochen-Rangliste und Freunde einladen
 - `supabase-update-09.sql`: Waldtaler, Skins, Skin-Kisten, Markt und Tausch
+- `supabase-update-10.sql`: Trade-up (10 Skins gegen 1 seltenen)
 - `supabase-alles-in-einem.sql`: **alle Datenbank-Schritte in einer Datei** (einfachster Weg, siehe Teil 1)
 - `manifest.webmanifest`, `sw.js`, `icon-192.png`, `icon-512.png`: damit man Waldlauf als App installieren kann (mit hochladen)
 - `OFL-Baloo2.txt`: Lizenz der eingebauten Schrift (mit hochladen)
@@ -34,7 +35,7 @@ Im Paket:
    - Tarif: **Free**
 3. Warte etwa 1 bis 2 Minuten, bis das Projekt bereit ist.
 4. Links im Menü auf **SQL Editor** gehen und dort ein neues Fenster öffnen.
-5. Den kompletten Inhalt von `supabase-setup.sql` hineinkopieren und auf **Run** drücken. Es sollte „Success“ erscheinen. Danach in neuen Fenstern genauso `supabase-update-02.sql` dann `supabase-update-03.sql`, `supabase-update-04.sql`, `supabase-update-05.sql`, `supabase-update-06.sql`, `supabase-update-07.sql`, `supabase-update-08.sql` und `supabase-update-09.sql` ausführen (Freunde, Postfach, Rahmen in der Rangliste, Cloud-Speicher).
+5. Den kompletten Inhalt von `supabase-setup.sql` hineinkopieren und auf **Run** drücken. Es sollte „Success“ erscheinen. Danach in neuen Fenstern genauso `supabase-update-02.sql` dann `supabase-update-03.sql`, `supabase-update-04.sql`, `supabase-update-05.sql`, `supabase-update-06.sql`, `supabase-update-07.sql`, `supabase-update-08.sql`, `supabase-update-09.sql` und `supabase-update-10.sql` ausführen (Freunde, Postfach, Rahmen in der Rangliste, Cloud-Speicher).
 6. Links auf **Project Settings** (Zahnrad), dann **API** beziehungsweise **API Keys**. Dort zwei Werte kopieren:
    - die **Project URL** (sieht aus wie `https://abcdefgh.supabase.co`)
    - den **anon / public** Schlüssel oder den **publishable key**
@@ -110,6 +111,8 @@ Die Datenbank musst du dafür nicht anfassen. Nur wenn ein Update neue Online-Fu
 **Update 08 (Wochen-Rangliste und Einladungen):** Einmal `supabase-update-08.sql` ausführen und die neue `index.html` hochladen. Danach gibt es in der Rangliste den Tab „📅 Woche“, und Einladungslinks (👥 Freunde → 🎁 Freunde einladen) schenken beiden Spielern 2.000 Münzen.
 
 **Update 09 (Skins, Markt und Tausch):** Einmal `supabase-update-09.sql` ausführen und die neue `spiel.html` plus `sw.js` hochladen. Danach gibt es im Hauptmenü den Knopf 🎨 Skins. Waldtaler und Skins liegen nur in der Datenbank, das Spiel selbst kann daran nichts verändern. Waldtaler gibt es für echte Online-Läufe (1 pro 50 m und 1 pro 10 Münzen, höchstens 800 am Tag), als Tagesbonus (60), beim Recyceln und bei Verkäufen. Jeder neue Spieler startet mit 500. Eine Skin-Kiste kostet 600, die Event-Kiste 900 (nur während eines Events). Der Markt behält 5 % jedes Verkaufs ein, damit nicht unendlich viele Taler entstehen. Wer Taler oder Skins von Spielern einsehen will: im **Table Editor** die Tabellen `wallets`, `skins`, `market`, `trades` und `taler_log`.
+
+**Update 10 (Trade-up):** Einmal `supabase-update-10.sql` ausführen und die neue `spiel.html` plus `sw.js` hochladen. Danach gibt es unter 🎨 Skins → Inventar den Knopf ⬆️ Trade-up: 10 Skins derselben Seltenheit werden gegen 1 Skin der nächsten Stufe getauscht. Das Spiel schreibt außerdem kurze Grafik-Aussetzer mit, sie stehen dann im Fehlerbericht unter „Fehler melden“.
 
 **Website (ab Version 0.65):** `index.html` ist jetzt die Startseite, das Spiel liegt in `spiel.html`. Lade beide, den Ordner `img` und alle anderen Dateien hoch. Trag in der `index.html` unten im Skript dieselben Werte wie im Spiel ein: bei `LEGAL` deine Impressum-Angaben und bei `ONLINE` die Supabase-Adresse und den öffentlichen Schlüssel. Dann zeigt die Website auch die Live-Rangliste.
 
