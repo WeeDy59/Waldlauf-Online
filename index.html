@@ -210,6 +210,21 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 }
 @media (max-width:520px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.zoo{grid-template-columns:repeat(2,minmax(0,1fr))}.sign{padding:10px 20px 14px}.ribbon{margin-left:16px}.play{font-size:1.25rem;padding:14px 24px}}
 @media (prefers-reduced-motion:reduce){.vinyl.on{animation:none}.play{transition:none}}
+
+.dlc{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;margin-top:26px;align-items:start}
+.dlc>figure{margin:0;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.dlc>figure img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.dlcin{padding:18px;border-radius:20px;background:linear-gradient(160deg,#fde2c0,#f7c48a);color:#3a2200}
+.dlcin h3{font-size:1.5rem;margin:0 0 6px}
+.dlcin .pr{display:inline-block;font-weight:800;padding:4px 12px;border-radius:999px;background:#fff;margin-bottom:10px}
+.dlcin ul{margin:0 0 12px;padding-left:1.1em;line-height:1.55}
+.dinos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dinos div{text-align:center;padding:6px;border-radius:14px;background:rgba(255,255,255,.65)}
+.dinos img{width:100%;height:auto;max-width:110px}
+.dinos b{display:block;font-size:.9rem}
+.soon3{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.soon3 span{padding:6px 12px;border-radius:999px;background:var(--moss);font-weight:700;font-size:.9rem}
+@media (max-width:760px){.dlc{grid-template-columns:1fr}}
 </style>
 
 <nav class="lang" aria-label="Sprache"><a href="index.html" aria-current="page" lang="de">🇩🇪 DE</a><a href="en.html" hreflang="en" lang="en">🇬🇧 EN</a></nav>
@@ -257,8 +272,9 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
     <h2>Waldlauf wird ständig größer</h2>
     <p class="lead">Jedes Update landet im Spiel auch als Nachricht in deinem Postfach.</p>
     <div class="news">
+      <div class="nw"><time>Update 0.76</time><h3>Erweiterungen und Dino-Tal</h3><ul><li>Neu im Shop: Erweiterungen für Waldtaler</li><li>Dino-Tal mit T-Rex, Triceratops und Pteranodon</li><li>5 Dino-Outfits und der T-Rex als Boss</li><li>Ein Probelauf ist gratis</li></ul></div>
       <div class="nw"><time>Update 0.75</time><h3>Fordere deine Freunde heraus</h3><ul><li>„Schlag mich!“-Link: Freunde laufen gegen deinen Geist</li><li>Teilen-Bilder für Legendär- und Ultra-Drops</li><li>Geschenk für neue Spieler bei 500 m</li><li>Einstellungen neu sortiert, am PC in Spalten</li></ul></div>
-      <div class="nw"><time>Update 0.74</time><h3>Ladebildschirm und Skin-Infos</h3><ul><li>Ladebildschirm mit Tipps nach dem Intro und vor jedem Lauf</li><li>Neuer Reiter „❓ Infos“ im Skin-Shop</li><li>Update-Post im Postfach</li></ul></div>
+      <div class="nw old"><time>Update 0.74</time><h3>Ladebildschirm und Skin-Infos</h3><ul><li>Ladebildschirm mit Tipps nach dem Intro und vor jedem Lauf</li><li>Neuer Reiter „❓ Infos“ im Skin-Shop</li><li>Update-Post im Postfach</li></ul></div>
       <div class="nw old"><time>Update 0.73</time><h3>56 neue Outfits</h3><ul><li>Alle Outfits neu gezeichnet, viele animiert</li><li>Neue Ausrüstungs-Kiste mit Flügeln und Auren</li><li>Kisten-Inhalt vorher ansehen</li></ul></div>
     </div>
   </div></section>
@@ -341,6 +357,20 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
     <div class="wlist" aria-label="Alle Welten">
       <span><b>0 m</b> Sommerwald</span><span><b>1.000 m</b> Savanne</span><span><b>2.000 m</b> Herbstwald</span><span><b>3.000 m</b> Bambuswald</span><span><b>4.000 m</b> Winterwald</span><span><b>5.000 m</b> Outback</span><span><b>6.000 m</b> Mondwald</span><span><b>7.000 m</b> Dschungel</span><span><b>8.000 m</b> Wüste</span><span><b>9.000 m</b> Kirschblütenhain</span><span><b>10.000 m</b> Sumpf</span><span><b>11.000 m</b> Vulkan</span><span><b>12.000 m</b> Polarlicht</span><span><b>13.000 m</b> Zauberwald</span><span><b>14.000 m</b> Kristallhöhle</span><span><b>15.000 m</b> Wolkenland</span>
     </div>
+  </div></section>
+
+  <section id="erweiterungen"><div class="wrap">
+    <p class="eyebrow">Neu: Erweiterungen</p>
+    <h2>Das Dino-Tal wartet auf dich</h2>
+    <p class="lead">Erweiterungen bringen neue Welten, Tiere und Outfits. Du kaufst sie im Shop mit Waldtalern, die du beim Laufen verdienst. Echtes Geld gibt es in Waldlauf nicht. Einen Probelauf bekommst du gratis.</p>
+    <div class="dlc">
+      <figure><img src="img/s-dino.jpg" alt="Dino-Tal mit Vulkan, Farnen und T-Rex" loading="lazy"></figure>
+      <div class="dlcin"><h3>🦖 Dino-Tal</h3><span class="pr">🪙 20.000 Waldtaler</span>
+        <ul><li>Neue Welt mit Vulkan, Farnwäldern und Dino-Knochen</li><li>Der T-Rex jagt dich alle 1.500 m als Boss</li><li>5 exklusive Outfits, die es nur hier gibt</li></ul>
+        <div class="dinos"><div><img src="img/a36.png" alt="T-Rex" loading="lazy"><b>T-Rex</b></div><div><img src="img/a37.png" alt="Triceratops" loading="lazy"><b>Triceratops</b></div><div><img src="img/a38.png" alt="Pteranodon" loading="lazy"><b>Pteranodon</b></div></div>
+      </div>
+    </div>
+    <div class="soon3"><span>Bald da:</span><span>🌊 Tiefsee</span><span>🚀 Weltraum</span><span>🏰 Märchenwald</span></div>
   </div></section>
 
   <section id="events"><div class="wrap">

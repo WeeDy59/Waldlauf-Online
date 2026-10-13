@@ -5,7 +5,7 @@
 
 -- Alte Funktionen entfernen, damit das Skript auch über einen älteren Stand laufen kann (Daten bleiben erhalten)
 do $$ declare r record; begin
-  for r in select p.oid::regprocedure as f from pg_proc p where p.pronamespace = 'public'::regnamespace and p.proname in ('ban_by_pub','challenge_done','challenge_send','clan_create','clan_info','clan_join','clan_kick','clan_leave','clan_top','delete_me','friend_remove','friend_request','friend_respond','friends_list','inbox_delete','inbox_list','inbox_read','leaderboard','load_backup','my_place','referral_claim','report_cheat','save_backup','search_players','start_run','submit_run','submit_run_v2','upsert_profile','weekly_top','wl_pub','market_browse','market_buy','market_cancel','market_sell','market_stats','skin_list','skin_open','skin_pub_list','skin_scrap','submit_run_v3','taler_daily','taler_daily_cleanup','taler_info','trade_answer','trade_list','trade_offer','wl_add','wl_cleanup','wl_event','wl_scrap_val','wl_skin_json','wl_var_r','wl_wallet','skin_tradeup','submit_run_v4','daily_top','duel_create','duel_list','live_create','live_join','live_start','live_leave','live_tick','skin_book_list','skin_book_claim','skin_top','weekly_claim','profile_set_card','profile_view','wl_today','chat_send','chat_list','chat_report','wl_clean','wl_drop_post','wl_skin_stamp','profile_set_img','avatar_imgs','avatar_report','dev_list')
+  for r in select p.oid::regprocedure as f from pg_proc p where p.pronamespace = 'public'::regnamespace and p.proname in ('ban_by_pub','challenge_done','challenge_send','clan_create','clan_info','clan_join','clan_kick','clan_leave','clan_top','delete_me','friend_remove','friend_request','friend_respond','friends_list','inbox_delete','inbox_list','inbox_read','leaderboard','load_backup','my_place','referral_claim','report_cheat','save_backup','search_players','start_run','submit_run','submit_run_v2','upsert_profile','weekly_top','wl_pub','market_browse','market_buy','market_cancel','market_sell','market_stats','skin_list','skin_open','skin_pub_list','skin_scrap','submit_run_v3','taler_daily','taler_daily_cleanup','taler_info','trade_answer','trade_list','trade_offer','wl_add','wl_cleanup','wl_event','wl_scrap_val','wl_skin_json','wl_var_r','wl_wallet','skin_tradeup','submit_run_v4','daily_top','duel_create','duel_list','live_create','live_join','live_start','live_leave','live_tick','skin_book_list','skin_book_claim','skin_top','weekly_claim','profile_set_card','profile_view','wl_today','chat_send','chat_list','chat_report','wl_clean','wl_drop_post','wl_skin_stamp','profile_set_img','avatar_imgs','avatar_report','dev_list','wl_dlc_price','dlc_buy','dlc_list')
   loop execute 'drop function if exists ' || r.f || ' cascade'; end loop;
 end $$;
 
@@ -2061,3 +2061,48 @@ language sql security definer set search_path = public stable as $$
   from profiles p where p.pub = p_pub;
 $$;
 grant execute on function public.profile_view(text, text) to anon;
+
+-- ===== Update 14: Erweiterungen (DLC) =====
+-- Waldlauf Update 14: Erweiterungen (DLC) mit Waldtalern kaufen
+-- Einmal im Supabase SQL Editor einfügen und auf Run drücken (nach Update 13).
+
+create table if not exists public.dlc_owned (
+  player     text not null references public.profiles(player) on delete cascade,
+  dlc        text not null,
+  created_at timestamptz not null default now(),
+  primary key (player, dlc)
+);
+alter table public.dlc_owned enable row level security;
+revoke all on public.dlc_owned from anon, authenticated;
+
+-- Preise der Erweiterungen (nur hier auf dem Server, damit niemand sie ändern kann)
+create or replace function public.wl_dlc_price(p_dlc text) returns int
+language sql immutable as $$
+  select case p_dlc when 'dino' then 20000 else null end
+$$;
+revoke all on function public.wl_dlc_price(text) from public, anon, authenticated;
+
+-- Erweiterung kaufen: zieht die Waldtaler ab und schaltet sie für immer frei
+create or replace function public.dlc_buy(p_player text, p_dlc text)
+returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare price int := wl_dlc_price(p_dlc); w wallets%rowtype; b bigint;
+begin
+  if exists (select 1 from banned where player = p_player) then raise exception 'gesperrt'; end if;
+  if price is null then raise exception 'unbekannte Erweiterung'; end if;
+  w := wl_wallet(p_player);
+  if exists (select 1 from dlc_owned where player = p_player and dlc = p_dlc) then raise exception 'schon gekauft'; end if;
+  b := wl_add(p_player, -price, 'dlc ' || p_dlc);
+  insert into dlc_owned (player, dlc) values (p_player, p_dlc);
+  return jsonb_build_object('dlc', p_dlc, 'bal', b);
+end $$;
+
+-- Welche Erweiterungen gehören mir? (auch für ein neues Gerät)
+create or replace function public.dlc_list(p_player text)
+returns jsonb
+language sql security definer set search_path = public stable as $$
+  select coalesce(jsonb_agg(dlc order by created_at), '[]') from dlc_owned where player = p_player;
+$$;
+
+grant execute on function public.dlc_buy(text, text), public.dlc_list(text) to anon;
+
