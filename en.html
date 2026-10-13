@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Waldlauf</title>
+<meta name="description" content="Waldlauf: a free endless runner with no ads and no real money. 16 worlds, 36 animals, 90+ outfits, rare skins, world chat, duels and an original soundtrack by Penta. Plays in your browser on PC and phone.">
+<link rel="canonical" href="https://weedy59.github.io/Waldlauf-Online/en.html">
+<link rel="alternate" hreflang="de" href="https://weedy59.github.io/Waldlauf-Online/">
+<link rel="alternate" hreflang="en" href="https://weedy59.github.io/Waldlauf-Online/en.html">
+<link rel="alternate" hreflang="x-default" href="https://weedy59.github.io/Waldlauf-Online/">
+<meta property="og:title" content="Waldlauf: Run for your fur! 🦊">
+<meta property="og:description" content="Free, no ads, no download. 36 animals, 16 worlds, 90+ outfits.">
+<meta property="og:image" content="https://weedy59.github.io/Waldlauf-Online/img/og.jpg">
+<meta property="og:url" content="https://weedy59.github.io/Waldlauf-Online/en.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon-192.png">
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;800&display=swap">
+<style>
+/* Layout: ein Waldpfad. Oben die Lichtung (Hero), dann Stationen am Weg: Spielen, Tiere, Welten, Events, Musik, Freunde. Einheitlicher Look: Wald in der Dämmerung. */
+:root{
+  --pine:#10241a;      /* Seitengrund */
+  --moss:#1c3d29;      /* Flächen */
+  --moss2:#26503a;     /* erhöhte Flächen */
+  --leaf:#e8872a;      /* Akzent Herbstlaub */
+  --gold:#ffd23f;      /* Hauptknopf, Münzen */
+  --bark:#6b4423;      /* Holzschild */
+  --bark2:#8a5a2e;
+  --mist:#eef5e8;      /* Text */
+  --sage:#a8c4a2;      /* Nebentext */
+  --line:rgba(238,245,232,.14);
+  --display:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  --body:'Nunito','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pine);color:var(--mist);font:400 1rem/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--gold)}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800}
+.eyebrow{font:800 .78rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+section{padding-block:72px}
+section+section{border-top:1px solid var(--line)}
+.lead{color:var(--sage);max-width:62ch;margin:.6rem 0 0}
+
+/* ---------- Hero: Lichtung */
+.hero{position:relative;overflow:hidden;padding-block:56px 0;background:
+  radial-gradient(120% 70% at 75% 0%,rgba(255,180,90,.28),transparent 60%),
+  linear-gradient(#2a3f5a 0%,#5a4a6a 28%,#c27a4a 52%,#1c3d29 52.2%,var(--pine) 100%)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hgrid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:40px;align-items:end}
+.sign{display:inline-block;transform:rotate(-3deg);padding:14px 30px 18px;border-radius:18px;background:
+  repeating-linear-gradient(0deg,rgba(0,0,0,.08) 0 3px,transparent 3px 11px),linear-gradient(#a8743a,var(--bark));
+  box-shadow:0 8px 0 #3e2612,0 18px 30px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.25)}
+.sign h1{font-size:clamp(3.2rem,9vw,6.2rem);font-weight:800;color:#fff4d6;letter-spacing:.01em;text-shadow:0 4px 0 #3e2612,0 0 1px #3e2612}
+.ribbon{display:inline-block;margin:-6px 0 0 34px;transform:rotate(-1.5deg);padding:6px 18px;border-radius:10px;background:linear-gradient(#e0603a,#a8361f);box-shadow:0 5px 0 #6a1f10;font:800 clamp(1.05rem,2.4vw,1.45rem)/1.2 var(--display);color:#fff}
+.pitch{font-size:1.15rem;color:var(--mist);max-width:38ch;margin:28px 0 22px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.play{display:inline-flex;align-items:center;gap:10px;padding:16px 34px;border-radius:18px;background:linear-gradient(#ffe066,#f4b416);color:#3a2200;text-decoration:none;font:800 1.5rem/1 var(--display);box-shadow:0 6px 0 #a8700a,0 14px 26px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s}
+.play:hover{transform:translateY(-2px);box-shadow:0 8px 0 #a8700a,0 18px 30px rgba(0,0,0,.4)}
+.play:active{transform:translateY(4px);box-shadow:0 2px 0 #a8700a}
+.play:focus-visible,.ghost:focus-visible,button:focus-visible{outline:3px solid var(--mist);outline-offset:3px}
+.ghost{padding:12px 18px;border-radius:14px;border:2px solid var(--line);color:var(--mist);text-decoration:none;font-weight:800}
+.ghost:hover{border-color:var(--sage)}
+.note{font-size:.85rem;color:var(--sage);margin-top:12px}
+.shot{position:relative;border-radius:22px;overflow:hidden;border:6px solid #2b1a0c;box-shadow:0 0 0 3px var(--bark2),0 30px 60px rgba(0,0,0,.55);transform:rotate(1.5deg);margin-bottom:-34px;aspect-ratio:16/9;max-width:100%}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.hero .fox{position:absolute;left:-46px;bottom:-24px;width:150px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.45));transform:rotate(-6deg)}
+.shotwrap{position:relative}
+
+/* ---------- Zahlen */
+.facts{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;padding-block:70px 0}
+.fact{padding:16px 12px;border-radius:16px;background:var(--moss);text-align:center}
+.fact b{display:block;font:800 2.2rem/1 var(--display);color:var(--gold);font-variant-numeric:tabular-nums}
+.fact span{font-size:.88rem;color:var(--sage)}
+
+/* ---------- Steuerung */
+.how{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:start;margin-top:28px}
+.keys{display:grid;gap:10px}
+.key{display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;padding:12px;border-radius:14px;background:var(--moss)}
+.key kbd{display:flex;align-items:center;justify-content:center;height:48px;border-radius:10px;background:#f4ead8;color:#3a2200;font:800 1.4rem/1 var(--display);box-shadow:0 4px 0 #b8a07a}
+.key b{display:block}.key small{color:var(--sage)}
+.hunter{padding:22px;border-radius:20px;background:linear-gradient(160deg,#4a1a14,#2a100c);border:2px solid #7a2a1f}
+.hunter h3{font-size:1.5rem;color:#ffb08a;margin-bottom:6px}
+.hunter p{margin:.4rem 0;color:#f4d8cc}
+
+/* ---------- Tiere */
+.zoo{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:28px}
+.ani{position:relative;padding:10px 10px 14px;border-radius:18px;background:linear-gradient(var(--moss2),var(--moss));text-align:center;min-width:0}
+.ani img{display:block;width:100%;height:130px;object-fit:contain;max-width:100%;margin:14px 0 8px}
+.ani b{display:block;font:700 1.05rem/1.2 var(--display);overflow-wrap:anywhere}
+.ani em{display:block;font-style:normal;font-weight:800;font-size:.8rem;color:var(--gold);margin-top:2px}
+.ani small{display:block;font-size:.78rem;color:var(--sage);line-height:1.35;margin-top:4px}
+.tag{position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:999px;font:800 .66rem/1.5 var(--body);letter-spacing:.06em;text-transform:uppercase;background:#ff5a9a;color:#fff}
+.tag.start{background:#3f9a4a}.tag.world{background:#c8501f}.tag.box{background:#3a6ad0}.tag.season{background:#c8961f}
+
+/* ---------- Welten */
+.worlds{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:28px}
+.w{margin:0;border-radius:16px;overflow:hidden;background:var(--moss);min-width:0}
+.w img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.w figcaption{padding:10px 12px}.w figcaption b{display:block;font-family:var(--display);font-size:1.1rem}.w figcaption span{font-size:.85rem;color:var(--sage)}
+.w.big{grid-column:span 3}.w.mid{grid-column:span 2}
+.wlist{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.wlist span{padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-size:.88rem;color:var(--sage);font-variant-numeric:tabular-nums}
+.wlist span b{color:var(--mist)}
+
+/* ---------- Events */
+.events{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+.ev{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;padding:14px;border-radius:18px;min-width:0}
+.ev img{width:96px;max-width:100%}
+.ev h3{font-size:1.35rem}.ev time{display:block;font-weight:800;font-size:.85rem;opacity:.85}.ev p{margin:.3rem 0 0;font-size:.88rem}
+.ev.hf{background:linear-gradient(140deg,#c2408a,#6a2a8a)}.ev.hw{background:linear-gradient(140deg,#d8600c,#3a1a5a)}.ev.wi{background:linear-gradient(140deg,#4a9ae0,#1a3a7a)}
+
+/* ---------- Rangliste */
+.board{margin-top:24px;border-radius:18px;background:var(--moss);overflow:hidden}
+.brow{display:grid;grid-template-columns:44px 40px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.brow:last-child{border-bottom:0}.brow .pl{font:800 1.2rem var(--display);color:var(--gold)}.brow .av{font-size:1.5rem}.brow .nm{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brow .m{font-weight:800}
+
+/* ---------- Musik */
+.music{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:36px;align-items:center}
+.vinyl{aspect-ratio:1;max-width:340px;width:100%;border-radius:50%;margin:0 auto;background:repeating-radial-gradient(circle,#161616 0 2px,#222 2px 4px);box-shadow:0 20px 40px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+.vinyl div{letter-spacing:.06em;width:38%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 50%,#ffa04a,var(--leaf));display:flex;align-items:center;justify-content:center;font:800 1.1rem/1 var(--display);color:#3a1a00;text-align:center}
+.vinyl.on{animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tracks{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:6px}
+.tracks button{width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border:0;border-radius:12px;background:var(--moss);color:var(--mist);font:600 1rem var(--body);text-align:left;cursor:pointer}
+.tracks button:hover{background:var(--moss2)}
+.tracks button i{font-style:normal;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--leaf);color:#2a1200;font-weight:800}
+.tracks button.on{background:var(--moss2);box-shadow:inset 3px 0 0 var(--gold)}
+.tracks small{color:var(--sage)}
+
+/* ---------- Freunde */
+.social{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px}
+.so{padding:18px;border-radius:18px;background:var(--moss)}
+.so h3{font-size:1.25rem;margin-bottom:4px}.so p{margin:0;color:var(--sage);font-size:.92rem}
+.so .ic{font:800 2rem/1 var(--display);color:var(--gold);margin-bottom:8px}
+
+/* ---------- Abschluss */
+.final{text-align:center;background:radial-gradient(80% 120% at 50% 100%,rgba(232,135,42,.35),transparent 70%)}
+.final .play{margin-top:22px}
+footer{padding-block:34px 44px;border-top:1px solid var(--line);color:var(--sage);font-size:.9rem}
+.fgrid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;color:var(--mist)}
+.legal p{margin:.4rem 0}.warn{color:#ffd9a0}
+
+
+/* ---------- Abzeichen */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(16,36,26,.7);border:1px solid rgba(255,210,63,.45);font-weight:800;font-size:.88rem;color:#fff4d6}
+.badge.no{border-color:rgba(255,120,90,.6)}
+/* ---------- Trailer */
+.trailer{position:relative;margin-top:26px;border-radius:22px;overflow:hidden;border:6px solid #2b1a0c;box-shadow:0 0 0 3px var(--bark2),0 30px 60px rgba(0,0,0,.5);background:#000;aspect-ratio:16/9}
+.trailer video{display:block;width:100%;height:100%}
+/* ---------- Neu */
+.news{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+.nw{padding:18px;border-radius:18px;background:var(--moss);border-top:4px solid var(--gold)}
+.nw.old{border-top-color:var(--sage);opacity:.92}
+.nw h3{font-size:1.35rem}.nw time{font-size:.8rem;font-weight:800;color:var(--leaf)}
+.nw ul{margin:.6rem 0 0;padding-left:1.1rem;color:var(--sage);font-size:.92rem}.nw li{margin:.2rem 0}
+/* ---------- Outfits & Kisten */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;margin-top:28px}
+.pics{border-radius:20px;overflow:hidden;border:5px solid #2b1a0c;box-shadow:0 0 0 3px var(--bark2),0 20px 40px rgba(0,0,0,.45)}
+.pics img{display:block;width:100%}
+.ticks{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+.ticks li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start}
+.ticks li>span{font-size:1.4rem;line-height:1.2}.ticks b{display:block}.ticks small{color:var(--sage);font-size:.9rem}
+.wardrobe{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;margin-top:28px}
+.of{padding:10px 8px 12px;border-radius:16px;text-align:center;background:linear-gradient(160deg,color-mix(in srgb,var(--rc) 45%,#1c3d29),#13281b);border:2px solid color-mix(in srgb,var(--rc) 70%,#000);box-shadow:inset 0 -4px 0 var(--rc);min-width:0}
+.of img{display:block;width:100%;height:110px;object-fit:contain;filter:drop-shadow(0 4px 4px rgba(0,0,0,.4))}
+.of b{display:block;font:700 1rem/1.15 var(--display);margin-top:4px;overflow-wrap:anywhere}.of small{font-weight:800;font-size:.72rem;color:var(--rc)}
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.slots span{padding:4px 10px;border-radius:999px;background:var(--moss2);font-size:.82rem;font-weight:700}
+/* ---------- Skins */
+.skins{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:28px}
+.sk{position:relative;padding:10px 6px 12px;border-radius:16px;text-align:center;background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--rc) 40%,#1c3d29),#10241a);border:2px solid var(--rc);min-width:0}
+.sk img{display:block;width:100%;height:120px;object-fit:contain}
+.sk b{display:block;font:700 1rem/1.1 var(--display)}.sk small{display:block;font-size:.72rem;color:var(--sage);line-height:1.35}
+.sk em{position:absolute;top:6px;left:6px;font-style:normal;font-weight:800;font-size:.62rem;padding:1px 7px;border-radius:999px;background:var(--rc);color:#fff;text-transform:uppercase;letter-spacing:.05em}
+.facts2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.fx{padding:16px;border-radius:16px;background:var(--moss)}
+.fx h3{font-size:1.2rem;margin-bottom:4px}.fx p{margin:.3rem 0 0;color:var(--sage);font-size:.9rem}
+.fx .gl{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}.fx .gl span{padding:2px 8px;border-radius:8px;background:linear-gradient(135deg,#fff6d8,#ffd23f);color:#3a2200;font-size:.72rem;font-weight:800}
+.rar{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}.rar span{padding:2px 8px;border-radius:8px;font-size:.72rem;font-weight:800;color:#fff}
+/* ---------- Modi */
+.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+/* ---------- FAQ */
+.faq{margin-top:22px;display:grid;gap:10px;max-width:820px}
+.faq details{margin:0;max-width:none;padding:14px 18px;border-radius:14px;background:var(--moss)}
+.faq summary{font-size:1.05rem}.faq p{margin:.5rem 0 0;color:var(--sage)}
+/* ---------- Sprachumschalter */
+.lang{position:absolute;top:14px;right:16px;z-index:5;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(16,36,26,.75);border:1px solid var(--line)}
+.lang a{padding:5px 10px;border-radius:999px;color:var(--mist);text-decoration:none;font-weight:800;font-size:.85rem}
+.lang a[aria-current]{background:var(--gold);color:#3a2200}
+@media (max-width:900px){
+  .news,.split,.modes,.facts2{grid-template-columns:minmax(0,1fr)}
+  .skins{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .hgrid,.how,.music{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .worlds{grid-template-columns:repeat(2,minmax(0,1fr))}.w.big,.w.mid{grid-column:span 1}
+  .events,.social{grid-template-columns:minmax(0,1fr)}
+  .shot{margin-bottom:-20px}.hero .fox{width:100px;left:-12px;bottom:-30px}
+}
+@media (max-width:520px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.zoo{grid-template-columns:repeat(2,minmax(0,1fr))}.sign{padding:10px 20px 14px}.ribbon{margin-left:16px}.play{font-size:1.25rem;padding:14px 24px}}
+@media (prefers-reduced-motion:reduce){.vinyl.on{animation:none}.play{transition:none}}
+</style>
+
+<nav class="lang" aria-label="Language"><a href="index.html" hreflang="de" lang="de">🇩🇪 DE</a><a href="en.html" aria-current="page" lang="en">🇬🇧 EN</a></nav>
+<header class="hero">
+  <canvas id="leaves" aria-hidden="true"></canvas>
+  <div class="wrap hgrid">
+    <div>
+      <div class="sign"><h1>Waldlauf</h1></div><br>
+      <div class="ribbon">Run for your fur!</div>
+      <p class="pitch">Dash through 16 worlds with 36 animals from all over the globe. Jump, slide, dodge the hunter, collect outfits and rare skins, and race your friends.</p>
+      <div class="badges" aria-label="Highlights">
+        <span class="badge">✅ 100% free</span><span class="badge no">🚫 No ads</span><span class="badge no">💳 No real money</span><span class="badge">📲 No download</span>
+      </div>
+      <div class="cta">
+        <a class="play" id="play1" href="spiel.html">▶ Play now</a>
+        <a class="ghost" href="#app">Get it as an app</a>
+      </div>
+      <p class="note">No ads, no real-money purchases. You earn everything by playing. Runs right in your browser, on PC and phone.</p>
+    </div>
+    <div class="shotwrap">
+      <div class="shot"><img src="img/s-menu.jpg" alt="Waldlauf main menu: a clearing with a campfire, a lake and lots of animals"></div>
+      <img class="fox" src="img/a0.png" alt="">
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap facts" aria-label="Waldlauf in numbers">
+    <div class="fact"><b>16</b><span>Worlds</span></div>
+    <div class="fact"><b>36</b><span>Animals with abilities</span></div>
+    <div class="fact"><b>120+</b><span>Outfits and frames</span></div>
+    <div class="fact"><b>6</b><span>Game modes</span></div>
+    <div class="fact"><b>9</b><span>original songs</span></div>
+    <div class="fact"><b>0</b><span>Ads</span></div>
+  </div>
+
+  <section id="trailer"><div class="wrap">
+    <p class="eyebrow">Trailer</p>
+    <h2>Waldlauf in one minute</h2>
+    <div class="trailer"><video controls playsinline preload="none" poster="img/trailer.jpg"><source src="img/trailer.mp4" type="video/mp4">Your browser cannot play this video.</video></div>
+  </div></section>
+
+  <section id="neu"><div class="wrap">
+    <p class="eyebrow">What's new</p>
+    <h2>Waldlauf keeps growing</h2>
+    <p class="lead">Every update also arrives as a message in your in-game mailbox.</p>
+    <div class="news">
+      <div class="nw"><time>Update 0.75</time><h3>Challenge your friends</h3><ul><li>“Beat me!” link: friends race against your ghost</li><li>Share images for Legendary and Ultra drops</li><li>A gift for new players at 500 m</li><li>Settings reorganized, in columns on PC</li></ul></div>
+      <div class="nw"><time>Update 0.74</time><h3>Loading screen and skin info</h3><ul><li>Loading screen with tips after the intro and before each run</li><li>New “❓ Info” tab in the skin shop</li><li>Update news in your mailbox</li></ul></div>
+      <div class="nw old"><time>Update 0.73</time><h3>56 new outfits</h3><ul><li>All outfits redrawn, many animated</li><li>New gear crate with wings and auras</li><li>Preview crate contents before opening</li></ul></div>
+    </div>
+  </div></section>
+
+  <section id="spielen"><div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>Three lanes, one hunter</h2>
+    <div class="how">
+      <div class="keys">
+        <div class="key"><kbd>⬅ ➡</kbd><div><b>Switch lanes</b><small>Swipe or use the arrow keys to dodge rocks and trees.</small></div></div>
+        <div class="key"><kbd>⬆</kbd><div><b>Jump</b><small>Over logs, fences and wild boars.</small></div></div>
+        <div class="key"><kbd>⬇</kbd><div><b>Slide</b><small>Under branches and rainbows. In mid-air it drops you back down fast.</small></div></div>
+        <div class="key"><kbd>1 2 3</kbd><div><b>Power-ups</b><small>Magnet, apple turbo and safety vest.</small></div></div>
+      </div>
+      <div class="hunter">
+        <h3>The hunter is after you</h3>
+        <p>The double-barrel shotgun waits at the bottom of the screen. Every stumble brings it closer. When your lane glows red, switch lanes fast.</p>
+        <p>Every 5,000 m the Head Hunter shows up. He fires at two lanes at once for 25 seconds. Survive and you earn up to 1,500 coins.</p>
+        <p>In between there are bonus stretches full of coins and night runs where only your lantern lights the way.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="tiere"><div class="wrap">
+    <p class="eyebrow">Your runners</p>
+    <h2>36 animals from around the world, each with its own ability</h2>
+    <p class="lead">From the fox of the Summer Forest to the polar bear of the Arctic. Lion, tiger, kangaroo and jaguar guard their worlds and join you once you reach them. Every run earns your animal stars. Five stars bring golden sparkle and more coins.</p>
+    <div class="zoo" id="zoo"></div>
+  </div></section>
+
+  <section id="outfits"><div class="wrap">
+    <p class="eyebrow">Crates and outfits</p>
+    <h2>Style your animal your way</h2>
+    <p class="lead">More than 90 outfits for six slots: head, eyes, neck, back, hand and aura. All hand-drawn, many animated. You can't buy any of them. They only come from crates you open with coins earned by playing.</p>
+    <div class="slots"><span>👑 Head</span><span>🕶️ Eyes</span><span>🧣 Neck</span><span>🦋 Back</span><span>🪄 Hand</span><span>✨ Aura</span></div>
+    <div class="wardrobe"><div class="of" style="--rc:#e8303a"><img src="img/o54.png" alt="Fuchs mit Feuerkrone" loading="lazy"><b>Feuerkrone</b><small>Ultra</small></div><div class="of" style="--rc:#e8303a"><img src="img/o80.png" alt="Fuchs mit Phönixflügel" loading="lazy"><b>Phönixflügel</b><small>Ultra</small></div><div class="of" style="--rc:#e8303a"><img src="img/o79.png" alt="Fuchs mit Drachenflügel" loading="lazy"><b>Drachenflügel</b><small>Ultra</small></div><div class="of" style="--rc:#e8303a"><img src="img/o63.png" alt="Fuchs mit Cyber-Visier" loading="lazy"><b>Cyber-Visier</b><small>Ultra</small></div><div class="of" style="--rc:#e8303a"><img src="img/o89.png" alt="Fuchs mit Laserschwert" loading="lazy"><b>Laserschwert</b><small>Ultra</small></div><div class="of" style="--rc:#e8303a"><img src="img/o96.png" alt="Fuchs mit Flammenaura" loading="lazy"><b>Flammenaura</b><small>Ultra</small></div><div class="of" style="--rc:#e0a020"><img src="img/o52.png" alt="Fuchs mit Heiligenschein" loading="lazy"><b>Heiligenschein</b><small>Legendär</small></div><div class="of" style="--rc:#e0a020"><img src="img/o53.png" alt="Fuchs mit Einhorn-Horn" loading="lazy"><b>Einhorn-Horn</b><small>Legendär</small></div><div class="of" style="--rc:#e0a020"><img src="img/o78.png" alt="Fuchs mit Engelsflügel" loading="lazy"><b>Engelsflügel</b><small>Legendär</small></div><div class="of" style="--rc:#8a4ad0"><img src="img/o8.png" alt="Fuchs mit Zauberhut" loading="lazy"><b>Zauberhut</b><small>Episch</small></div><div class="of" style="--rc:#8a4ad0"><img src="img/o48.png" alt="Fuchs mit Zylinder" loading="lazy"><b>Zylinder</b><small>Episch</small></div><div class="of" style="--rc:#8a4ad0"><img src="img/o50.png" alt="Fuchs mit Wikingerhelm" loading="lazy"><b>Wikingerhelm</b><small>Episch</small></div><div class="of" style="--rc:#8a4ad0"><img src="img/o74.png" alt="Fuchs mit Gitarre" loading="lazy"><b>Gitarre</b><small>Episch</small></div><div class="of" style="--rc:#8a4ad0"><img src="img/o70.png" alt="Fuchs mit Federboa" loading="lazy"><b>Federboa</b><small>Episch</small></div><div class="of" style="--rc:#3a7bd5"><img src="img/o47.png" alt="Fuchs mit Cowboyhut" loading="lazy"><b>Cowboyhut</b><small>Selten</small></div><div class="of" style="--rc:#3a7bd5"><img src="img/o57.png" alt="Fuchs mit Herzbrille" loading="lazy"><b>Herzbrille</b><small>Selten</small></div><div class="of" style="--rc:#3a7bd5"><img src="img/o86.png" alt="Fuchs mit Regenschirm" loading="lazy"><b>Regenschirm</b><small>Selten</small></div><div class="of" style="--rc:#8a96a0"><img src="img/o42.png" alt="Fuchs mit Strickmütze" loading="lazy"><b>Strickmütze</b><small>Gewöhnlich</small></div></div>
+    <div class="split">
+      <div class="pics"><img src="img/s-shop.jpg" alt="Shop with the outfit crate and content preview" loading="lazy"></div>
+      <div>
+        <h3 style="font-size:1.6rem">How crates work</h3>
+        <ul class="ticks">
+          <li><span>👁️</span><div><b>See the contents first</b><small>Every crate shows everything inside, sorted by rarity, with the drop chance for each item.</small></div></li>
+          <li><span>🍀</span><div><b>Luck meter</b><small>Legendary is guaranteed after 50 openings, Ultra after 100.</small></div></li>
+          <li><span>♻️</span><div><b>Duplicate? No problem</b><small>Duplicate animals and outfits refund half the crate price.</small></div></li>
+          <li><span>🎁</span><div><b>Free every day</b><small>You can open the animal crate once a day for free.</small></div></li>
+        </ul>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="skins"><div class="wrap">
+    <p class="eyebrow">Skins</p>
+    <h2>Every skin is one of a kind</h2>
+    <p class="lead">Skins are rare color variants for your animals, from Moss to Galaxy. You pull them from skin crates using Forest Talers you earn while running. No two skins are alike.</p>
+    <div class="skins"><div class="sk" style="--rc:#e8303a"><em>Mythisch</em><img src="img/k0.png" alt="Fuchs-Skin Regenbogen" loading="lazy"><b>Regenbogen</b><small>Fuchs<br>Glanz 0,970 · Makellos</small></div><div class="sk" style="--rc:#e8303a"><em>Mythisch</em><img src="img/k1.png" alt="Löwe-Skin Galaxie" loading="lazy"><b>Galaxie</b><small>Löwe<br>Muster #777 · 🏃 Zähler</small></div><div class="sk" style="--rc:#e0a020"><em>Legendär</em><img src="img/k2.png" alt="Tiger-Skin Gold" loading="lazy"><b>Gold</b><small>Tiger<br>Muster #3 · Prototyp</small></div><div class="sk" style="--rc:#e0a020"><em>Legendär</em><img src="img/k4.png" alt="Faultier-Skin Kristall" loading="lazy"><b>Kristall</b><small>Faultier<br>Glanz 0,740 · Strahlend</small></div><div class="sk" style="--rc:#e0a020"><em>Legendär</em><img src="img/k3.png" alt="Jaguar-Skin Lava" loading="lazy"><b>Lava</b><small>Jaguar<br>Glanz 0,660 · Glänzend</small></div><div class="sk" style="--rc:#8a4ad0"><em>Episch</em><img src="img/k5.png" alt="Pfau-Skin Neon" loading="lazy"><b>Neon</b><small>Pfau<br>Glanz 0,500 · Glänzend</small></div></div>
+    <div class="facts2">
+      <div class="fx"><h3>💎 Rarity</h3><p>Five tiers. How often they drop from the skin crate:</p><div class="rar"><span style="background:#8a96a0">Common 70%</span><span style="background:#3a7bd5">Rare 20%</span><span style="background:#8a4ad0">Epic 7%</span><span style="background:#e0a020">Legendary 2.5%</span><span style="background:#e8303a">Mythic 0.5%</span></div></div>
+      <div class="fx"><h3>✨ Shine</h3><p>A value from 0.000 to 1.000. The higher it is, the more the skin shines. From 0.600 a streak of light sweeps across it.</p><div class="gl"><span>Matte</span><span>Silky</span><span>Glossy</span><span>Radiant</span><span>Flawless</span></div></div>
+      <div class="fx"><h3>🎲 Pattern #0 to #999</h3><p>Sets the hue, spots and stripes, the sparkle effects and the neon color. #0 to #4 are called “Prototype”, #777 is the “Lucky Number”.</p></div>
+      <div class="fx"><h3>🏃 Tracker</h3><p>10% of all skins come with a tracker. It counts every meter you run wearing that skin.</p></div>
+      <div class="fx"><h3>🔢 Serial number</h3><p>No. 1, 2, 3 … in the order the skins were pulled. Low numbers are the oldest.</p></div>
+      <div class="fx"><h3>🎁 Pulled by</h3><p>Every skin remembers forever who pulled it, even after 400 sales. It also shows how often it has changed owners.</p></div>
+      <div class="fx"><h3>🏪 Market and trading</h3><p>Sell skins to other players or trade with friends. Payment is only in Forest Talers earned by playing.</p></div>
+      <div class="fx"><h3>⬆️ Trade-up</h3><p>10 skins of the same rarity become 1 skin of the next tier. Its shine is the average of the 10.</p></div>
+      <div class="fx"><h3>📖 Skin book</h3><p>The skin book shows which variants you are still missing. Show off your best skins on your profile.</p></div>
+    </div>
+  </div></section>
+
+  <section id="welten"><div class="wrap">
+    <p class="eyebrow">A new world every 1,000 m</p>
+    <h2>From the savanna to Cloudland</h2>
+    <p class="lead">Every world has its own weather, obstacles and song. New: Savanna, Bamboo Forest, Outback and Jungle. Far at the end wait two worlds most players never see.</p>
+    <div class="worlds">
+      <figure class="w big"><img src="img/s-herbst.jpg" alt="Autumn Forest" loading="lazy"><figcaption><b>Autumn Forest</b><span>Golden light and red leaves</span></figcaption></figure>
+      <figure class="w big"><img src="img/s-boss.jpg" alt="Boss fight in the Cherry Blossom Grove" loading="lazy"><figcaption><b>Cherry Blossom Grove with the Head Hunter</b><span>Two lanes are red. Only one is safe.</span></figcaption></figure>
+      <figure class="w mid"><img src="img/s-savanne.jpg" alt="Savanna with lion" loading="lazy"><figcaption><b>Savanna</b><span>Acacias, termite mounds and the lion</span></figcaption></figure>
+      <figure class="w mid"><img src="img/s-kristall.jpg" alt="Crystal Cave" loading="lazy"><figcaption><b>Crystal Cave</b><span>Only from 14,000 m</span></figcaption></figure>
+      <figure class="w mid"><img src="img/s-dschungel.jpg" alt="Jungle with jaguar" loading="lazy"><figcaption><b>Jungle</b><span>Vines, fireflies and the jaguar</span></figcaption></figure>
+    </div>
+    <div class="wlist" aria-label="All worlds">
+      <span><b>0 m</b> Summer Forest</span><span><b>1,000 m</b> Savanna</span><span><b>2,000 m</b> Autumn Forest</span><span><b>3,000 m</b> Bamboo Forest</span><span><b>4,000 m</b> Winter Forest</span><span><b>5,000 m</b> Outback</span><span><b>6,000 m</b> Moon Forest</span><span><b>7,000 m</b> Jungle</span><span><b>8,000 m</b> Desert</span><span><b>9,000 m</b> Cherry Blossom Grove</span><span><b>10,000 m</b> Swamp</span><span><b>11,000 m</b> Volcano</span><span><b>12,000 m</b> Northern Lights</span><span><b>13,000 m</b> Magic Forest</span><span><b>14,000 m</b> Crystal Cave</span><span><b>15,000 m</b> Cloudland</span>
+    </div>
+  </div></section>
+
+  <section id="events"><div class="wrap">
+    <p class="eyebrow">Limited time</p>
+    <h2>Events with exclusive animals</h2>
+    <p class="lead">Each event lasts 14 days. Complete daily tasks, collect the event currency and trade it for outfits, frames and the grand prize.</p>
+    <div class="events">
+      <div class="ev hf"><img src="img/a13.png" alt=""><div><time>October 11 to 25</time><h3>Heart Festival</h3><p>Collect stars for the Love-You-All Panda.</p></div></div>
+      <div class="ev hw"><img src="img/a15.png" alt=""><div><time>from October 31</time><h3>Halloween</h3><p>Pumpkins, fog and the Flutter Bat.</p></div></div>
+      <div class="ev wi"><img src="img/a16.png" alt=""><div><time>from December 14</time><h3>Winter Magic</h3><p>Snowflakes for Frosti the arctic fox.</p></div></div>
+    </div>
+  </div></section>
+
+  <section id="rangliste" hidden><div class="wrap">
+    <p class="eyebrow">Live from the game</p>
+    <h2>The fastest runners this season</h2>
+    <div class="board" id="board"></div>
+  </div></section>
+
+  <section id="musik"><div class="wrap music">
+    <div class="vinyl" id="vinyl"><div>Penta</div></div>
+    <div>
+      <p class="eyebrow">Soundtrack</p>
+      <h2>Music by Penta</h2>
+      <p class="lead">Every song was made for Waldlauf. In the game, each world has its own track.</p>
+      <ul class="tracks" id="tracks"></ul>
+      <audio id="au" preload="none"></audio>
+    </div>
+  </div></section>
+
+  <section id="modi"><div class="wrap">
+    <p class="eyebrow">Game modes</p>
+    <h2>Six ways to run</h2>
+    <div class="modes">
+      <div class="so"><div class="ic">🌲</div><h3>Endless run</h3><p>As far as you can go, through all 16 worlds. The Head Hunter waits every 5,000 m.</p></div>
+      <div class="so"><div class="ic">📅</div><h3>Daily track</h3><p>A new track every day, the same for everyone. Who gets the farthest?</p></div>
+      <div class="so"><div class="ic">🗺️</div><h3>Adventure</h3><p>30 levels with goals and up to three stars each.</p></div>
+      <div class="so"><div class="ic">⏱️</div><h3>Sprint</h3><p>60 seconds, as many meters as possible.</p></div>
+      <div class="so"><div class="ic">💀</div><h3>Hardcore</h3><p>One life, no second chances. For true pros.</p></div>
+      <div class="so"><div class="ic">🏁</div><h3>Duel and live race</h3><p>Race your friends: a best-of-three duel or live with up to 4 runners.</p></div>
+    </div>
+  </div></section>
+
+  <section id="freunde"><div class="wrap">
+    <p class="eyebrow">Run together</p>
+    <h2>More fun with friends</h2>
+    <div class="social">
+      <div class="so"><div class="ic">💬</div><h3>World chat</h3><p>Chat with every runner and see live who just pulled a rare skin.</p></div><div class="so"><div class="ic">🏁</div><h3>Live race and duel</h3><p>Up to 4 friends run the same track at the same time. Or challenge each other to a best-of-three duel.</p></div><div class="so"><div class="ic">👤</div><h3>Your profile</h3><p>Your own picture, frames, a bio and your best skins to show off. Tap other players to see their profiles.</p></div><div class="so"><div class="ic">📬</div><h3>Mailbox</h3><p>Friend requests, challenges, gifts and every new update land here.</p></div><div class="so"><div class="ic">⚔️</div><h3>Challenges</h3><p>Challenge friends with your best distance. Whoever beats it gets 500 coins.</p></div>
+      <div class="so"><div class="ic">🐺</div><h3>Packs</h3><p>Start a pack of up to 30 runners and battle other packs for first place.</p></div>
+      <div class="so"><div class="ic">👻</div><h3>Ghost run</h3><p>A ghost replays your best run. Are you ahead?</p></div>
+      <div class="so"><div class="ic">🏆</div><h3>Leaderboards</h3><p>Worldwide, weekly and among friends. Each season lasts 90 days.</p></div>
+    </div>
+  </div></section>
+
+  <section id="app"><div class="wrap">
+    <p class="eyebrow">Just like a real app</p>
+    <h2>Waldlauf on your home screen</h2>
+    <div class="how">
+      <div class="keys">
+        <div class="key"><kbd>A</kbd><div><b>Android and PC (Chrome, Edge)</b><small>Open the game, then tap “Install as app” in the settings.</small></div></div>
+        <div class="key"><kbd>i</kbd><div><b>iPhone and iPad (Safari)</b><small>Open the game, tap “Share” and choose “Add to Home Screen”.</small></div></div>
+      </div>
+      <p class="lead" style="margin-top:0">Waldlauf then launches full screen from your home screen, no app store needed. Your progress stays on your device. Use the cloud save to take it to a new phone.</p>
+    </div>
+  </div></section>
+
+  <section id="fragen"><div class="wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2>Good to know</h2>
+    <div class="faq">
+      <details><summary>Does Waldlauf cost anything?</summary><p>No. Waldlauf is completely free. There are no real-money purchases. You earn all coins, Forest Talers, crates, outfits and skins by playing.</p></details>
+      <details><summary>Are there ads?</summary><p>No, not a single one. No banners, no videos, nothing interrupts your run.</p></details>
+      <details><summary>Do I need to install anything?</summary><p>No. Waldlauf runs right in your browser. If you like, add it to your home screen like an app.</p></details>
+      <details><summary>How do I get rare outfits and skins?</summary><p>From crates: outfits with coins, skins with Forest Talers. You earn both by running, from daily rewards and in events. You can also buy skins on the market or trade with friends.</p></details>
+      <details><summary>What do shine, pattern and tracker mean?</summary><p>See the skins section above, or the “❓ Info” tab in the in-game skin shop.</p></details>
+      <details><summary>Will I lose my progress?</summary><p>It stays on your device. Use the in-game cloud save to move it to a new phone.</p></details>
+    </div>
+  </div></section>
+
+  <section class="final"><div class="wrap">
+    <h2>Ready? The hunter is waiting.</h2>
+    <p class="lead" style="margin-inline:auto">Free, no ads, no download.</p>
+    <a class="play" id="play2" href="spiel.html">▶ Play now</a>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <span>Waldlauf · Made by <b>WeeDy :3</b> · Music by <b>Penta</b></span>
+    <span>Fonts: Baloo 2 and Nunito (SIL Open Font License)</span>
+  </div>
+  <details id="impressum"><summary>Legal notice (Impressum) and privacy</summary><div class="legal" id="legal"></div></details>
+</div></footer>
+
+<script>
+// Hier deine Angaben fürs Impressum eintragen (gleich wie im Spiel):
+const LEGAL={name:'Rene Stredecke',street:'Marmorweg 23',city:'59581 Warstein',email:'WeeDyTheDevil@gmail.com'};
+// Wenn das Spiel online ist: dieselbe Supabase-Adresse und derselbe öffentliche Schlüssel wie im Spiel (zeigt dann die Live-Rangliste):
+const ONLINE={url:'https://jvupgazchuggeizfdvcl.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2dXBnYXpjaHVnZ2VpemZkdmNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4MzY0ODksImV4cCI6MjEwNzQxMjQ4OX0.abBB7jlgNrOm0oRgPMGPJ2tLvT0_VUlm6K26RD69bLw'};
+const PLAY='spiel.html?lang=en';
+
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.querySelectorAll('#play1,#play2').forEach(a=>a.href=PLAY);
+
+const ANI=[['Fox','Sly Fox','Every 10th coin counts double.','start'],['Hare','Spring Legs','Jumps higher than anyone.','box'],['Raccoon','Sticky Fingers','The magnet lasts 30% longer.','box'],['Cat','Velvet Paws','The gun aims more slowly.','box'],['Squirrel','Stockpile','The apple turbo lasts 40% longer.','box'],['Wolf','Pack Start','Starts with a 3-second turbo.','box'],['Bear','Bear Strength','Survives one hit per run.','box'],['Panda','Thick Fur','The vest holds 3 hits instead of 2.','box'],['Robin','Early Bird','Power-ups appear more often.','box'],['Owl','Gliding','Glides down more slowly.','box'],['Parrot','Chatter Magnet','Magnet with a bigger range.','box'],['Penguin','Ice Slider','Slides under branches for longer.','box'],['Golden Mushroom','Golden Glow','Every 7th coin counts double.','season'],['Love-You-All Panda','Heart Shield','Survives a hit and spits out hearts.','event'],['Fawn','Light Foot','Jumps a bit higher, more power-ups.','start'],['Flutter Bat','Night Flight','Glides gently and glows in the dark.','event'],['Frosti the Arctic Fox','Snowstorm','Slides longer, magnet lasts longer.','event'],['Lion','Royal Roar','2-second turbo and one shield hit.','world'],['Zebra','Stripe Camo','The gun aims more slowly.','box'],['Giraffe','Long Neck','Magnet with a bigger range.','box'],['Meerkat','Lookout','Slower gun, every 15th coin doubled.','box'],['Tiger','Tiger Leap','Jumps higher, 3-second turbo.','world'],['Red Panda','Climbing Ace','Glides gently, every 15th coin doubled.','box'],['Snow Leopard','Mountain Runner','Slides longer, vest holds 3 hits.','box'],['Peacock','Showy Feathers','Every 8th coin doubled, longer turbo.','box'],['Kangaroo','Giant Leap','Jumps higher than any other animal.','world'],['Koala','Eucalyptus Power','One shield hit, longer turbo.','box'],['Wombat','Armored Bum','Vest holds 3 hits, every 14th coin doubled.','box'],['Platypus','Dive Pro','Slides longer, more power-ups.','box'],['Sloth','Take It Easy','Turbo lasts 50% longer, glides gently.','box'],['Alpaca','Wool Padding','One shield hit, magnet lasts longer.','box'],['Jaguar','Jungle King','Much slower gun, every 9th coin doubled.','world'],['Toucan','Fruit Beak','Lots more power-ups, longer turbo.','box'],['Seal','Belly Slider','Slides the longest of all.','box'],['Polar Bear','Polar Armor','Shield hit, slides longer, magnet lasts longer.','box'],['Elephant','Trunk Magnet','Big magnet range, vest holds 3 hits.','box']];
+const TAG={start:'Starter',box:'Animal crate',season:'Season',event:'Event',world:'World guardian'};
+const order=[0,14,1,2,3,4,5,6,7,8,9,10,11,17,21,25,31,18,19,20,22,23,24,35,26,27,28,29,30,32,33,34,12,13,15,16];
+document.getElementById('zoo').innerHTML=order.map(i=>{const a=ANI[i];return '<div class="ani"><span class="tag '+a[3]+'">'+TAG[a[3]]+'</span><img src="img/a'+i+'.png" alt="'+esc(a[0])+'" loading="lazy"><b>'+esc(a[0])+'</b><em>✨ '+esc(a[1])+'</em><small>'+esc(a[2])+'</small></div>'}).join('');
+
+const TR=[['Waldlauf Soundtrack','Main menu','waldlauf-soundtrack.mp3'],['Forward Momentum','Summer Forest','forward-momentum.mp3'],['Golden Sunset Run','Autumn Forest and Savanna','golden-sunset-run.mp3'],['Arcade Frost','Winter Forest and Northern Lights','arcade-frost.mp3'],['Neon Runner','Moon Forest and Magic Forest','neon-runner.mp3'],['Treasure Hunt Groove','Desert and Bamboo Forest','treasure-hunt-groove.mp3'],['Coin Collecting Groove','Cherry Blossom Grove and Outback','coin-collecting-groove.mp3'],['Tropical Rush','Swamp and Jungle','tropical-rush.mp3'],['Boosting Groove','Volcano','boosting-groove.mp3']];
+const au=document.getElementById('au'),T=document.getElementById('tracks'),V=document.getElementById('vinyl');let cur=-1;
+T.innerHTML=TR.map((t,i)=>'<li><button data-i="'+i+'" aria-label="'+esc(t[0])+' play"><i>▶</i><span>'+esc(t[0])+'<br><small>'+esc(t[1])+'</small></span><small>Penta</small></button></li>').join('');
+const ui=()=>{T.querySelectorAll('button').forEach((b,i)=>{const on=i===cur&&!au.paused;b.classList.toggle('on',i===cur);b.querySelector('i').textContent=on?'❚❚':'▶'});V.classList.toggle('on',!au.paused)};
+T.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;if(i===cur&&!au.paused){au.pause()}else{if(i!==cur){cur=i;au.src=TR[i][2]}au.play().catch(()=>{})}ui()});
+au.addEventListener('ended',()=>{cur=(cur+1)%TR.length;au.src=TR[cur][2];au.play().catch(()=>{});ui()});au.addEventListener('pause',ui);au.addEventListener('play',ui);
+
+{const L=document.getElementById('legal'),miss=!LEGAL.name||!LEGAL.street||!LEGAL.city||!LEGAL.email,f=(v,p)=>v?esc(v):'<span class="warn">['+p+']</span>';
+ L.innerHTML=(miss?'<p class="warn">Legal notice details have not been entered yet.</p>':'')+'<p><b>Angaben gemäß § 5 DDG</b><br>'+f(LEGAL.name,'Vor- und Nachname')+'<br>'+f(LEGAL.street,'Straße und Hausnummer')+'<br>'+f(LEGAL.city,'PLZ und Ort')+'<br>Deutschland</p><p>E-Mail: '+f(LEGAL.email,'E-Mail-Adresse')+'</p><p><b>Privacy</b><br>This site does not store any data about you. It loads its fonts from Google Fonts, which transmits your IP address to Google. The full privacy policy of the game is in the game under Settings, Legal.</p>'}
+
+if(ONLINE.url&&ONLINE.key){const se=Math.floor((Date.now()-Date.UTC(2026,9,11))/(90*864e5))+1;
+ fetch(ONLINE.url.replace(/\/+$/,'')+'/rest/v1/rpc/leaderboard',{method:'POST',headers:{apikey:ONLINE.key,Authorization:'Bearer '+ONLINE.key,'Content-Type':'application/json'},body:JSON.stringify({p_season:se,p_limit:5,p_player:'website-viewer'})}).then(r=>r.ok?r.json():[]).then(rows=>{if(!rows||!rows.length)return;
+  document.getElementById('board').innerHTML=rows.slice(0,5).map(r=>'<div class="brow"><span class="pl">'+r.place+'.</span><span class="av">'+esc(r.avatar||'🦊')+'</span><span class="nm">'+esc(r.name||'Player')+'</span><span class="m">'+Number(r.best).toLocaleString('de-DE')+' m</span></div>').join('');document.getElementById('rangliste').hidden=false}).catch(()=>{})}
+
+// fallende Blätter im Hero
+{const c=document.getElementById('leaves'),x=c.getContext('2d'),R=matchMedia('(prefers-reduced-motion: reduce)').matches;let W,H;const L=[];
+ const rs=()=>{const r=c.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height};rs();addEventListener('resize',rs);
+ for(let i=0;i<26;i++)L.push({x:Math.random(),y:Math.random(),s:4+Math.random()*6,v:.03+Math.random()*.05,p:Math.random()*6,c:['#e8872a','#c25a24','#e9b23a','#a8431f'][i%4]});
+ const f=t=>{x.clearRect(0,0,W,H);for(const l of L){if(!R){l.y+=l.v*.016;l.p+=.02;if(l.y>1.05){l.y=-.05;l.x=Math.random()}}const px=l.x*W+Math.sin(l.p)*20,py=l.y*H;x.save();x.translate(px,py);x.rotate(l.p);x.fillStyle=l.c;x.globalAlpha=.75;x.beginPath();x.ellipse(0,0,l.s,l.s*.5,0,0,7);x.fill();x.restore()}if(!R)requestAnimationFrame(f)};requestAnimationFrame(f)}
+</script>
+
+</body>
+</html>

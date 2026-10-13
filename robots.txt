@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://weedy59.github.io/Waldlauf-Online/sitemap.xml

@@ -1,23 +1,22 @@
-# Waldlauf v0.74: Ladebildschirm, Update-Post, Skin-Infos, neue Website und Trailer
+# Waldlauf v0.75: „Schlag mich!“-Link, Teilen-Bilder, Geschenk, Einstellungen, englische Website
 
 ## Hochladen (kein Supabase nötig)
 
-1. Öffne dein GitHub-Repo **Waldlauf-Online**.
-2. Klicke auf **Add file → Upload files**.
-3. Ziehe diese Dateien hinein: **index.html**, **spiel.html** und **sw.js**
-4. Ziehe den ganzen Ordner **img** mit hinein (GitHub übernimmt die Ordner-Struktur, alte Bilder werden ersetzt, neue kommen dazu).
-5. Unten auf **Commit changes** klicken.
-6. 1–2 Minuten warten, dann Website und Spiel neu laden.
+1. Öffne dein GitHub-Repo **Waldlauf-Online** und klicke auf **Add file → Upload files**.
+2. Ziehe diese Dateien hinein: **spiel.html**, **sw.js**, **index.html**, **en.html**, **robots.txt**, **sitemap.xml**
+3. Ziehe auch den ganzen Ordner **img** mit hinein (neu: og.jpg für die Link-Vorschau).
+4. Unten auf **Commit changes** klicken, 1–2 Minuten warten, neu laden.
 
-In Supabase musst du diesmal **nichts** ausführen.
+In Supabase musst du **nichts** ausführen.
 
 ## Was ist neu
 
-- Ladebildschirm mit Tipps nach dem Intro und vor jedem Lauf (dein Tier läuft über den Balken, antippen überspringt)
-- Jedes Update kommt ab jetzt automatisch als Nachricht ins Postfach (mit 1.000 Münzen als Dankeschön)
-- Neuer Reiter „❓ Infos“ im Skin-Shop: erklärt Seltenheit, Glanz, Muster, Zähler, Seriennummer, „Gezogen von“, Markt, Tausch, Trade-up und Recyceln
-- Komplett neue Website: Trailer, „Was ist neu“, Outfits und Kisten, Skins mit Erklärung, Spielmodi, Fragen und Antworten, überall „Keine Werbung, kein Echtgeld“
-
-## Bei jedem künftigen Update
-
-Die Postfach-Nachricht steht im Spiel in der Liste `UPML` (neben `BUILD`). Neue Version = neuer Eintrag, den Rest macht das Spiel.
+- „Schlag mich!“-Link: Nach einem Lauf auf Teilen tippen. Der Link enthält deine Weite, dein Tier mit Outfits und deinen Geist. Wer ihn öffnet, bekommt ein Herausforderungs-Fenster und läuft gegen deinen Geist. Schafft er mehr, gibt es 500 Münzen. Mit deiner Freundes-ID im Link gibt es zusätzlich den Einladungs-Bonus für euch beide.
+- Teilen-Bilder: Bei Legendär- und Ultra-Drops aus Kisten erscheint „📤 … teilen“.
+- Neue Spieler bekommen bei 500 m das Partyhütchen geschenkt und gleich angezogen.
+- Einstellungen nach Themen sortiert (Ton, Spiel und Grafik, Barrierefreiheit, Konto, Sprache und App, Hilfe). Am PC breit in 3 Spalten.
+- Fehlerbericht-Kasten besser lesbar.
+- Impressum ist jetzt ausgefüllt (in Spiel und Website).
+- Website auf Englisch: oben rechts DE/EN. Die englische Seite öffnet das Spiel direkt auf Englisch.
+- Link-Vorschau: Wenn jemand den Link in WhatsApp, Discord usw. teilt, erscheint ein großes Bild mit „Kostenlos · Keine Werbung“.
+- Google: robots.txt und sitemap.xml sind dabei. In der Google Search Console kannst du die Sitemap „sitemap.xml“ einreichen.

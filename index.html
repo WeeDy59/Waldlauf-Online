@@ -5,8 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Waldlauf</title>
 <meta name="description" content="Waldlauf: kostenloser Endlos-Runner ohne Werbung und ohne Echtgeld. 16 Welten, 36 Tiere, über 90 Outfits, seltene Skins, Weltchat, Duelle und eigener Soundtrack von Penta. Läuft im Browser am PC und Handy.">
-<meta property="og:title" content="Waldlauf: Renn um dein Fell!">
-<meta property="og:image" content="img/s-menu.jpg">
+<link rel="canonical" href="https://weedy59.github.io/Waldlauf-Online/">
+<link rel="alternate" hreflang="de" href="https://weedy59.github.io/Waldlauf-Online/">
+<link rel="alternate" hreflang="en" href="https://weedy59.github.io/Waldlauf-Online/en.html">
+<link rel="alternate" hreflang="x-default" href="https://weedy59.github.io/Waldlauf-Online/">
+<meta property="og:title" content="Waldlauf: Renn um dein Fell! 🦊">
+<meta property="og:description" content="Kostenlos, keine Werbung, kein Download. 36 Tiere, 16 Welten, über 90 Outfits.">
+<meta property="og:image" content="https://weedy59.github.io/Waldlauf-Online/img/og.jpg">
+<meta property="og:url" content="https://weedy59.github.io/Waldlauf-Online/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="icon-192.png">
 </head>
 <body>
@@ -185,6 +193,10 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 .faq{margin-top:22px;display:grid;gap:10px;max-width:820px}
 .faq details{margin:0;max-width:none;padding:14px 18px;border-radius:14px;background:var(--moss)}
 .faq summary{font-size:1.05rem}.faq p{margin:.5rem 0 0;color:var(--sage)}
+/* ---------- Sprachumschalter */
+.lang{position:absolute;top:14px;right:16px;z-index:5;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(16,36,26,.75);border:1px solid var(--line)}
+.lang a{padding:5px 10px;border-radius:999px;color:var(--mist);text-decoration:none;font-weight:800;font-size:.85rem}
+.lang a[aria-current]{background:var(--gold);color:#3a2200}
 @media (max-width:900px){
   .news,.split,.modes,.facts2{grid-template-columns:minmax(0,1fr)}
   .skins{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -200,6 +212,7 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 @media (prefers-reduced-motion:reduce){.vinyl.on{animation:none}.play{transition:none}}
 </style>
 
+<nav class="lang" aria-label="Sprache"><a href="index.html" aria-current="page" lang="de">🇩🇪 DE</a><a href="en.html" hreflang="en" lang="en">🇬🇧 EN</a></nav>
 <header class="hero">
   <canvas id="leaves" aria-hidden="true"></canvas>
   <div class="wrap hgrid">
@@ -244,9 +257,9 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
     <h2>Waldlauf wird ständig größer</h2>
     <p class="lead">Jedes Update landet im Spiel auch als Nachricht in deinem Postfach.</p>
     <div class="news">
+      <div class="nw"><time>Update 0.75</time><h3>Fordere deine Freunde heraus</h3><ul><li>„Schlag mich!“-Link: Freunde laufen gegen deinen Geist</li><li>Teilen-Bilder für Legendär- und Ultra-Drops</li><li>Geschenk für neue Spieler bei 500 m</li><li>Einstellungen neu sortiert, am PC in Spalten</li></ul></div>
       <div class="nw"><time>Update 0.74</time><h3>Ladebildschirm und Skin-Infos</h3><ul><li>Ladebildschirm mit Tipps nach dem Intro und vor jedem Lauf</li><li>Neuer Reiter „❓ Infos“ im Skin-Shop</li><li>Update-Post im Postfach</li></ul></div>
-      <div class="nw"><time>Update 0.73</time><h3>56 neue Outfits</h3><ul><li>Alle Outfits neu gezeichnet, viele animiert</li><li>Neue Ausrüstungs-Kiste mit Flügeln und Auren</li><li>Kisten-Inhalt vorher ansehen</li></ul></div>
-      <div class="nw old"><time>Update 0.70 bis 0.72</time><h3>Skins, Chat und Modi</h3><ul><li>Skins mit Markt, Tausch und Trade-up</li><li>Weltchat mit Live-Drops</li><li>Tagesstrecke, Abenteuer, Duell und Live-Rennen</li></ul></div>
+      <div class="nw old"><time>Update 0.73</time><h3>56 neue Outfits</h3><ul><li>Alle Outfits neu gezeichnet, viele animiert</li><li>Neue Ausrüstungs-Kiste mit Flügeln und Auren</li><li>Kisten-Inhalt vorher ansehen</li></ul></div>
     </div>
   </div></section>
 
@@ -424,7 +437,7 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 
 <script>
 // Hier deine Angaben fürs Impressum eintragen (gleich wie im Spiel):
-const LEGAL={name:'',street:'',city:'',email:''};
+const LEGAL={name:'Rene Stredecke',street:'Marmorweg 23',city:'59581 Warstein',email:'WeeDyTheDevil@gmail.com'};
 // Wenn das Spiel online ist: dieselbe Supabase-Adresse und derselbe öffentliche Schlüssel wie im Spiel (zeigt dann die Live-Rangliste):
 const ONLINE={url:'https://jvupgazchuggeizfdvcl.supabase.co',key:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2dXBnYXpjaHVnZ2VpemZkdmNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4MzY0ODksImV4cCI6MjEwNzQxMjQ4OX0.abBB7jlgNrOm0oRgPMGPJ2tLvT0_VUlm6K26RD69bLw'};
 const PLAY='spiel.html';
