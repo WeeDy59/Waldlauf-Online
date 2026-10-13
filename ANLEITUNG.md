@@ -20,6 +20,7 @@ Im Paket:
 - `supabase-update-10.sql`: Trade-up (10 Skins gegen 1 seltenen)
 - `supabase-update-11.sql`: Spielmodi (Tagesstrecke, Duell, Live-Rennen), Sammelbuch, Skin-Rangliste, Wochen-Belohnungen, Profil-Schaufenster
 - `supabase-update-12.sql`: Weltchat mit Live-Drops, Namen in der Rangliste immer aktuell
+- `supabase-update-13.sql`: „Gezogen von“ für jeden Skin, eigene Profilbilder für alle sichtbar, DEV-Wappen, Rahmen im Chat
 - `supabase-alles-in-einem.sql`: **alle Datenbank-Schritte in einer Datei** (einfachster Weg, siehe Teil 1)
 - `manifest.webmanifest`, `sw.js`, `icon-192.png`, `icon-512.png`: damit man Waldlauf als App installieren kann (mit hochladen)
 - `OFL-Baloo2.txt`: Lizenz der eingebauten Schrift (mit hochladen)
@@ -37,7 +38,7 @@ Im Paket:
    - Tarif: **Free**
 3. Warte etwa 1 bis 2 Minuten, bis das Projekt bereit ist.
 4. Links im Menü auf **SQL Editor** gehen und dort ein neues Fenster öffnen.
-5. Den kompletten Inhalt von `supabase-setup.sql` hineinkopieren und auf **Run** drücken. Es sollte „Success“ erscheinen. Danach in neuen Fenstern genauso `supabase-update-02.sql` dann `supabase-update-03.sql`, `supabase-update-04.sql`, `supabase-update-05.sql`, `supabase-update-06.sql`, `supabase-update-07.sql`, `supabase-update-08.sql`, `supabase-update-09.sql`, `supabase-update-10.sql`, `supabase-update-11.sql` und `supabase-update-12.sql` ausführen (Freunde, Postfach, Rahmen in der Rangliste, Cloud-Speicher).
+5. Den kompletten Inhalt von `supabase-setup.sql` hineinkopieren und auf **Run** drücken. Es sollte „Success“ erscheinen. Danach in neuen Fenstern genauso `supabase-update-02.sql` dann `supabase-update-03.sql`, `supabase-update-04.sql`, `supabase-update-05.sql`, `supabase-update-06.sql`, `supabase-update-07.sql`, `supabase-update-08.sql`, `supabase-update-09.sql`, `supabase-update-10.sql`, `supabase-update-11.sql`, `supabase-update-12.sql` und `supabase-update-13.sql` ausführen (Freunde, Postfach, Rahmen in der Rangliste, Cloud-Speicher).
 6. Links auf **Project Settings** (Zahnrad), dann **API** beziehungsweise **API Keys**. Dort zwei Werte kopieren:
    - die **Project URL** (sieht aus wie `https://abcdefgh.supabase.co`)
    - den **anon / public** Schlüssel oder den **publishable key**
@@ -119,6 +120,16 @@ Die Datenbank musst du dafür nicht anfassen. Nur wenn ein Update neue Online-Fu
 **Update 11 (Spielmodi und Profil):** Einmal `supabase-update-11.sql` ausführen und die neue `spiel.html` plus `sw.js` hochladen. Danach gibt es im Hauptmenü 🎮 Modi: Tagesstrecke mit eigener Tages-Rangliste, Abenteuer mit 30 Leveln, Sprint, Hardcore, Duell (Best of 3 gegen Freunde, Sieger bekommt 300 Waldtaler) und Live-Rennen mit bis zu 4 Spielern über einen Raum-Code. Unter 🎨 Skins → 🏆 Buch gibt es das Sammelbuch und die Skin-Rangliste. Die besten 100 der Wochen-Rangliste holen sich montags Gratis-Kisten ab. Im Profil gibt es den Tab 🪪 Schaufenster mit Info-Text und bis zu 4 ausgestellten Skins, die andere sehen, wenn sie auf das Profil tippen. Die Infotexte der Spieler findest du in Supabase in der Tabelle `profiles`, Spalte `bio`, und kannst sie dort bei Bedarf leeren.
 
 **Update 12 (Weltchat):** Einmal `supabase-update-12.sql` ausführen und die neue `spiel.html` plus `sw.js` hochladen. Danach gibt es im Hauptmenü 💬 Chat. Epische, legendäre und mythische Skins aus Kisten und Trade-ups erscheinen automatisch als Drop im Chat und kurz im Hauptmenü. Schimpfwörter werden zu Sternchen, Links werden entfernt, man kann höchstens alle 3 Sekunden schreiben. Wird eine Nachricht von 3 Spielern gemeldet, verschwindet sie. Du kannst Nachrichten in Supabase in der Tabelle `chat` löschen oder `hidden` auf true setzen. Nachrichten werden nach 3 Tagen automatisch gelöscht. Außerdem zeigt die Weltrangliste jetzt immer den aktuellen Namen aus dem Profil.
+
+**Update 13 (Herkunft, Profilbilder, DEV-Wappen):** Einmal `supabase-update-13.sql` ausführen und die neue `spiel.html` plus `sw.js` hochladen. Jeder Skin merkt sich für immer, wer ihn gezogen hat, und zählt die Besitzerwechsel. Eigene Profilbilder werden klein (96×96) auf den Server geladen und sind für alle sichtbar. Wird ein Bild von 3 Spielern gemeldet, verschwindet es und der Spieler kann kein neues hochladen. Zum Entsperren in der Tabelle `profiles` bei dem Spieler `img_block` auf false setzen.
+
+**DEV-Wappen vergeben:** Nur wer in der Datenbank als Entwickler eingetragen ist, trägt das Wappen, und alle sehen es. Öffne im Spiel 👥 Freunde, dort steht deine Freundes-ID mit `#` davor. Dann im SQL Editor ausführen und `DEINE-FREUNDES-ID` durch deine ID ersetzen (ohne `#`):
+
+```sql
+update profiles set dev = true where pub = 'DEINE-FREUNDES-ID';
+```
+
+Wieder entfernen geht mit `dev = false`.
 
 **Website (ab Version 0.65):** `index.html` ist jetzt die Startseite, das Spiel liegt in `spiel.html`. Lade beide, den Ordner `img` und alle anderen Dateien hoch. Trag in der `index.html` unten im Skript dieselben Werte wie im Spiel ein: bei `LEGAL` deine Impressum-Angaben und bei `ONLINE` die Supabase-Adresse und den öffentlichen Schlüssel. Dann zeigt die Website auch die Live-Rangliste.
 
