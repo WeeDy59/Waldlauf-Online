@@ -775,6 +775,12 @@ html.ctx #c,html.ctx #ov,html.ctx #intro{filter:contrast(var(--ct,1))}
 #puy{background:linear-gradient(#ffd23f,#f2a020)!important;color:#3a2200!important;font-weight:800}
 .puc small{display:block;margin-top:8px;font-size:.7rem;color:#7a5a3a!important}
 @media (prefers-reduced-motion:reduce){.pubell,.puc,#puask{animation:none}}
+
+.dms{display:grid;gap:6px}
+.dm{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 9px;border-radius:12px;background:#fff6e0}
+.dm>span{font-size:1.25rem;text-align:center}.dm b{display:block;font-size:.85rem}.dm small{display:block;font-size:.7rem;color:#7a5a2a!important}
+.dm i{display:block;height:6px;margin-top:4px;border-radius:99px;background:rgba(0,0,0,.1);overflow:hidden}.dm i b{height:100%;border-radius:99px;background:linear-gradient(90deg,#ffa31a,#ffd23f)}
+.dm em{font-style:normal;font-size:.72rem;font-weight:800;color:#7a4a10;white-space:nowrap}.dm.ok{background:#e4f6dc}.dm.ok em{color:#2f8a3a}
 </style>
 </head>
 <body>
@@ -937,19 +943,21 @@ const K=6,PD=1.6,pr=d=>K/(Math.max(d+PD,-4)+K),rl=()=>(RS()*3|0)-1;
 function reset(){S={dist:0,speed:14,scroll:0,px:0,lane:0,jh:0,jv:0,slide:0,ob:[],cs:[],pt:[],lv:[],gap:10-dr()*.8,inv:0,hb:0,hx:0,bl:[],gt:8,pu:[],sh:[],wx:0,wxN:0,wi:0,wxT:20+Math.random()*20,vest:0,vhit:0,mag:0,boost:0,fl:0,cv:0,cvT:0,cvTm:5,lt:0,ptm:0,put:'',aim:0,al:0,ax:0,vol:0,hold:0,coins:0,spT:1,cT:2,t:0,shake:0,dead:false}}
 reset();
 function geo(){const laneW=Math.min(W*.3,H*.2);return{hz:H*.36,gb:H*.88,laneW,u:laneW*.9}}
-const SPW={0:'boar',1:'boar',2:'snowball',3:'boar',4:'tumble',5:'boar',6:'boar',7:'lavaball',8:'snowball',9:'tumble',11:'boulder',12:'tumble',13:'tumble',14:'boar',15:'tumble',16:'boar'};
+const SPW={17:'lavaball',0:'boar',1:'boar',2:'snowball',3:'boar',4:'tumble',5:'boar',6:'boar',7:'lavaball',8:'snowball',9:'tumble',11:'boulder',12:'tumble',13:'tumble',14:'boar',15:'tumble',16:'boar'};
 function spawn(){const wi=wI(Math.floor(S.dist/1000));const sr0=RS();if(S.dist>400&&sr0<.15&&SPW[wi]){const t=SPW[wi];S.pf=[-1,0,1];
   if(t==='tumble'){const a=RS()<.5?-1:1;S.ob.push({t,lane:a,dir:-a,d:75,y0:0,y1:.5,mv:1,c:wi===12?'#ffffff':wi===9?'#c89aff':'#c8a060'})}
   else if(t==='boar')S.ob.push({t,lane:rl(),d:75,y0:0,y1:.65,fs:1.6});
   else{const l=rl();S.ob.push({t:'snowball',lane:l,d:75,y0:0,y1:1.6,fs:1.45,c:t==='lavaball'?'#5a2a1a':t==='boulder'?'#4a3f66':'#ffffff',k:t});S.pf=[-1,0,1].filter(x=>x!==l)}
   if(!S.nwo){S.nwo=1;S.put=t==='boar'?'Achtung: Wildschwein!':t==='tumble'?'Achtung: Rollbusch!':t==='lavaball'?'Achtung: Lavabrocken!':t==='boulder'?'Achtung: Felsbrocken!':'Achtung: Riesenschneeball!';S.ptm=1.8}fixCoins();return}
- const hr=dr(),bm=GR[wi],r=hr>0&&RS()<.12+hr*.04?3:RS()*3|0,D=75,pf0=S.pf||[-1,0,1];S.pf=[-1,0,1];
+ if(wi===17&&S.dist>250&&RS()<.17){const sd=RS()<.5?-1:1;[-1,0,1].forEach(l=>S.ob.push({t:'boa',lane:l,d:75,y0:0,y1:.5,sd}));S.pf=[-1,0,1];if(!S.nbo){S.nbo=1;S.put='🐍 Riesenschlange! Spring drüber!';S.ptm=1.8}fixCoins();return}
+ const n0=S.ob.length,hr=dr(),bm=GR[wi],r=hr>0&&RS()<.12+hr*.04?3:RS()*3|0,D=75,pf0=S.pf||[-1,0,1];S.pf=[-1,0,1];
  if(r==0)S.ob.push({t:RS()<.35&&bm<5?'fence':['log','pile','ice','stump','rockl','crysl','cloudl'][bm],lane:rl(),d:D,y0:0,y1:.55});
  else if(r==1)S.ob.push({t:['bar','bar','icicle','web','bar','stal','rainbow'][bm],lane:rl(),d:D,y0:.9,y1:1.3});
  else if(r==3){const a=RS()<.5?-1:1;S.ob.push({t:'deer',lane:a,dir:-a,d:D,y0:0,y1:1.4,mv:1});S.pf=[0,a]}
- else{let l,fr;const n=1+(RS()*2|0);do{l=[-1,0,1].sort(()=>RS()-.5);fr=[-1,0,1].filter(x=>!l.slice(0,n).includes(x))}while(!fr.some(f=>pf0.some(q=>Math.abs(f-q)<=1)));S.pf=fr;for(let i=0;i<n;i++)S.ob.push({t:['rock','trunk','snowman','tomb','cactus','crys','cloudt'][bm],lane:l[i],d:D,y0:0,y1:1.6})}fixCoins()}
+ else{let l,fr;const n=1+(RS()*2|0);do{l=[-1,0,1].sort(()=>RS()-.5);fr=[-1,0,1].filter(x=>!l.slice(0,n).includes(x))}while(!fr.some(f=>pf0.some(q=>Math.abs(f-q)<=1)));S.pf=fr;for(let i=0;i<n;i++)S.ob.push({t:['rock','trunk','snowman','tomb','cactus','crys','cloudt'][bm],lane:l[i],d:D,y0:0,y1:1.6})}dinoMap(n0,wi);fixCoins()}
+function dinoMap(n0,wi){if(wi!==17)return;for(let i=n0;i<S.ob.length;i++){const o=S.ob[i];if(o.mv)o.t='raptor';else if(o.y0>=.9)o.t='ptero';else if(o.y1<=.6)o.t=RS()<.55?'bone':'dnest';else o.t=RS()<.5?'degg':'vrock'}}
 function coinRow(){const free=[-1,0,1].filter(L=>!S.ob.some(o=>!o.mv&&o.y1>=1.5&&o.lane===L&&o.d>66&&o.d<100)),q1=RS(),q2=RS(),q3=RS(),q4=RS(),q5=RS(),l=free.length?free[q1*free.length|0]:(q1*3|0)-1,n=8,pu=q2<(MD.seed!==undefined?.2:PUF())&&MD.k!=='hc'?(q3*n|0):-1;
- for(let i=0;i<n;i++){if(i===pu&&!S.pu.length)S.pu.push({lane:l,d:78+i*2,t:q4<.12?'vest':q5<.5?'apple':'mag'});else S.cs.push({lane:l,d:78+i*2,h:.7})}fixCoins()}
+ const am=MD.w===17&&TH===17&&RS()<.16?(RS()*n|0):-1;for(let i=0;i<n;i++){if(i===pu&&!S.pu.length)S.pu.push({lane:l,d:78+i*2,t:q4<.12?'vest':q5<.5?'apple':'mag'});else S.cs.push(i===am?{lane:l,d:78+i*2,h:.9,amb:1}:{lane:l,d:78+i*2,h:.7})}fixCoins()}
 function fixCoins(){for(const o of S.ob){if(o.mv||o.fs)continue;for(const c of S.cs.concat(S.pu)){if(c.got||Math.round(c.lane)!==o.lane)continue;const dd=c.d-o.d;if(Math.abs(dd)>3)continue;
  if(o.y1>=1.5){if(c.t){c.lane=[-1,0,1].find(L=>L!==o.lane&&!S.ob.some(q=>q.lane===L&&Math.abs(q.d-c.d)<3))??c.lane}else c.got=1}else if(o.y0>=.9)c.h=.4;else c.h=.7+1.0*Math.max(0,1-(dd/3)**2)}}}
 function update(dt){
@@ -976,7 +984,7 @@ function update(dt){
  for(const o of S.ob){if(!o.hit&&S.boost>0&&o.d<.6&&o.d>-.6&&Math.abs(o.lane-S.px)<.62){o.hit=1;o.gone=1;burst(pp().x,pp().y-.6*pp().u,14,'#c9a877');continue}if(!o.hit&&S.inv<=0&&o.d<.6&&o.d>-.6&&Math.abs(o.lane-S.px)<.62&&pT>o.y0&&pB<o.y1){o.hit=1;hit();if(S.dead)return}}
  for(const b of S.bl){if(!b.hit&&S.inv<=0&&S.boost<=0&&b.d>-.5&&b.d<.5&&Math.abs(b.lane-S.px)<.5&&pT>.5&&pB<.9){b.hit=1;if(S.vest>0)vestHit();else hit();if(S.dead)return}}
  for(const b of S.bl)if(!b.hit&&!b.ok&&b.d>.7){b.ok=1;evAdd('dg',1);S.dgc=(S.dgc||0)+1}
- for(const c of S.cs){if(!c.got&&c.d<.7&&c.d>-.7&&Math.abs(c.lane-S.px)<.6&&(S.mag>0||pT>(c.h||.7)-.4&&pB<(c.h||.7)+.4)){c.got=1;S.coins++;{const n2=abv('c');if(n2){S.cn2=(S.cn2||0)+1;if(S.cn2%n2===0){S.coins++;burst(pp().x,pp().y-.9*pp().u,6,'#fff3a0')}}}S.cc=S.t-(S.lc??-9)<.6?Math.min((S.cc||0)+1,7):0;S.lc=S.t;sfx('coin');burst(pp().x,pp().y-.7*pp().u,8,'#f2c94c')}}
+ for(const c of S.cs){if(!c.got&&c.d<.7&&c.d>-.7&&Math.abs(c.lane-S.px)<.6&&(S.mag>0||pT>(c.h||.7)-.4&&pB<(c.h||.7)+.4)){c.got=1;S.coins++;if(c.amb){S.amb=(S.amb||0)+1;S.coins+=9;sfx('harp');burst(pp().x,pp().y-.9*pp().u,14,'#ffa31a');S.put='🟠 Bernstein! +10';S.ptm=1}if(MD.w===17&&XO.includes('dino')){S.dcb=(S.dcb||0)+1;if(S.dcb%4===0)S.coins++}{const n2=abv('c');if(n2){S.cn2=(S.cn2||0)+1;if(S.cn2%n2===0){S.coins++;burst(pp().x,pp().y-.9*pp().u,6,'#fff3a0')}}}S.cc=S.t-(S.lc??-9)<.6?Math.min((S.cc||0)+1,7):0;S.lc=S.t;sfx('coin');burst(pp().x,pp().y-.7*pp().u,8,'#f2c94c')}}
  for(const c of S.pu){if(!c.got&&c.d<.7&&c.d>-.7&&Math.abs(c.lane-S.px)<.6&&pT>.3&&pB<1.4){c.got=1;S.puc=(S.puc||0)+1;evAdd('pu',1);S.bub={t:0,c:c.t==='apple'?'#ff5a3a':c.t==='vest'?'#4fdf6a':'#5aa8ff'};sfx('woop');if(c.t==='apple')S.boost=APD();else if(c.t==='vest')S.vest=abv('vs')||2;else S.mag=MAGD();S.put=c.t==='apple'?'Apfel: Turbo!':c.t==='vest'?'Schutzweste!':'Magnet!';S.ptm=2;burst(pp().x,pp().y-.7*pp().u,14,c.t==='apple'?'#e8402f':c.t==='vest'?'#4fbf6a':'#5a9ad8')}}
  S.pu=S.pu.filter(c=>c.d>-3&&!c.got);if(S.ptm>0)S.ptm-=dt;
  S.ob=S.ob.filter(o=>o.d>-3);S.cs=S.cs.filter(c=>c.d>-3&&!c.got);
@@ -1029,8 +1037,8 @@ function shareDrop(x){const u=gameURL();shareCanvas(dropCard(x),'Ich hab in Wald
 
 /* ===== Erweiterungen (mit Waldtalern kaufen, Server prüft) ===== */
 const XPK=[{id:'dino',ic:'🦖',n:'Dino-Tal',p:20000,an:[36,37,38],of:[98,99,100,101,102],w:17,
- d:'Reise in die Urzeit! Lauf durch dichte Farnwälder, vorbei an rauchenden Vulkanen und uralten Knochen. Aber pass auf: Alle 1.500 m jagt dich der T-Rex.',
- inc:['🌋 Neue Welt „Dino-Tal“ mit eigenem Lauf','🦖 3 Urzeit-Tiere mit eigenen Fähigkeiten','👕 5 exklusive Outfits, die es nur hier gibt','💀 Der T-Rex jagt dich alle 1.500 m als Boss','🎵 Mit Musik von Penta']},
+ d:'Reise in die Urzeit! Lauf durch dichte Farnwälder, vorbei an rauchenden Vulkanen und uralten Knochen. Statt dem Jäger ist dir hier ein T-Rex auf den Fersen, und alle 1.500 m greift er richtig an.',
+ inc:['🌋 Neue Welt „Dino-Tal“ mit eigenem Lauf','🦖 3 Urzeit-Tiere mit eigenen Fähigkeiten','👕 5 exklusive Outfits, dazu 3 weitere aus Missionen','🦴 Eigene Hindernisse: Riesenschlange, Flugsaurier, Knochen, Rieseneier, Lavafelsen und Raptoren','🟠 Bernstein sammeln: +10 Münzen pro Stück','💰 +25 % Münzen in jedem Dino-Lauf','🏆 5 Dino-Missionen mit 10.000 Münzen und 3 Outfits','💀 Der T-Rex jagt dich alle 1.500 m als Boss','🎵 Mit Musik von Penta']},
  {id:'sea',ic:'🌊',n:'Tiefsee',soon:1,d:'Tauch ab zu Korallen, Quallen und versunkenen Schiffen. Delfin, Oktopus und Seepferdchen laufen mit, und ein Hai ist dir auf den Fersen.'},
  {id:'space',ic:'🚀',n:'Weltraum',soon:1,d:'Renn über den Mond und fremde Planeten, mit Astronauten-Tieren, Raketen-Outfits und einem Alien-Ufo als Gegner.'},
  {id:'tale',ic:'🏰',n:'Märchenwald',soon:1,d:'Burgen, Drachen und verzauberte Wälder. Einhorn und Greif als Läufer, dazu Ritter- und Prinzessinnen-Outfits.'}];
@@ -1038,6 +1046,20 @@ let XO=[];try{XO=JSON.parse(localStorage.getItem('waldlauf-xpk')||'[]')||[]}catc
 const saveXO=()=>{try{localStorage.setItem('waldlauf-xpk',JSON.stringify(XO))}catch(e){}};
 let XTRY={};try{XTRY=JSON.parse(localStorage.getItem('waldlauf-xtry')||'{}')||{}}catch(e){}
 let XBUSY=false,XCONF=null;
+
+// Dino-Missionen (nur für Besitzer der Erweiterung)
+let DINO={runs:0,best:0,amb:0,rex:0,done:[]};try{Object.assign(DINO,JSON.parse(localStorage.getItem('waldlauf-dino')||'{}'))}catch(e){}
+const saveDINO=()=>{try{localStorage.setItem('waldlauf-dino',JSON.stringify(DINO))}catch(e){}};
+const DMIS=[{id:'d1',ic:'🏃',n:'Lauf 2.000 m im Dino-Tal',v:()=>DINO.best,z:2000,rw:{c:2000}},
+ {id:'d2',ic:'🟠',n:'Sammle 30 Bernstein',v:()=>DINO.amb,z:30,rw:{o:103}},
+ {id:'d3',ic:'🦖',n:'Häng den T-Rex 3-mal ab',v:()=>DINO.rex,z:3,rw:{o:104}},
+ {id:'d4',ic:'🔁',n:'Spiele 15 Dino-Läufe',v:()=>DINO.runs,z:15,rw:{c:3000}},
+ {id:'d5',ic:'👑',n:'Lauf 5.000 m in einem Dino-Lauf',v:()=>DINO.best,z:5000,rw:{c:5000,o:105}}];
+const dmRw=m=>[m.rw.c?fmtN(m.rw.c)+' Münzen':'',m.rw.o?'Outfit „'+OF[m.rw.o].n+'“':''].filter(Boolean).join(' + ');
+function dinoRunEnd(){try{if(MD.w!==17||!XO.includes('dino'))return;const m=Math.floor(S.dist);DINO.runs++;DINO.best=Math.max(DINO.best,m);DINO.amb+=S.amb||0;DINO.rex+=S.bossW||0;
+ const got=[];for(const x of DMIS){if(DINO.done.includes(x.id)||x.v()<x.z)continue;DINO.done.push(x.id);if(x.rw.c)wal+=x.rw.c;if(x.rw.o!==undefined&&!own.includes('o'+x.rw.o))own.push('o'+x.rw.o);got.push(x)}
+ saveDINO();if(got.length){save();got.forEach((x,i)=>{setTimeout(()=>{mToast('🏆 Dino-Mission geschafft: '+x.n+'! '+dmRw(x));sfx('win')},1200+i*2600);try{mailAdd('dm-'+x.id,'🏆','Dino-Mission geschafft!',x.ic+' '+x.n+'\nDeine Belohnung: '+dmRw(x)+'.'+(x.rw.o!==undefined?' Das Outfit findest du im Kleiderschrank.':''))}catch(e){}})}}catch(e){}}
+function dinoMisHTML(own2){return'<h4>🏆 Dino-Missionen</h4><div class="dms">'+DMIS.map(x=>{const v=Math.min(x.v(),x.z),ok=DINO.done.includes(x.id);return'<div class="dm'+(ok?' ok':'')+'"><span>'+(ok?'✅':x.ic)+'</span><div><b>'+x.n+'</b><small>'+dmRw(x)+'</small><i><b style="width:'+(own2?v/x.z*100:0)+'%"></b></i></div><em>'+(own2?(ok?'Geschafft':fmtN(v)+' / '+fmtN(x.z)):'🔒')+'</em></div>'}).join('')+'</div>'}
 function xpkGrant(id){const p=XPK.find(x=>x.id===id&&!x.soon);if(!p)return;let ch=false;if(!XO.includes(id)){XO.push(id);saveXO();ch=true}p.an.forEach(i=>{if(!own.includes('a'+i)){own.push('a'+i);ch=true}});p.of.forEach(i=>{if(!own.includes('o'+i)){own.push('o'+i);ch=true}});if(ch)save()}
 async function xpkSync(){if(!onl())return;try{const L=await rpcM('dlc_list',{p_player:pid})||[];L.forEach(xpkGrant)}catch(e){}}
 async function xpkBal(){if(!onl())return;try{const i=await rpcM('taler_info',{p_player:pid});if(i&&i.bal!=null){TL.bal=i.bal;saveTL()}}catch(e){}}
@@ -1056,7 +1078,7 @@ function xpkUI(){const L=document.getElementById('xpl');if(!L)return;const bal=T
   else{act=tried?'<button class="alt" disabled>Probelauf schon genutzt</button>':'<button class="alt" data-xtry="'+p.id+'">▶ Probelauf (1× gratis)</button>';
    if(!onl())act+='<small class="xpnote">Kaufen geht, sobald das Spiel online ist.</small>';
    else act+='<div class="xpsave"><span>'+(bal!=null&&bal>=p.p?'🎉 Du hast genug Waldtaler!':'Gespart: <b>'+fmtN(bal||0)+'</b> von '+fmtN(p.p)+' 🪙')+'</span><i><b style="width:'+Math.round(pr*100)+'%"></b></i></div><button class="xpbuy'+(XCONF===p.id?' conf':'')+'" data-xbuy="'+p.id+'"'+((bal||0)<p.p||XBUSY?' disabled':'')+'>'+(XBUSY?'Einen Moment …':XCONF===p.id?'Wirklich kaufen? Nochmal tippen':'🪙 Für '+fmtN(p.p)+' Waldtaler kaufen')+'</button>'}
-  return'<div class="xpp xp-'+p.id+(has?' own':'')+'"><div class="xpart"><span class="xpvol"></span>'+p.an.map(i=>'<img alt="" data-th="a'+i+'">').join('')+'<em class="xpbadge">'+(has?'Gekauft':'Neu')+'</em></div><div class="xpbody"><h3>'+p.ic+' '+p.n+'</h3><p>'+p.d+'</p><ul class="xpinc">'+p.inc.map(x=>'<li>'+x+'</li>').join('')+'</ul><div class="xpact">'+act+'</div><h4>Die Tiere</h4><div class="xpas">'+ani+'</div><h4>Die Outfits</h4><div class="xpos">'+ofs+'</div></div></div>'}).join('')+'<p class="xpfoot">Erweiterungen kaufst du nur mit Waldtalern, die du beim Spielen verdienst. Echtes Geld gibt es in Waldlauf nicht.</p>';
+  return'<div class="xpp xp-'+p.id+(has?' own':'')+'"><div class="xpart"><span class="xpvol"></span>'+p.an.map(i=>'<img alt="" data-th="a'+i+'">').join('')+'<em class="xpbadge">'+(has?'Gekauft':'Neu')+'</em></div><div class="xpbody"><h3>'+p.ic+' '+p.n+'</h3><p>'+p.d+'</p><ul class="xpinc">'+p.inc.map(x=>'<li>'+x+'</li>').join('')+'</ul><div class="xpact">'+act+'</div><h4>Die Tiere</h4><div class="xpas">'+ani+'</div><h4>Die Outfits</h4><div class="xpos">'+ofs+'</div>'+(p.id==='dino'?dinoMisHTML(has)+'<div class="xpos">'+[103,104,105].map(i=>'<div class="xpo"><img alt="" data-th="o'+i+'"><small>'+esc(OF[i].n)+'</small></div>').join('')+'</div>':'')+'</div></div>'}).join('')+'<p class="xpfoot">Erweiterungen kaufst du nur mit Waldtalern, die du beim Spielen verdienst. Echtes Geld gibt es in Waldlauf nicht.</p>';
  shThFill()}
 function xpkOpen(){showCard($xpc);xpkUI();xpkBal().then(xpkUI);xpkSync().then(xpkUI)}
 document.getElementById('xpl').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;if(b.dataset.xrun)xpkRun(b.dataset.xrun);else if(b.dataset.xtry)xpkRun(b.dataset.xtry,true);else if(b.dataset.xbuy)xpkBuy(b.dataset.xbuy)});
@@ -1537,6 +1559,12 @@ setInterval(()=>{let d=false;try{d=localStorage.getItem('waldlauf-dev')==='1'}ca
 async function redeem(){const inp=document.getElementById('rdc'),msg=document.getElementById('rdmsg'),raw=(inp.value||'').trim().toUpperCase().replace(/\s+/g,'');if(!raw){msg.className='rdmsg bad';msg.textContent='Bitte gib einen Code ein.';return}
  if(await sha(raw)===DEVH){devUnlock();inp.value='';msg.className='rdmsg ok';msg.textContent='🛠️ Entwickler-Modus: alles freigeschaltet, Münzen unendlich.';sfx('win');return}
  let h=5381;for(const ch of raw)h=((h<<5)+h+ch.codePointAt(0))>>>0;const r=RCODES[h];let used=[];try{used=JSON.parse(localStorage.getItem('waldlauf-codes')||'[]')}catch(e){}
+ if(!r&&onl()&&raw.replace(/[^A-Z0-9]/g,'').length>=8){msg.className='rdmsg';msg.textContent='⏳ Code wird geprüft …';
+  try{try{await frProfile(true)}catch(_){}const x=await rpcM('dlc_redeem',{p_player:pid,p_code:raw});const p=XPK.find(q=>q.id===x.dlc);xpkGrant(x.dlc);inp.value='';msg.className='rdmsg ok';msg.textContent='🎉 '+(p?p.ic+' '+p.n:'Erweiterung')+' freigeschaltet! Viel Spaß!';sfx('win');setTimeout(()=>sfx('harp'),250);
+   if(p&&!x.again)mailAdd('xpk-'+p.id,p.ic,p.n+' freigeschaltet!','Glückwunsch, dein Code hat funktioniert! Deine neuen Tiere und Outfits findest du im Kleiderschrank. Im Shop unter „🧩 Erweiterungen“ startest du jederzeit einen Lauf im '+p.n+'.');return}
+  catch(e){const m=String(e&&e.message||e);if(/benutzt/.test(m)){msg.className='rdmsg warn';msg.textContent='⚠️ Dieser Code wurde schon von jemand anderem eingelöst.';sfx('lock');return}
+   if(/schon/.test(m)){msg.className='rdmsg warn';msg.textContent='⚠️ Diese Erweiterung gehört dir schon. Gib den Code doch an jemand anderen weiter!';sfx('lock');return}
+   if(!/ungueltig/.test(m)){msg.className='rdmsg bad';msg.textContent='😕 Der Code konnte gerade nicht geprüft werden. Versuch es gleich nochmal.';return}}}
  if(!r){msg.className='rdmsg bad';msg.textContent='❌ Ungültiger Code. Prüfe die Schreibweise.';sfx('lock');return}
  if(used.includes(h)){msg.className='rdmsg warn';msg.textContent='⚠️ Diesen Code hast du schon eingelöst.';sfx('lock');return}
  used.push(h);try{localStorage.setItem('waldlauf-codes',JSON.stringify(used))}catch(e){}mailAdd('code'+h,'🎁','Code eingelöst','Dein Code hat dir '+(r.c||0).toLocaleString('de-DE')+' Münzen gebracht. Viel Spaß damit!');if(r.c){wal+=r.c;save();home()}inp.value='';msg.className='rdmsg ok';msg.innerHTML='✅ Code eingelöst: +'+r.c.toLocaleString('de-DE')+' '+COIN;sfx('win');setTimeout(()=>sfx('coin'),200)}
@@ -1717,9 +1745,9 @@ setTimeout(()=>{for(const k of AC_FN){try{if(typeof window[k]==='function'){AC_R
 setInterval(()=>{for(const k in AC_REF){if(window[k]!==AC_REF[k]){acFlag('Spielfunktion verändert: '+k);break}}},1000);
 
 // ---------- Build, Konto, Rechtliches
-const BUILD='0.78.1',BUILDT='Alpha',BUILDD='13.10.2026';
+const BUILD='0.79.1',BUILDT='Alpha',BUILDD='13.10.2026';
 /* Update-Post: Bei jeder neuen Version landet eine Nachricht mit den Neuerungen im Postfach */
-const UPML={'0.78.0':{ic:'🔔',ti:'Update 0.78: Benachrichtigungen',c:300,tx:'Waldlauf kann dich jetzt erinnern, auch wenn das Spiel zu ist:\n• 🎁 wenn dein Tagesbonus wartet\n• 🏪 wenn dein Skin im Markt verkauft wurde oder jemand tauschen will\n• 🏃 wenn ein Freund deine Bestweite überholt hat\nEinschalten kannst du das in den Einstellungen unter „Sprache und App“. Du entscheidest selbst, welche Nachrichten du willst.\nAuf dem iPhone geht das, wenn du Waldlauf zum Home-Bildschirm hinzugefügt hast.'},'0.77.0':{ic:'🎨',ti:'Update 0.77: Der Skin-Shop in neuem Glanz',c:500,tx:'Der Skin-Shop wurde komplett aufgehübscht:\n• 🏛️ Dein bester Skin steht jetzt auf einer leuchtenden Bühne mit Scheinwerfer\n• 🗂️ Inventar mit Filtern nach Seltenheit und Tier, glänzende Skins funkeln\n• 🎁 Großer Knopf für deine erste Kiste\n• ✨ Der Skins-Knopf im Menü schimmert und zeigt GRATIS, wenn etwas auf dich wartet\nViel Glück bei den Kisten!'},'0.76.2':{ic:'💬',ti:'Update 0.76.2: Mehr Platz im Menü',c:200,tx:'Am Handy liegt der Chat nicht mehr über deinem Tier. Du öffnest ihn oben mit dem 💬-Knopf, ein roter Punkt zeigt neue Nachrichten. Der kleine dunkle Balken in der Mitte ist auch weg. Und dein Tier steht jetzt etwas weiter oben, damit es nicht mehr hinter den Knöpfen verschwindet. So kommst du wieder an alle Münzen ran!'},'0.76.1':{ic:'🛠️',ti:'Update 0.76.1: Kein dunkelgrünes Flackern mehr',c:300,tx:'Manchmal wurde der Bildschirm im Lauf kurz dunkelgrün. Das ist behoben: Das Bild bleibt jetzt stehen, und falls die Grafik doch mal kurz aussetzt, hält das Spiel an und du bist danach kurz geschützt. Danke fürs Melden!'},'0.76.0':{ic:'🦖',ti:'Update 0.76: Das Dino-Tal ist da!',c:1000,tx:'Die erste Erweiterung für Waldlauf:\n• 🌋 Neue Welt „Dino-Tal“ mit Farnwäldern, Vulkan und uralten Knochen\n• 🦖 T-Rex, 🦕 Triceratops und 🦅 Pteranodon mit eigenen Fähigkeiten\n• 👕 5 exklusive Outfits: Dino-Kapuze, Zahnkette, Dino-Ei-Rucksack, Knochenkeule und Vulkan-Aura\n• 💀 Im Dino-Tal jagt dich alle 1.500 m der T-Rex\n\nDu kaufst sie für 20.000 Waldtaler, die du beim Spielen verdienst. Einen Probelauf gibt es gratis! Du findest alles im Shop unter „🧩 Erweiterungen“.\n\nBald kommen Tiefsee, Weltraum und Märchenwald.\n\nAls Dankeschön: 1.000 Münzen!'},'0.75.0':{ic:'⚔️',ti:'Update 0.75: Fordere deine Freunde heraus!',c:1000,tx:'Das ist neu:\n• „Schlag mich!“-Link: Nach jedem Lauf kannst du einen Link teilen. Wer ihn öffnet, läuft gegen deinen Geist und bekommt 500 Münzen, wenn er dich schlägt\n• Teilen-Bilder für seltene Drops: Legendär und Ultra aus Kisten kannst du direkt als Bild teilen\n• Neue Spieler bekommen bei 500 m ein Geschenk\n• Website-Knopf im Hauptmenü und in den Einstellungen\n• Einstellungen übersichtlich nach Themen sortiert, am PC in Spalten\n• Die Website gibt es jetzt auch auf Englisch\n\nAls Dankeschön: 1.000 Münzen!'},'0.74.0':{ic:'🆕',ti:'Update 0.74 ist da!',c:1000,tx:'Das ist neu:\n• Ladebildschirm mit Tipps nach dem Intro und vor jedem Lauf\n• Ab jetzt kommt jedes Update als Nachricht hier in dein Postfach\n• Im Skin-Shop gibt es den Reiter „❓ Infos“: Dort steht genau, was Glanz, Muster, Zähler und Seriennummer bedeuten\n• Neue Website und neuer Trailer\n\nAus Update 0.73:\n• 56 neue Outfits, neu gezeichnet mit Schatten und Glanz\n• Neue Ausrüstungs-Kiste mit Flügeln, Auren und Dingen zum Halten\n• Schönere Kisten, bei denen du den Inhalt vorher ansehen kannst\n\nAls Dankeschön fürs Spielen: 1.000 Münzen!'}};
+const UPML={'0.79.0':{ic:'🦖',ti:'Update 0.79: Dino-Tal 2.0',c:500,tx:'Das Dino-Tal wurde komplett überarbeitet:\n• 🦴 Eigene Urzeit-Hindernisse: Riesenknochen, Dino-Nester, Rieseneier, Lavafelsen\n• 🐍 Eine Riesenschlange schlängelt sich über alle 3 Spuren: drüberspringen!\n• 🦅 Flugsaurier fliegen tief: unten durchrutschen!\n• 🦖 Statt dem Jäger jagt dich ein T-Rex und schickt dir sein Gebiss hinterher!\n• 🦎 Raptoren flitzen über die Strecke (statt Rehe)\n• 🟠 Bernstein sammeln: +10 Münzen pro Stück\n• 🏆 5 Dino-Missionen mit 3 neuen Outfits und 10.000 Münzen\n• 💰 +25 % Münzen in jedem Dino-Lauf\n• 🌄 Brachiosaurus-Herden am Horizont\nAlle Dino-Besitzer bekommen das automatisch.'},'0.78.0':{ic:'🔔',ti:'Update 0.78: Benachrichtigungen',c:300,tx:'Waldlauf kann dich jetzt erinnern, auch wenn das Spiel zu ist:\n• 🎁 wenn dein Tagesbonus wartet\n• 🏪 wenn dein Skin im Markt verkauft wurde oder jemand tauschen will\n• 🏃 wenn ein Freund deine Bestweite überholt hat\nEinschalten kannst du das in den Einstellungen unter „Sprache und App“. Du entscheidest selbst, welche Nachrichten du willst.\nAuf dem iPhone geht das, wenn du Waldlauf zum Home-Bildschirm hinzugefügt hast.'},'0.77.0':{ic:'🎨',ti:'Update 0.77: Der Skin-Shop in neuem Glanz',c:500,tx:'Der Skin-Shop wurde komplett aufgehübscht:\n• 🏛️ Dein bester Skin steht jetzt auf einer leuchtenden Bühne mit Scheinwerfer\n• 🗂️ Inventar mit Filtern nach Seltenheit und Tier, glänzende Skins funkeln\n• 🎁 Großer Knopf für deine erste Kiste\n• ✨ Der Skins-Knopf im Menü schimmert und zeigt GRATIS, wenn etwas auf dich wartet\nViel Glück bei den Kisten!'},'0.76.2':{ic:'💬',ti:'Update 0.76.2: Mehr Platz im Menü',c:200,tx:'Am Handy liegt der Chat nicht mehr über deinem Tier. Du öffnest ihn oben mit dem 💬-Knopf, ein roter Punkt zeigt neue Nachrichten. Der kleine dunkle Balken in der Mitte ist auch weg. Und dein Tier steht jetzt etwas weiter oben, damit es nicht mehr hinter den Knöpfen verschwindet. So kommst du wieder an alle Münzen ran!'},'0.76.1':{ic:'🛠️',ti:'Update 0.76.1: Kein dunkelgrünes Flackern mehr',c:300,tx:'Manchmal wurde der Bildschirm im Lauf kurz dunkelgrün. Das ist behoben: Das Bild bleibt jetzt stehen, und falls die Grafik doch mal kurz aussetzt, hält das Spiel an und du bist danach kurz geschützt. Danke fürs Melden!'},'0.76.0':{ic:'🦖',ti:'Update 0.76: Das Dino-Tal ist da!',c:1000,tx:'Die erste Erweiterung für Waldlauf:\n• 🌋 Neue Welt „Dino-Tal“ mit Farnwäldern, Vulkan und uralten Knochen\n• 🦖 T-Rex, 🦕 Triceratops und 🦅 Pteranodon mit eigenen Fähigkeiten\n• 👕 5 exklusive Outfits: Dino-Kapuze, Zahnkette, Dino-Ei-Rucksack, Knochenkeule und Vulkan-Aura\n• 💀 Im Dino-Tal jagt dich alle 1.500 m der T-Rex\n\nDu kaufst sie für 20.000 Waldtaler, die du beim Spielen verdienst. Einen Probelauf gibt es gratis! Du findest alles im Shop unter „🧩 Erweiterungen“.\n\nBald kommen Tiefsee, Weltraum und Märchenwald.\n\nAls Dankeschön: 1.000 Münzen!'},'0.75.0':{ic:'⚔️',ti:'Update 0.75: Fordere deine Freunde heraus!',c:1000,tx:'Das ist neu:\n• „Schlag mich!“-Link: Nach jedem Lauf kannst du einen Link teilen. Wer ihn öffnet, läuft gegen deinen Geist und bekommt 500 Münzen, wenn er dich schlägt\n• Teilen-Bilder für seltene Drops: Legendär und Ultra aus Kisten kannst du direkt als Bild teilen\n• Neue Spieler bekommen bei 500 m ein Geschenk\n• Website-Knopf im Hauptmenü und in den Einstellungen\n• Einstellungen übersichtlich nach Themen sortiert, am PC in Spalten\n• Die Website gibt es jetzt auch auf Englisch\n\nAls Dankeschön: 1.000 Münzen!'},'0.74.0':{ic:'🆕',ti:'Update 0.74 ist da!',c:1000,tx:'Das ist neu:\n• Ladebildschirm mit Tipps nach dem Intro und vor jedem Lauf\n• Ab jetzt kommt jedes Update als Nachricht hier in dein Postfach\n• Im Skin-Shop gibt es den Reiter „❓ Infos“: Dort steht genau, was Glanz, Muster, Zähler und Seriennummer bedeuten\n• Neue Website und neuer Trailer\n\nAus Update 0.73:\n• 56 neue Outfits, neu gezeichnet mit Schatten und Glanz\n• Neue Ausrüstungs-Kiste mit Flügeln, Auren und Dingen zum Halten\n• Schönere Kisten, bei denen du den Inhalt vorher ansehen kannst\n\nAls Dankeschön fürs Spielen: 1.000 Münzen!'}};
 {let sv='';try{sv=localStorage.getItem('waldlauf-ver')||''}catch(e){}if(sv!==BUILD){const u=UPML[BUILD];if(u)mailAdd('upd-'+BUILD,u.ic,u.ti,u.tx,u.c?{c:u.c}:undefined);try{localStorage.setItem('waldlauf-ver',BUILD)}catch(e){}}}
 // Hier deine Angaben für das Impressum eintragen (oder Claude schicken):
 const LEGAL={name:'Rene Stredecke',street:'Marmorweg 23',city:'59581 Warstein',country:'Deutschland',email:'WeeDyTheDevil@gmail.com'};
@@ -1841,7 +1869,7 @@ const clRar=(k,i)=>{if(k==='a'){if(i===0||i===14)return{n:'Start',c:'#6a9a5a'};i
  if(k==='o'){if(OF[i].hr!==undefined)return{n:RAR[OF[i].hr].n,c:RAR[OF[i].hr].c};if(OF[i].ex)return{n:'Exklusiv',c:'#ff5a9a'};const r=typeof ORR!=='undefined'?ORR[i]:undefined;return r===undefined?{n:'Gewöhnlich',c:RAR[0].c}:{n:RAR[r].n,c:RAR[r].c}}
  const f=(k==='P'?FRP:FRA)[i];return f[3]&&f[3]!=='Halloween-Kiste'?{n:'Exklusiv',c:'#ff5a9a'}:f[2]<0?{n:'Start',c:'#6a9a5a'}:{n:RAR[f[2]].n,c:RAR[f[2]].c}};
 const clSrc=(k,i)=>{if(k==='a'){if(AN[i]&&AN[i].gd)return'Welt-Wächter: erreiche die Welt '+BN[AN[i].gd];if(i===0||i===14)return'Von Anfang an dabei';if(i===12)return'Season-Belohnung bei Level 100';if(i===13)return'Hauptpreis im Herzensfest-Event';if(i===15)return'Hauptpreis im Halloween-Event';if(i===16)return'Hauptpreis im Winterzauber-Event';return'Tier-Kiste im Shop'}
- if(k==='o'){if(i>=AUO)return'Weltrangliste: Platz '+(i-AUO+1)+' am Season-Ende';if(OF[i].hr!==undefined)return'Halloween-Kiste (nur zu Halloween)';if(OF[i].ex){if(ERH.some(r=>r[1]==='o'&&r[2]===i))return'Halloween-Event';if(ERW.some(r=>r[1]==='o'&&r[2]===i))return'Winterzauber-Event';const e=ER0.find(r=>r[1]==='o'&&r[2]===i);return e?'Herzensfest-Event':'Season-Belohnung'}return'Outfit-Kiste im Shop'}
+ if(k==='o'){if(OF[i].dlc){const m=OF[i].dm&&DMIS.find(x=>x.id===OF[i].dm);return m?'Dino-Mission: '+m.n:'Erweiterung Dino-Tal'}if(i>=AUO)return'Weltrangliste: Platz '+(i-AUO+1)+' am Season-Ende';if(OF[i].hr!==undefined)return'Halloween-Kiste (nur zu Halloween)';if(OF[i].ex){if(ERH.some(r=>r[1]==='o'&&r[2]===i))return'Halloween-Event';if(ERW.some(r=>r[1]==='o'&&r[2]===i))return'Winterzauber-Event';const e=ER0.find(r=>r[1]==='o'&&r[2]===i);return e?'Herzensfest-Event':'Season-Belohnung'}return'Outfit-Kiste im Shop'}
  const f=(k==='P'?FRP:FRA)[i];return f[3]===1?'Herzensfest-Event':f[3]==='Halloween'?'Halloween-Event':f[3]==='Winterzauber'?'Winterzauber-Event':f[3]==='Halloween-Kiste'?'Halloween-Kiste (nur zu Halloween)':f[3]==='Sammlung'?'Sammlungs-Belohnung (Tab „Belohnungen“)':'Rahmen-Kiste im Shop'};
 const clHas=(k,i)=>k==='a'?(i===0||own.includes('a'+i)):k==='o'?own.includes('o'+i):(i===0||own.includes(k+i));
 function clCounts(){const a=AN.map((x,i)=>i),o=OF.map((x,i)=>i).filter(i=>i>0),f=FRP.map((x,i)=>['P',i]).concat(FRA.map((x,i)=>['R',i])).filter(x=>x[1]>0);
@@ -1939,8 +1967,23 @@ function gunUpd(dt,hr){
  if(S.gt>0){S.gt-=dt;return}
  if(!S.aim){S.aim=1;S.al=Math.max(.9,1.4-hr*.1)+(abv('gn')||0)-(S.boss>0?.15:0);S.ax=S.px;S.ax2=undefined;S.vol=S.boss>0?3:2;sfx('cock');return}
  S.al-=dt;if(S.al>Math.max(.45,.8-hr*.07))S.ax=S.px;else if(S.boss>0&&S.ax2===undefined){const L=[-1,0,1].filter(l=>l!==Math.round(S.ax));S.ax2=L[RGN()*2|0]}
- if(S.al<=0){if(S.ob.some(o=>o.d>-1&&o.d<12)){S.hw=(S.hw||0)+dt;if(S.hw>2){S.aim=0;S.gt=1.5;S.hw=0}return}S.hw=0;S.bl.push({lane:S.ax,d:-1.3});if(S.ax2!==undefined)S.bl.push({lane:S.ax2,d:-1.3});S.fl=.25;sfx('shot');S.shake=Math.max(S.shake,.15);{const q=geo();for(let i=0;i<7;i++)S.pt.push({x:W/2+S.hx*q.laneW+(Math.random()-.5)*24,y:q.gb-q.u*.15,vx:(Math.random()-.5)*50,vy:-60-Math.random()*50,l:.7,c:'rgba(190,190,195,.55)',r:5+Math.random()*6})}S.vol--;if(S.vol>0){S.al=S.boss>0?1.1:1.25;S.ax=S.px;S.ax2=undefined}else{S.aim=0;S.ax2=undefined;S.gt=S.boss>0?1+Math.random():Math.max(2.2,7-hr*.9)+Math.random()*2}}}
-function gun(x,ym,s,t,gl,hr){
+ if(S.al<=0){if(S.ob.some(o=>o.d>-1&&o.d<12)){S.hw=(S.hw||0)+dt;if(S.hw>2){S.aim=0;S.gt=1.5;S.hw=0}return}S.hw=0;S.bl.push({lane:S.ax,d:-1.3});if(S.ax2!==undefined)S.bl.push({lane:S.ax2,d:-1.3});S.fl=.25;sfx(TH===17?'thud':'shot');S.shake=Math.max(S.shake,.15);{const q=geo();for(let i=0;i<7;i++)S.pt.push({x:W/2+S.hx*q.laneW+(Math.random()-.5)*24,y:q.gb-q.u*.15,vx:(Math.random()-.5)*50,vy:-60-Math.random()*50,l:.7,c:'rgba(190,190,195,.55)',r:5+Math.random()*6})}S.vol--;if(S.vol>0){S.al=S.boss>0?1.1:1.25;S.ax=S.px;S.ax2=undefined}else{S.aim=0;S.ax2=undefined;S.gt=S.boss>0?1+Math.random():Math.max(2.2,7-hr*.9)+Math.random()*2}}}
+
+function trexChase(x,ym,s,t,gl){const sn=S.fl>0?S.fl*4:0,op=.12+.1*Math.abs(Math.sin(t*5))+sn*.25,c='#4f8f3a',cd='#2f5a22',cl='#7ab85a',k=s*1.15,bob=Math.sin(t*9)*k*.03;
+ g.save();g.translate(x,ym+bob+k*.15);
+ el(0,k*1.05,k*.62,k*.75,cd);
+ g.fillStyle=cd;g.beginPath();g.moveTo(-k*.42,k*.45);g.quadraticCurveTo(-k*.48,-k*.05+op*k*.5,-k*.18,-k*.18+op*k*.4);g.lineTo(k*.18,-k*.18+op*k*.4);g.quadraticCurveTo(k*.48,-k*.05+op*k*.5,k*.42,k*.45);g.closePath();g.fill();
+ g.fillStyle='#8a1a1a';g.beginPath();g.ellipse(0,k*.2+op*k*.3,k*.3,k*(.12+op*.9),0,0,Math.PI*2);g.fill();
+ g.fillStyle='#fff8e8';for(let i=-3;i<=3;i++){const tx=i*k*.075;g.beginPath();g.moveTo(tx-k*.03,-k*.12+op*k*.4);g.lineTo(tx,-k*.02+op*k*.4+Math.abs(i)*k*.01);g.lineTo(tx+k*.03,-k*.12+op*k*.4);g.fill()}
+ const G=g.createRadialGradient(-k*.1,-k*.3,k*.05,0,0,k*.7);G.addColorStop(0,cl);G.addColorStop(1,c);g.fillStyle=G;g.beginPath();g.moveTo(-k*.5,k*.55);g.quadraticCurveTo(-k*.55,-k*.2,-k*.22,-k*.5);g.quadraticCurveTo(0,-k*.62,k*.22,-k*.5);g.quadraticCurveTo(k*.55,-k*.2,k*.5,k*.55);g.closePath();g.fill();
+ g.fillStyle='#fff8e8';for(let i=-3;i<=3;i++){const tx=i*k*.075;g.beginPath();g.moveTo(tx-k*.03,-k*.38+Math.abs(i)*k*.03+k*.3);g.lineTo(tx,-k*.24+Math.abs(i)*k*.03+k*.3);g.lineTo(tx+k*.03,-k*.38+Math.abs(i)*k*.03+k*.3);g.fill()}
+ el(-k*.09,-k*.45,k*.035,k*.025,'#1a2a10');el(k*.09,-k*.45,k*.035,k*.025,'#1a2a10');
+ [-1,1].forEach(q=>{el(q*k*.36,-k*.08,k*.1,k*.07,cd);el(q*k*.36,-k*.09,k*.07,k*.05,gl>0?'#ff3a1a':'#ffcf3a');el(q*k*.36,-k*.09,k*.018,k*.045,'#111');
+  if(gl>0)el(q*k*.36,-k*.09,k*.18,k*.12,'rgba(255,60,30,'+gl*.45+')');g.strokeStyle=cd;g.lineWidth=k*.04;g.lineCap='round';g.beginPath();g.moveTo(q*k*.46,-k*.17);g.lineTo(q*k*.26,-k*.13);g.stroke()});
+ for(let i=0;i<5;i++)el(-k*.16+i*k*.08,-k*.25+Math.abs(i-2)*k*.03,k*.025,k*.02,'rgba(30,60,20,.45)');
+ if(sn>.2){g.globalAlpha=Math.min(1,sn);g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=k*.03;for(let i=0;i<3;i++){g.beginPath();g.arc(0,-k*.4,k*(.5+i*.18+sn*.2),Math.PI*1.15,Math.PI*1.85);g.stroke()}g.globalAlpha=1}
+ g.restore()}
+function gun(x,ym,s,t,gl,hr){if(TH===17){trexChase(x,ym,s,t,gl);return}
  const hi=Math.round(hr),m=['#3b3f47','#444a55','#4d5560','#5a4f33','#6a5a2b','#4a1f1f'][hi],hl=hi>=3?'#e0b94a':'#8a909b',rc=S.fl>0?S.fl*.6*s:0;
  g.save();g.translate(x,ym+rc);g.scale(.72,1);
  [-1,1].forEach(k=>{rr(k*.11*s-.085*s,0,.17*s,3*s,.07*s,m);rr(k*.11*s-.04*s,0,.03*s,3*s,1,hl);el(k*.11*s,0,.085*s,.04*s,'#0b0b0b')});
@@ -1984,6 +2027,7 @@ function offer(){const c=500*2**(S.rv||0),have=wal+S.coins,ok=have>=c,q=id=>docu
   st='play';S.dead=false;S.shake=0;S.gap=10-dr()*.8;S.hold=0;S.inv=3;S.aim=0;S.gt=5;S.bl=[];S.ob=S.ob.filter(o=>o.d>25);S.jh=0;S.jv=0;S.slide=0;ov.hidden=true;$pb.hidden=false};
  q('rvn').onclick=()=>{clearTimeout(rvT);finish()}}
 function finish(){
+ dinoRunEnd();
  if(S.cheat){const m=Math.floor(S.dist);if(onl())rpc('report_cheat',{p_player:pid,p_name:(pname||'').slice(0,16),p_reason:String(S.cheat).slice(0,80),p_meters:Math.min(m,100000)}).catch(()=>{});
   setTimeout(()=>{$t.textContent='Lauf ungültig';$m.innerHTML='<span class="stats">⚠️ Das Spiel hat eine Manipulation erkannt.<br>Dieser Lauf zählt nicht: keine Münzen, keine XP, kein Rang.</span>';$rk.innerHTML=rankHTML();$b.textContent='Nochmal laufen';$mmb.hidden=false;showCard(mc);$b.focus()},500);return}
  const m=Math.floor(S.dist);nestAdd(selA,m);
@@ -2627,8 +2671,75 @@ function hunter(x,gy,s,t){
  el(x,gy-1.36*s,.2*s,.2*s,'#d9a47a');
  el(x,gy-1.5*s,.34*s,.07*s,'#3b2a1a');rr(x-.2*s,gy-1.75*s,.4*s,.28*s,.08*s,['#4a3a22','#2f4a2c','#4a2f5a','#5a1f1f','#1a1a22','#3a0f0f'][hr]);
  if(hr>=1)rr(x+.1*s,gy-1.8*s,.05*s,.25*s,1,'#e8d9b0')}
+
+// ---------- Dino-Tal 2.0: Hindernisse, Bernstein, Herden
+function drawDino(o,x,gy,w,uu){const t=o.t,T=S.t||0;
+
+ if(t==='boa'){if(o.lane!==0)return;const L=w/.88,sd=o.sd||1,k=Math.max(0,Math.min(1,(74-o.d)/22)),span=L*3.4,x0=x-sd*span/2,th=.36*uu,yb=gy-.24*uu,N=46,hp=k;
+  const P=[];for(let i=0;i<=N;i++){const q=i/N;if(q>hp)break;const px=x0+sd*q*span,ph=q*11-T*7,py=yb+Math.sin(ph)*.13*uu;P.push([px,py,q])}
+  if(P.length<2)return;el(x,gy,span*.48*hp,uu*.06,'rgba(0,0,0,.22)');
+  g.lineCap='round';g.lineJoin='round';const head=P[P.length-1];
+  [[th*1.15,'#2f3f12'],[th,'#6f9a2a'],[th*.42,'#c8d870']].forEach(([lw,col],j)=>{g.strokeStyle=col;g.lineWidth=lw*(j===2?1:1);g.beginPath();P.forEach(([px,py,q],i)=>{const taper=Math.min(1,q*hp>0?.35+q/hp*.65:1);i?g.lineTo(px,py-(j===2?th*.18:0)):g.moveTo(px,py)});g.stroke()});
+  for(let i=2;i<P.length-1;i+=3){const[px,py]=P[i];el(px,py-th*.05,th*.28,th*.2,'#2a3a10');el(px,py-th*.08,th*.14,th*.1,'#c8a030')}
+  const[hx,hy]=head,ang=sd>0?0:Math.PI;g.save();g.translate(hx,hy-th*.1);if(sd<0)g.scale(-1,1);
+  el(th*.35,0,th*.75,th*.55,'#5a7a22');el(th*.35,-th*.12,th*.6,th*.35,'#7a9a32');el(th*.55,-th*.25,th*.16,th*.14,'#ffd23f');el(th*.58,-th*.25,th*.05,th*.12,'#111');
+  if(Math.sin(T*10)>0){g.strokeStyle='#d8302a';g.lineWidth=Math.max(1.5,th*.08);g.beginPath();g.moveTo(th*1.05,th*.05);g.lineTo(th*1.45,th*.05);g.lineTo(th*1.6,-th*.08);g.moveTo(th*1.45,th*.05);g.lineTo(th*1.6,th*.18);g.stroke()}
+  g.restore();return}
+ if(t==='ptero'){const hy=gy-1.12*uu,fl=Math.sin(T*9+o.d),s=uu*.95,c='#7a8aa8',cd='#4a5a78';
+  g.save();g.translate(x,hy+Math.sin(T*3+o.d)*.04*uu);
+  [-1,1].forEach(q=>{g.fillStyle=cd;g.beginPath();g.moveTo(q*.12*s,-.02*s);g.quadraticCurveTo(q*.55*s,(-.3-fl*.25)*s,q*.95*s,(-.05-fl*.3)*s);g.quadraticCurveTo(q*.6*s,.05*s,q*.12*s,.1*s);g.closePath();g.fill();
+   g.strokeStyle='rgba(30,40,60,.5)';g.lineWidth=Math.max(1,s*.015);g.beginPath();g.moveTo(q*.15*s,0);g.quadraticCurveTo(q*.5*s,(-.2-fl*.2)*s,q*.9*s,(-.06-fl*.3)*s);g.stroke()});
+  el(0,.02*s,.16*s,.12*s,c);el(0,.05*s,.1*s,.07*s,'#c8d0e0');
+  el(0,-.14*s,.11*s,.09*s,c);g.fillStyle='#e8b060';g.beginPath();g.moveTo(-.03*s,-.1*s);g.lineTo(0,.12*s);g.lineTo(.03*s,-.1*s);g.fill();
+  g.fillStyle='#d8603a';g.beginPath();g.moveTo(-.04*s,-.2*s);g.lineTo(0,-.42*s);g.lineTo(.05*s,-.19*s);g.fill();
+  el(-.05*s,-.15*s,.022*s,.022*s,'#fff');el(.05*s,-.15*s,.022*s,.022*s,'#fff');el(-.05*s,-.15*s,.01*s,.014*s,'#111');el(.05*s,-.15*s,.01*s,.014*s,'#111');
+  g.restore();el(x,gy,w*.3,uu*.05,'rgba(0,0,0,.18)');return}
+ if(t==='bone'){const h=.5*uu,y=gy-h*.55,L=w*.46;rr(x-L,y-h*.22,L*2,h*.44,h*.2,'#e8dcc0');shR(x-L,y-h*.22,L*2,h*.44,h*.2);
+  [-1,1].forEach(k=>{el(x+k*L,y-h*.22,h*.3,h*.26,'#efe4c8');el(x+k*L,y+h*.22,h*.3,h*.26,'#e2d4b4');el(x+k*L-k*h*.06,y-h*.26,h*.12,h*.08,'rgba(255,255,255,.6)')});
+  g.strokeStyle='rgba(120,100,70,.55)';g.lineWidth=Math.max(1,uu*.012);g.beginPath();g.moveTo(x-L*.3,y-h*.1);g.lineTo(x-L*.15,y+h*.05);g.lineTo(x,y-h*.08);g.moveTo(x+L*.25,y+h*.12);g.lineTo(x+L*.4,y-h*.02);g.stroke();return}
+ if(t==='dnest'){const h=.5*uu;el(x,gy-h*.25,w*.48,h*.42,'#6a4422');shE(x,gy-h*.25,w*.48,h*.42);
+  [[-.22,.8,'#f4ecd8'],[.2,.85,'#e8f0d0'],[0,1,'#f8e8d0']].forEach(([k,s,c],i)=>{const ex=x+k*w,ey=gy-h*(.55+(i===2?.1:0));el(ex,ey,w*.13*s,h*.42*s,c);el(ex-w*.04,ey-h*.15,w*.03,h*.06,'rgba(255,255,255,.7)');[[-.04,.05],[.04,-.08],[.02,.12]].forEach(([a,b])=>el(ex+a*w,ey+b*h,w*.018,h*.03,'#8a6a3a'))});
+  g.strokeStyle='#4a2c12';g.lineWidth=Math.max(1,uu*.02);for(let i=0;i<7;i++){const a=-.45+i*.15;g.beginPath();g.moveTo(x+w*a,gy-h*.05);g.lineTo(x+w*(a+.2),gy-h*.4);g.stroke()}return}
+ if(t==='degg'){const H=1.55*uu,cy=gy-H*.5;el(x,gy-uu*.04,w*.4,uu*.08,'rgba(0,0,0,.25)');
+  const G=g.createRadialGradient(x-w*.12,cy-H*.2,uu*.05,x,cy,H*.6);G.addColorStop(0,'#fffaf0');G.addColorStop(.6,'#efe2c4');G.addColorStop(1,'#bfa77a');g.fillStyle=G;g.beginPath();g.ellipse(x,cy+H*.04,w*.36,H*.5,0,0,Math.PI*2);g.fill();
+  [[-.15,-.25,.05],[.12,-.05,.06],[-.05,.18,.045],[.18,.25,.04],[-.2,.1,.035],[.05,-.35,.035]].forEach(([a,b,r])=>el(x+a*w,cy+b*H,w*r,w*r*.8,'#7a9a4a'));
+  g.strokeStyle='#5a4428';g.lineWidth=Math.max(1.2,uu*.02);g.beginPath();g.moveTo(x-w*.3,cy-H*.12);[-.2,-.1,0,.1,.2,.3].forEach((a,i)=>g.lineTo(x+a*w,cy-H*.12+(i%2?-1:1)*H*.05));g.stroke();
+  const p=.5+.5*Math.sin(T*3+o.lane);g.fillStyle='rgba(255,230,140,'+(.15*p)+')';g.beginPath();g.ellipse(x,cy,w*.45,H*.6,0,0,Math.PI*2);g.fill();return}
+ if(t==='vrock'){const H=1.5*uu;g.fillStyle='#2e2424';g.beginPath();g.moveTo(x-w*.46,gy);g.lineTo(x-w*.4,gy-H*.55);g.lineTo(x-w*.18,gy-H*.95);g.lineTo(x+w*.12,gy-H);g.lineTo(x+w*.38,gy-H*.6);g.lineTo(x+w*.46,gy);g.closePath();g.fill();
+  g.fillStyle='rgba(255,255,255,.08)';g.beginPath();g.moveTo(x-w*.4,gy-H*.55);g.lineTo(x-w*.18,gy-H*.95);g.lineTo(x-w*.05,gy-H*.5);g.closePath();g.fill();
+  const p=.6+.4*Math.sin(T*4+o.lane*2);g.strokeStyle='rgba(255,'+(110+60*p|0)+',30,'+(.7+.3*p)+')';g.lineWidth=Math.max(1.5,uu*.035);g.lineCap='round';g.beginPath();g.moveTo(x-w*.1,gy-H*.85);g.lineTo(x-w*.02,gy-H*.55);g.lineTo(x-w*.15,gy-H*.3);g.lineTo(x-w*.05,gy-H*.05);g.moveTo(x-w*.02,gy-H*.55);g.lineTo(x+w*.2,gy-H*.4);g.lineTo(x+w*.25,gy-H*.15);g.stroke();
+  g.fillStyle='rgba(255,140,40,'+(.18*p)+')';g.beginPath();g.ellipse(x,gy-H*.4,w*.5,H*.45,0,0,Math.PI*2);g.fill();return}
+ if(t==='neck'){const sd=o.lane>0?1:o.lane<0?-1:(o.sd||(o.sd=RS()<.5?-1:1)),hy=gy-1.12*uu,hx=x,c='#7a9a5a',cd='#5a7a3e',nw=.36*uu;
+  g.lineCap='round';g.strokeStyle=cd;g.lineWidth=nw*1.12;g.beginPath();g.moveTo(hx+sd*w*1.6,gy-3.2*uu);g.quadraticCurveTo(hx+sd*w*.9,gy-2.6*uu,hx+sd*w*.18,hy-.12*uu);g.stroke();
+  g.strokeStyle=c;g.lineWidth=nw;g.stroke();g.strokeStyle='rgba(230,240,190,.55)';g.lineWidth=nw*.32;g.beginPath();g.moveTo(hx+sd*w*1.55,gy-3.1*uu);g.quadraticCurveTo(hx+sd*w*.85,gy-2.5*uu,hx+sd*w*.16,hy-.04*uu);g.stroke();
+  for(let i=0;i<6;i++){const q=i/6,px=hx+sd*w*(1.4-q*1.15),py=gy-(3.0-q*1.75)*uu;el(px,py-nw*.35,nw*.12,nw*.08,cd)}
+  const bob=Math.sin(T*2.2+o.d)*.03*uu;el(hx+sd*w*.08,hy+bob-.02*uu,w*.2,.2*uu,c);el(hx,hy+bob,w*.32,.19*uu,c);el(hx-sd*w*.2,hy+bob+.03*uu,w*.16,.12*uu,'#8aaa66');el(hx-sd*w*.22,hy+bob+.02*uu,w*.012,.012*uu,'#2a3a1a');
+  el(hx+sd*w*.02,hy+bob-.05*uu,w*.035,.035*uu,'#fff');el(hx+sd*w*.01,hy+bob-.05*uu,w*.018,.022*uu,'#1a1a1a');
+  g.strokeStyle='#2a3a1a';g.lineWidth=Math.max(1,uu*.012);g.beginPath();g.moveTo(hx-sd*w*.28,hy+bob+.06*uu);g.quadraticCurveTo(hx-sd*w*.12,hy+bob+.1*uu,hx,hy+bob+.07*uu);g.stroke();
+  [-.08,0,.08].forEach((k,i)=>{g.strokeStyle='#3f8a2a';g.lineWidth=Math.max(1,uu*.02);g.beginPath();g.moveTo(hx-sd*w*.3,hy+bob+.08*uu);g.lineTo(hx-sd*w*(.36+i*.04),hy+bob+(.2+k)*uu);g.stroke()});return}
+ if(t==='raptor'){const f=o.dir||1,r=Math.sin(T*18),s=uu,bx=x,by=gy-.75*s,c='#c87a2a',cd='#7a4418';
+  g.save();g.translate(bx,by);g.scale(f,1);
+  g.strokeStyle=cd;g.lineCap='round';g.lineWidth=.07*s;g.beginPath();g.moveTo(-.12*s,.08*s);g.quadraticCurveTo(-.45*s,.0,-.75*s,-.12*s+r*.03*s);g.stroke();g.strokeStyle=c;g.lineWidth=.05*s;g.stroke();
+  [[-.04,1],[.06,-1]].forEach(([k,ph])=>{const a=r*ph*.6;g.strokeStyle=cd;g.lineWidth=.06*s;g.beginPath();g.moveTo(k*s,.15*s);g.lineTo(k*s+Math.sin(a)*.18*s,.45*s);g.lineTo(k*s+Math.sin(a)*.18*s+.1*s,.72*s);g.stroke();el(k*s+Math.sin(a)*.18*s+.13*s,.74*s,.07*s,.025*s,cd)});
+  el(0,.06*s,.26*s,.17*s,c);shE(0,.06*s,.26*s,.17*s);for(let i=0;i<3;i++)el(-.1*s+i*.09*s,-.04*s,.025*s,.08*s,cd);
+  g.strokeStyle=c;g.lineWidth=.09*s;g.beginPath();g.moveTo(.18*s,0);g.quadraticCurveTo(.3*s,-.12*s,.32*s,-.28*s);g.stroke();
+  el(.38*s,-.32*s,.16*s,.09*s,c);el(.48*s,-.29*s,.08*s,.05*s,'#e0a050');el(.36*s,-.36*s,.03*s,.03*s,'#ffd23f');el(.365*s,-.36*s,.012*s,.022*s,'#111');
+  g.fillStyle='#fff';for(let i=0;i<4;i++){g.beginPath();g.moveTo(.4*s+i*.04*s,-.26*s);g.lineTo(.42*s+i*.04*s,-.22*s);g.lineTo(.44*s+i*.04*s,-.26*s);g.fill()}
+  g.strokeStyle=cd;g.lineWidth=.035*s;g.beginPath();g.moveTo(.2*s,.08*s);g.lineTo(.3*s,.18*s+r*.03*s);g.stroke();g.restore();return}}
+function amberGem(x,y,r,T){g.save();g.translate(x,y);g.rotate(Math.sin(T*1.5)*.25);const G=g.createRadialGradient(-r*.3,-r*.3,r*.1,0,0,r*1.1);G.addColorStop(0,'#ffe08a');G.addColorStop(.5,'#ffa31a');G.addColorStop(1,'#a8500a');g.fillStyle=G;g.beginPath();g.moveTo(0,-r*1.1);g.lineTo(r*.85,-r*.35);g.lineTo(r*.7,r*.7);g.lineTo(0,r*1.05);g.lineTo(-r*.7,r*.7);g.lineTo(-r*.85,-r*.35);g.closePath();g.fill();
+ g.strokeStyle='rgba(120,50,0,.6)';g.lineWidth=Math.max(1,r*.08);g.stroke();el(-r*.25,-r*.35,r*.22,r*.14,'rgba(255,255,255,.65)');
+ g.strokeStyle='rgba(40,20,0,.75)';g.lineWidth=Math.max(.8,r*.05);g.beginPath();g.moveTo(-r*.05,r*.1);g.lineTo(r*.15,r*.3);g.moveTo(r*.05,r*.18);g.lineTo(-r*.12,r*.32);g.moveTo(r*.05,r*.18);g.lineTo(r*.25,r*.12);g.stroke();el(r*.05,r*.18,r*.06,r*.05,'rgba(40,20,0,.8)');
+ const p=(T*1.4)%1;g.globalAlpha=1-p;g.strokeStyle='#ffd27a';g.lineWidth=Math.max(1,r*.06);g.beginPath();g.arc(0,0,r*(1.2+p*.6),0,Math.PI*2);g.stroke();g.globalAlpha=1;g.restore()}
+function dinoHerd(hz){const T=performance.now()/1000;for(let i=0;i<3;i++){const sc=hz*(.055+i*.018),sp=5+i*2.5,x=((W*1.3)-((T*sp+i*W*.47)%(W*1.6))),y=hz-hz*(.1-i*.02),c=['#8a6e66','#7a5e58','#6a504c'][i],st=Math.sin(T*1.6+i);
+ g.fillStyle=c;g.strokeStyle=c;g.lineCap='round';
+ g.lineWidth=sc*.16;[[-.45,st],[-.15,-st],[.35,st],[.6,-st]].forEach(([k,s])=>{g.beginPath();g.moveTo(x+k*sc,y-sc*.7);g.lineTo(x+k*sc+s*sc*.07,y);g.stroke()});
+ g.beginPath();g.ellipse(x,y-sc*.85,sc*.85,sc*.4,0,0,Math.PI*2);g.fill();
+ g.lineWidth=sc*.2;g.beginPath();g.moveTo(x+sc*.75,y-sc*.85);g.quadraticCurveTo(x+sc*1.4,y-sc*.65,x+sc*1.85,y-sc*.4);g.stroke();
+ g.lineWidth=sc*.22;g.beginPath();g.moveTo(x-sc*.55,y-sc*1.0);g.quadraticCurveTo(x-sc*.95,y-sc*1.8,x-sc*1.0,y-sc*2.5);g.stroke();
+ g.beginPath();g.ellipse(x-sc*1.12,y-sc*2.55,sc*.26,sc*.14,-.2,0,Math.PI*2);g.fill()}}
 function drawNew(o,x,gy,w,uu){
  const t=o.t;
+ if(t==='boa'||t==='ptero'||t==='bone'||t==='dnest'||t==='neck'||t==='raptor'||t==='degg'||t==='vrock'){drawDino(o,x,gy,w,uu);return true}
  if(t==='pile'){el(x,gy-.22*uu,w*.5,.3*uu,'#c8661e');shE(x,gy-.22*uu,w*.5,.3*uu);el(x-w*.2,gy-.3*uu,w*.3,.22*uu,'#e0902f');el(x+w*.22,gy-.28*uu,w*.28,.2*uu,'#a8431f')}
  else if(t==='stump'){rr(x-w*.3,gy-.55*uu,w*.6,.55*uu,w*.08,'#6b4a35');shR(x-w*.3,gy-.55*uu,w*.6,.55*uu,w*.08);el(x,gy-.55*uu,w*.3,.07*uu,'#d6a56a')}
  else if(t==='ice'){rr(x-w*.45,gy-.55*uu,w*.9,.55*uu,w*.1,'#bfe3f2');shR(x-w*.45,gy-.55*uu,w*.9,.55*uu,w*.1);rr(x-w*.3,gy-.5*uu,w*.2,.3*uu,w*.05,'#e8f6fb')}
@@ -3165,9 +3276,21 @@ function draw(){if(INTRO.on){drawIntro();return}
  }});
  for(const c of S.cs)items.push({d:c.d,f:(p,gy)=>{
   const x=cx+c.lane*laneW*p,y=gy-((c.h||.7)+.08*Math.sin(T*6+c.d))*u*p,r=.2*u*p;
-  treeCoin(x,y,r,T*.45+c.d*.15);if(ART()){const ph=(T*1.6+c.d*.37)%2.4;if(ph<.35){const k=Math.sin(ph/.35*Math.PI),q=r*1.1*k;g.fillStyle='rgba(255,255,230,'+(.9*k)+')';g.beginPath();g.moveTo(x+r*.4,y-r*.4-q);g.lineTo(x+r*.4+q*.18,y-r*.4);g.lineTo(x+r*.4,y-r*.4+q);g.lineTo(x+r*.4-q*.18,y-r*.4);g.closePath();g.moveTo(x+r*.4-q,y-r*.4);g.lineTo(x+r*.4,y-r*.4+q*.18);g.lineTo(x+r*.4+q,y-r*.4);g.lineTo(x+r*.4,y-r*.4-q*.18);g.closePath();g.fill()}}
+  if(c.amb)amberGem(x,y,r*1.2,T);else treeCoin(x,y,r,T*.45+c.d*.15);if(ART()){const ph=(T*1.6+c.d*.37)%2.4;if(ph<.35){const k=Math.sin(ph/.35*Math.PI),q=r*1.1*k;g.fillStyle='rgba(255,255,230,'+(.9*k)+')';g.beginPath();g.moveTo(x+r*.4,y-r*.4-q);g.lineTo(x+r*.4+q*.18,y-r*.4);g.lineTo(x+r*.4,y-r*.4+q);g.lineTo(x+r*.4-q*.18,y-r*.4);g.closePath();g.moveTo(x+r*.4-q,y-r*.4);g.lineTo(x+r*.4,y-r*.4+q*.18);g.lineTo(x+r*.4+q,y-r*.4);g.lineTo(x+r*.4,y-r*.4-q*.18);g.closePath();g.fill()}}
  }});
  if(st!=='start'){const hr=dr(),c=1-Math.min(1,Math.max(0,S.gap)/(10-hr*.8));items.push({d:.05,f:()=>gun(cx+S.hx*laneW,gb+u*(.5-.4*c),u*(.6+.35*c),T,S.aim?.4+.6*Math.abs(Math.sin(S.t*20)):0,S.boss>0?5:hr)});for(const b of S.bl)items.push({d:b.d,f:(p,gy)=>{const x=cx+b.lane*laneW*p,y=gy-.6*u*p,r=.12*u*p,p2=pr(b.d-2.5),x2=cx+b.lane*laneW*p2-bd(b.d)+bd(b.d-2.5),y2=yy(b.d-2.5)-.6*u*p2;
+  if(TH===17){const ch=Math.abs(Math.sin(S.t*14+b.lane*2)),op=.15+ch*.55,R=r*2.6;g.strokeStyle='rgba(255,255,255,.25)';g.lineWidth=Math.max(2,r*.8);g.lineCap='round';g.beginPath();g.moveTo(x,y);g.lineTo(x2,y2);g.stroke();
+ g.save();g.translate(x,y);
+ el(0,R*.05,R*.95,R*.35,'rgba(0,0,0,.18)');
+ g.fillStyle='#8a1a2a';g.beginPath();g.ellipse(0,0,R*.85,R*(.12+op*.5),0,0,Math.PI*2);g.fill();
+ const gum='#e0607a',gd='#a8304a';
+ g.save();g.translate(0,-R*op*.5);g.fillStyle=gd;g.beginPath();g.ellipse(0,-R*.12,R*.95,R*.32,0,Math.PI,0);g.fill();g.fillStyle=gum;g.beginPath();g.ellipse(0,-R*.15,R*.9,R*.26,0,Math.PI,0);g.fill();
+ g.fillStyle='#fffaf0';for(let i=-4;i<=4;i++){const tx=i*R*.19;g.beginPath();g.moveTo(tx-R*.08,-R*.08);g.lineTo(tx,R*.16-Math.abs(i)*R*.015);g.lineTo(tx+R*.08,-R*.08);g.fill()}g.restore();
+ g.save();g.translate(0,R*op*.5);g.fillStyle=gd;g.beginPath();g.ellipse(0,R*.12,R*.95,R*.32,0,0,Math.PI);g.fill();g.fillStyle=gum;g.beginPath();g.ellipse(0,R*.15,R*.9,R*.26,0,0,Math.PI);g.fill();
+ g.fillStyle='#fffaf0';for(let i=-4;i<=4;i++){const tx=i*R*.19;g.beginPath();g.moveTo(tx-R*.08,R*.08);g.lineTo(tx,-R*.16+Math.abs(i)*R*.015);g.lineTo(tx+R*.08,R*.08);g.fill()}g.restore();
+ el(-R*.45,-R*(.3+op*.5),R*.18,R*.06,'rgba(255,255,255,.5)');
+ if(ch>.92){g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=Math.max(1.5,r*.3);[-1,1].forEach(q=>{g.beginPath();g.moveTo(q*R*1.05,-R*.15);g.lineTo(q*R*1.3,-R*.3);g.moveTo(q*R*1.05,R*.15);g.lineTo(q*R*1.3,R*.3);g.stroke()})}
+ g.restore();return}
   g.strokeStyle='rgba(255,215,130,.75)';g.lineWidth=Math.max(2,r*1.4);g.beginPath();g.moveTo(x,y);g.lineTo(x2,y2);g.stroke();
   el(x,y+r*.55,r*1.05,r*.42,'#d4a73a');rr(x-r,y-r*.85,r*2,r*1.45,r*.3,'#b87333');el(x,y-r*.85,r,r*.95,'#c98a4a');el(x-r*.35,y-r*.55,r*.22,r*.6,'rgba(255,230,190,.6)')}})}
  if(st!=='start'&&MD.k==='live'&&LV.players)liveDraw(items,cx,laneW,u,T);
@@ -3221,7 +3344,7 @@ function draw(){if(INTRO.on){drawIntro();return}
  if(S.ptm>0){g.globalAlpha=Math.min(1,S.ptm);g.font='bold 24px "Trebuchet MS",system-ui,sans-serif';g.fillText(S.put,W/2,H*.34);g.globalAlpha=1}
  if(S.toast>0){g.globalAlpha=Math.min(1,S.toast);g.font='bold 26px "Trebuchet MS",system-ui,sans-serif';g.fillText('Neuer Rang: '+RK[S.rk][0],W/2,H*.2);g.globalAlpha=1}
  if(S.bt>0){g.globalAlpha=Math.min(1,S.bt);g.font='bold 30px "Trebuchet MS",system-ui,sans-serif';g.fillText(BN[wI(S.bn)]+(wI(S.bn)>=13?' (neu!)':''),W/2,H*.28);g.globalAlpha=1}
- if(st!=='start'){g.shadowBlur=0;const gp=Math.max(0,S.gap)/(10-dr()*.8);g.fillStyle='rgba(0,0,0,.4)';g.fillRect(16,48,110,8);g.fillStyle=gp<.35?'#d8402f':'#e8792b';g.fillRect(16,48,110*gp,8);g.fillStyle='#fff';g.font='12px "Trebuchet MS",system-ui,sans-serif';g.textAlign='left';g.fillText('Gewehr',16,72);
+ if(st!=='start'){g.shadowBlur=0;const gp=Math.max(0,S.gap)/(10-dr()*.8);g.fillStyle='rgba(0,0,0,.4)';g.fillRect(16,48,110,8);g.fillStyle=gp<.35?'#d8402f':'#e8792b';g.fillRect(16,48,110*gp,8);g.fillStyle='#fff';g.font='12px "Trebuchet MS",system-ui,sans-serif';g.textAlign='left';g.fillText(TH===17?'🦖 T-Rex':'Gewehr',16,72);
   if(gp<.35||S.inv>1){g.fillStyle='rgba(216,64,47,'+Math.min(.35,Math.max(0,.35-gp)*.5+(S.inv>1?.15:0))+')';g.fillRect(0,0,W,H)}}
  g.shadowBlur=0;
 }
@@ -3253,7 +3376,7 @@ function treeFern(x,gy,s){g.strokeStyle='#4a3420';g.lineWidth=Math.max(2,s*.09);
 function dinoBones(x,gy,s){g.lineCap='round';const B='#efe6cf',O='#a89878';[O,B].forEach((c,j)=>{g.strokeStyle=c;g.lineWidth=Math.max(1.5,s*(j?.05:.08));g.beginPath();g.moveTo(x-s*.7,gy-s*.25);g.quadraticCurveTo(x,gy-s*.75,x+s*.7,gy-s*.2);for(let k=0;k<5;k++){const bx=x-s*.45+k*s*.22,by=gy-s*.5-Math.sin((k+.5)/5*Math.PI)*s*.15;g.moveTo(bx,by);g.quadraticCurveTo(bx+s*.12,gy-s*.25,bx+s*.04,gy)}g.stroke()});
  el(x+s*.82,gy-s*.25,s*.22,s*.17,B);el(x+s*.86,gy-s*.27,s*.05,s*.05,'#4a3a2a');rr(x+s*.85,gy-s*.16,s*.2,s*.06,s*.02,B)}
 function dinoEgg(x,gy,r){el(x,gy-r*.1,r*1.1,r*.35,'#7a5a32');el(x,gy-r*.18,r*.95,r*.25,'#9a7444');[[-.35,0],[.3,.05],[0,-.1]].forEach(([p,q],k)=>{el(x+p*r,gy-r*(.55+q),r*.32,r*.45,'#f4ecd8');el(x+p*r+r*.08,gy-r*(.7+q),r*.06,r*.05,'#6a9a4a');el(x+p*r-r*.1,gy-r*(.45+q),r*.05,r*.04,'#6a9a4a');el(x+p*r-r*.1,gy-r*(.75+q),r*.08,r*.12,'rgba(255,255,255,.4)')})}
-function dinoSky(hz){const T=performance.now()/1000,x=W*.72,b=hz+2,h=hz*.42,w=hz*.55;
+function dinoSky(hz){const T=performance.now()/1000,x=W*.72,b=hz+2,h=hz*.42,w=hz*.55;try{dinoHerd(hz)}catch(e){}
  g.fillStyle='#3a2a26';g.beginPath();g.moveTo(x-w,b);g.lineTo(x-w*.18,b-h);g.lineTo(x+w*.16,b-h);g.lineTo(x+w,b);g.fill();
  const G=g.createLinearGradient(0,b-h,0,b);G.addColorStop(0,'rgba(255,120,40,.55)');G.addColorStop(.3,'rgba(255,120,40,0)');g.fillStyle=G;g.beginPath();g.moveTo(x-w,b);g.lineTo(x-w*.18,b-h);g.lineTo(x+w*.16,b-h);g.lineTo(x+w,b);g.fill();
  g.strokeStyle='rgba(255,110,30,.8)';g.lineWidth=Math.max(1.5,hz*.012);g.beginPath();g.moveTo(x-w*.05,b-h);g.quadraticCurveTo(x-w*.1,b-h*.6,x-w*.2,b-h*.25);g.moveTo(x+w*.06,b-h);g.quadraticCurveTo(x+w*.12,b-h*.55,x+w*.08,b-h*.2);g.stroke();
@@ -3283,6 +3406,14 @@ oX(99,{N(t){g.beginPath();oE(0,-.64,.2,.1,0,Math.PI*.1,Math.PI*.9);oS('#5a3418',
 oX(100,{B(t){g.save();g.rotate(-.15);g.beginPath();oE(-.3,-.5,.17,.23);oF(oRG(-.34,-.56,.26,['#ffffff','#f4ecd8','#c8b898'],-.38,-.62),'#8a7a5a',.01);[[-.36,-.58,.03],[-.24,-.45,.025],[-.33,-.38,.022],[-.22,-.62,.02]].forEach(([x,y,r])=>{g.beginPath();oE(x,y,r,r*.8);oF('#6a9a4a',0)});g.beginPath();oM(-.44,-.5);oL(-.38,-.46);oL(-.33,-.52);oL(-.27,-.47);oL(-.2,-.53);oS('rgba(90,70,40,.6)',.008);g.restore()},N(t){oPackStr('#6b4423')}});
 oX(101,{W(t,a){oHand(t,()=>{g.beginPath();oRR(-.022,-.3,.044,.34,.02);oF(oLG(-.022,0,.022,0,['#c8b898','#fff8e8','#c8b898']),'#8a7a5a',.006);[[-.04,-.36],[.04,-.36],[-.035,-.42],[.035,-.42]].forEach(([x,y])=>{g.beginPath();oE(x,y,.045,.045);oF(oBall(x,y,.05,'#f4ecd8'),'#8a7a5a',.006)});g.beginPath();oRR(-.05,-.42,.1,.07,.03);oF('#f4ecd8',0);oPaw(0,0,a)},.3)}});
 const oLava=(t,front)=>{for(let i=0;i<8;i++){const p=(t*.5+i/8)%1,an=i*1.7+t*.3,z=Math.sin(an);if((z>=0)!==front)continue;const x=Math.cos(an)*.32*(1-p*.4),y=-.05-p*1.1;g.beginPath();oE(x,y,.014,.014);g.fillStyle='rgba(255,'+(120+(i%3)*40)+',40,'+(1-p)+')';g.fill();if(i%3===0){g.beginPath();oE(x*.8,y-.1,.05+p*.06,.035+p*.04);g.fillStyle='rgba(70,60,60,'+(.35*(1-p))+')';g.fill()}}};
+
+OF.push({n:'Bernstein-Amulett',e:'🟠',p:0,s:'Hals',ex:1,hr:3,dlc:'dino',dm:'d2'},{n:'Bernstein-Brille',e:'🥽',p:0,s:'Augen',ex:1,hr:3,dlc:'dino',dm:'d3'},{n:'Urzeit-Krone',e:'👑',p:0,s:'Kopf',ex:1,hr:4,dlc:'dino',dm:'d5'});
+oX(103,{N(t){g.beginPath();oE(0,-.64,.2,.1,0,Math.PI*.1,Math.PI*.9);oS('#6a4a2a',.012);g.beginPath();oM(0,-.56);oL(.07,-.5);oL(.05,-.4);oL(0,-.37);oL(-.05,-.4);oL(-.07,-.5);oZ();oF(oRG(-.02,-.49,.09,['#ffe08a','#ffa31a','#a8500a'],-.03,-.52),'#7a3a04',.008);
+ g.beginPath();oE(-.025,-.5,.018,.01);g.fillStyle='rgba(255,255,255,.7)';g.fill();g.beginPath();oM(-.01,-.45);oL(.02,-.42);oM(.0,-.44);oL(.03,-.46);oS('rgba(40,20,0,.8)',.005);if((t*1.2)%2<.3)oStar(.04,-.52,.022,'#fff')}});
+oX(104,{E(t){oBridge('#7a4a10');oLens((x,y)=>{g.beginPath();oE(x,y,.062,.052);oF(oRG(x-.02,y-.02,.07,['rgba(255,220,120,.85)','rgba(255,150,30,.75)','rgba(160,70,0,.8)'],x-.03,y-.03),'#5a3008',.014);oHi(x-.022,y-.018,.018,.008,-.5,.7)});oTemple('#7a4a10')}});
+oX(105,{H(t){const y=-.98;g.beginPath();oM(-.2,y+.1);oL(-.22,y-.06);oL(-.13,y);oL(-.08,y-.13);oL(-.03,y-.02);oL(0,y-.17);oL(.03,y-.02);oL(.08,y-.13);oL(.13,y);oL(.22,y-.06);oL(.2,y+.1);oZ();oF(oGold(-.22,.22),'#6a4a04',.01);
+ [-.13,0,.13].forEach((x,i)=>{g.beginPath();oE(x,y+.04,.03,.034);oF(oRG(x-.01,y+.03,.04,['#ffe08a','#ffa31a','#a8500a'],x-.012,y+.025),'#6a3004',.006)});
+ [-.08,.08].forEach(x=>{g.beginPath();oM(x-.02,y-.1);oL(x,y-.2);oL(x+.02,y-.1);oZ();oF('#f4ecd8','#8a7a5a',.005)});const p=(t*1.3)%2;if(p<.4)oStar(-.05,y-.08,.03,'#fff')}});
 oX(102,{B(t){oGlow(0,-.3,.55,'rgba(255,90,30,.35)');[-1,1].forEach(k=>{g.beginPath();oM(k*.18,0);oL(k*.26,-.12);oL(k*.34,0);oZ();oF('#3a2a26',0);g.beginPath();oE(k*.26,-.11,.02,.012);oF('#ffb03a',0)});oLava(t,false)},W(t){oLava(t,true)}});
 /* T-Rex als Boss im Dino-Tal */
 function trexFace(x,y,r){el(x,y+r*.25,r*1.2,r*1.0,'#3f7a2e');el(x,y-r*.1,r*1.05,r*.85,'#4f8f3a');if(ART())el(x-r*.3,y-r*.4,r*.4,r*.25,'rgba(255,255,255,.12)');

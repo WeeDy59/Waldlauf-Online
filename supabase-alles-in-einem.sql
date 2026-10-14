@@ -5,7 +5,7 @@
 
 -- Alte Funktionen entfernen, damit das Skript auch über einen älteren Stand laufen kann (Daten bleiben erhalten)
 do $$ declare r record; begin
-  for r in select p.oid::regprocedure as f from pg_proc p where p.pronamespace = 'public'::regnamespace and p.proname in ('ban_by_pub','challenge_done','challenge_send','clan_create','clan_info','clan_join','clan_kick','clan_leave','clan_top','delete_me','friend_remove','friend_request','friend_respond','friends_list','inbox_delete','inbox_list','inbox_read','leaderboard','load_backup','my_place','referral_claim','report_cheat','save_backup','search_players','start_run','submit_run','submit_run_v2','upsert_profile','weekly_top','wl_pub','market_browse','market_buy','market_cancel','market_sell','market_stats','skin_list','skin_open','skin_pub_list','skin_scrap','submit_run_v3','taler_daily','taler_daily_cleanup','taler_info','trade_answer','trade_list','trade_offer','wl_add','wl_cleanup','wl_event','wl_scrap_val','wl_skin_json','wl_var_r','wl_wallet','skin_tradeup','submit_run_v4','daily_top','duel_create','duel_list','live_create','live_join','live_start','live_leave','live_tick','skin_book_list','skin_book_claim','skin_top','weekly_claim','profile_set_card','profile_view','wl_today','chat_send','chat_list','chat_report','wl_clean','wl_drop_post','wl_skin_stamp','profile_set_img','avatar_imgs','avatar_report','dev_list','wl_dlc_price','dlc_buy','dlc_list','push_key','push_sub','push_unsub','push_add','push_daily','push_tg_taler','push_tg_trade','push_tg_inbox','push_tg_run')
+  for r in select p.oid::regprocedure as f from pg_proc p where p.pronamespace = 'public'::regnamespace and p.proname in ('ban_by_pub','challenge_done','challenge_send','clan_create','clan_info','clan_join','clan_kick','clan_leave','clan_top','delete_me','friend_remove','friend_request','friend_respond','friends_list','inbox_delete','inbox_list','inbox_read','leaderboard','load_backup','my_place','referral_claim','report_cheat','save_backup','search_players','start_run','submit_run','submit_run_v2','upsert_profile','weekly_top','wl_pub','market_browse','market_buy','market_cancel','market_sell','market_stats','skin_list','skin_open','skin_pub_list','skin_scrap','submit_run_v3','taler_daily','taler_daily_cleanup','taler_info','trade_answer','trade_list','trade_offer','wl_add','wl_cleanup','wl_event','wl_scrap_val','wl_skin_json','wl_var_r','wl_wallet','skin_tradeup','submit_run_v4','daily_top','duel_create','duel_list','live_create','live_join','live_start','live_leave','live_tick','skin_book_list','skin_book_claim','skin_top','weekly_claim','profile_set_card','profile_view','wl_today','chat_send','chat_list','chat_report','wl_clean','wl_drop_post','wl_skin_stamp','profile_set_img','avatar_imgs','avatar_report','dev_list','wl_dlc_price','dlc_buy','dlc_list','push_key','push_sub','push_unsub','push_add','push_daily','push_tg_taler','push_tg_trade','push_tg_inbox','push_tg_run','dlc_redeem')
   loop execute 'drop function if exists ' || r.f || ' cascade'; end loop;
 end $$;
 
@@ -2291,4 +2291,48 @@ begin
 exception when others then
   raise notice 'Zeitpläne nicht angelegt (pg_cron/pg_net fehlen?): %', sqlerrm;
 end $do$;
+
+-- ===== Update 16: Einmal-Codes =====
+-- ===== Waldlauf Update 16: Einmal-Codes für Erweiterungen (z. B. zum Verlosen) =====
+-- Im Spiel unter Einstellungen → Code einlösen. Jeder Code funktioniert genau einmal.
+-- In der Datenbank steht nur ein Fingerabdruck (Hash) des Codes, nie der Code selbst.
+
+create table if not exists public.dlc_codes (
+  code_hash  text primary key,
+  dlc        text not null,
+  note       text not null default '',
+  used_by    text,
+  used_at    timestamptz,
+  created_at timestamptz not null default now()
+);
+alter table public.dlc_codes enable row level security;
+revoke all on public.dlc_codes from anon, authenticated;
+
+create or replace function public.dlc_redeem(p_player text, p_code text) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare h text; r record; c text := upper(regexp_replace(coalesce(p_code, ''), '[^A-Za-z0-9]', '', 'g'));
+begin
+  if not exists (select 1 from profiles where player = p_player) then raise exception 'unbekannt'; end if;
+  if exists (select 1 from banned where player = p_player) then raise exception 'gesperrt'; end if;
+  if char_length(c) < 8 or char_length(c) > 40 then raise exception 'ungueltig'; end if;
+  h := encode(sha256(convert_to('waldlauf-dlc:' || c, 'UTF8')), 'hex');
+  select * into r from dlc_codes where code_hash = h for update;
+  if not found then raise exception 'ungueltig'; end if;
+  if r.used_by is not null then
+    if r.used_by = p_player then return jsonb_build_object('dlc', r.dlc, 'again', true); end if;
+    raise exception 'benutzt';
+  end if;
+  if exists (select 1 from dlc_owned where player = p_player and dlc = r.dlc) then raise exception 'schon gekauft'; end if;
+  update dlc_codes set used_by = p_player, used_at = now() where code_hash = h;
+  insert into dlc_owned (player, dlc) values (p_player, r.dlc) on conflict do nothing;
+  return jsonb_build_object('dlc', r.dlc);
+end $$;
+
+grant execute on function public.dlc_redeem(text, text) to anon;
+
+-- Neuen Code anlegen (Beispiel, Code bitte selbst ausdenken oder von Claude erzeugen lassen):
+-- insert into dlc_codes (code_hash, dlc, note)
+-- values (encode(sha256(convert_to('waldlauf-dlc:' || 'MEINCODE1234', 'UTF8')), 'hex'), 'dino', 'Verlosung');
+-- Prüfen, ob ein Code schon benutzt wurde:
+-- select note, used_by is not null as benutzt, used_at from dlc_codes;
 
