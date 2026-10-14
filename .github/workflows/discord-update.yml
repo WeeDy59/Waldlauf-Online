@@ -1,0 +1,50 @@
+# Kündigt jedes neue Spiel-Update automatisch im Discord-Kanal #update-notizen an.
+# Benötigt das Repository-Secret DISCORD_UPDATES (Webhook-URL des Kanals).
+name: Update im Discord ankündigen
+
+on:
+  push:
+    branches: [main]
+    paths: [spiel.html]
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Neue Version erkennen und posten
+        env:
+          HOOK: ${{ secrets.DISCORD_UPDATES }}
+          MSG: ${{ github.event.head_commit.message }}
+        run: |
+          git show HEAD~1:spiel.html > /tmp/old.html 2>/dev/null || echo "" > /tmp/old.html
+          node <<'JS'
+          const fs = require('fs'), vm = require('vm');
+          const cur = fs.readFileSync('spiel.html', 'utf8'), old = fs.readFileSync('/tmp/old.html', 'utf8');
+          const ver = s => (s.match(/const BUILD='([^']+)'/) || [])[1];
+          const v = ver(cur), vo = ver(old);
+          if (!v || v === vo) { console.log('Keine neue Version (' + v + ')'); process.exit(0); }
+          if (!process.env.HOOK) { console.log('Secret DISCORD_UPDATES fehlt'); process.exit(0); }
+          let notes = null;
+          try { const m = cur.match(/const UPML=(\{[\s\S]*?\});\n/); if (m) notes = vm.runInNewContext('(' + m[1] + ')')[v]; } catch (e) {}
+          const url = 'https://weedy59.github.io/Waldlauf-Online/spiel.html';
+          const msg = (process.env.MSG || '').split('\n')[0].replace(/^Update [0-9.]+:\s*/, '');
+          const embed = notes ? {
+            title: notes.ic + ' ' + notes.ti,
+            description: notes.tx + (notes.c ? '\n\n🎁 **Geschenk:** ' + notes.c.toLocaleString('de-DE') + ' Münzen im Postfach!' : ''),
+            color: 15235627
+          } : {
+            title: '🔧 Update ' + v + ' ist da!',
+            description: (msg ? msg + '\n\n' : '') + 'Lade das Spiel neu, dann hast du die neue Version.',
+            color: 5793266
+          };
+          embed.url = url;
+          embed.footer = { text: 'Waldlauf v' + v };
+          embed.timestamp = new Date().toISOString();
+          const body = { username: 'Waldlauf Updates', allowed_mentions: { parse: [] }, embeds: [embed],
+            components: [] };
+          fetch(process.env.HOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+            .then(async r => { console.log('Discord:', r.status, await r.text()); if (!r.ok) process.exit(1); });
+          JS
