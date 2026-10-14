@@ -1,6 +1,6 @@
-# Waldlauf v0.76.1: Fix für das dunkelgrüne Flackern
+# Waldlauf v0.76.3: Haupttier steht über den Knöpfen
 
-Falls du Update 0.76 noch nicht hochgeladen hast: zuerst update-0.76 (inklusive supabase-update-14.sql), dann dieses hier.
+Enthält auch alles aus 0.76.2 (Chat am Handy als Knopf, dunkler Balken weg). Du kannst 0.76.2 also überspringen.
 
 ## Hochladen (kein Supabase nötig)
 
@@ -8,8 +8,8 @@ Falls du Update 0.76 noch nicht hochgeladen hast: zuerst update-0.76 (inklusive 
 2. **spiel.html** und **sw.js** hineinziehen
 3. **Commit changes**, 1–2 Minuten warten, Spiel neu laden (App einmal ganz schließen und neu öffnen)
 
-## Was behoben ist
+## Was neu ist
 
-- Wenn beim Zeichnen eines Bildes ein Fehler passierte, wurde die ganze Zeichenfläche gelöscht. Dann sah man für den Moment den dunkelgrünen Hintergrund der Seite. Jetzt bleibt das Bild stehen, und der Spieler ist in dem Moment kurz geschützt.
-- Wenn das Handy der Grafik kurz den Speicher wegnimmt, hält das Spiel an, statt blind weiterzulaufen. Danach bist du 1,5 Sekunden geschützt.
-- Spieler bekommen eine kurze Update-Nachricht mit 300 Münzen.
+- Dein ausgerüstetes Tier im Hauptmenü steht jetzt immer direkt über der Knopfreihe, statt halb dahinter zu verschwinden. Das passt sich automatisch an jede Bildschirmgröße an.
+- Am Handy: Chat nur noch über den 💬-Knopf oben, kein Chat-Fenster mehr über dem Tier.
+- Der kleine dunkle Balken in der Mitte ist weg.
