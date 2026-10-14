@@ -225,6 +225,13 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 .soon3{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .soon3 span{padding:6px 12px;border-radius:999px;background:var(--moss);font-weight:700;font-size:.9rem}
 @media (max-width:760px){.dlc{grid-template-columns:1fr}}
+.tform{display:grid;gap:10px;max-width:520px;margin-top:18px}.tform input[type=email],.tform input[type=text]{padding:12px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:inherit;font:inherit}.tform label{font-size:.9rem;opacity:.9}.tform button{justify-self:start}#tmsg{min-height:1.2em;font-weight:700}
+.shbtn{background:none;cursor:pointer;font:inherit;font-weight:800}.shline{margin:18px 0 0}.flink{background:none;border:0;color:inherit;font:inherit;font-weight:800;text-decoration:underline;cursor:pointer;padding:0}
+#shp{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(5,15,10,.6)}#shp .box{position:relative;width:min(380px,100%);padding:22px 18px 16px;border-radius:22px;background:#fff8e8;color:#3a2410;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.4)}
+#shp h3{margin:0 0 6px;font:800 1.4rem var(--display)}#shp p{margin:0 0 12px;font-size:.92rem}#shp .row{display:flex;gap:6px;margin-bottom:12px}#shp input{flex:1;min-width:0;padding:9px 10px;border-radius:10px;border:2px solid #e0c890;font:600 .85rem system-ui,sans-serif}
+#shp .row button,#shp .x{border:0;border-radius:12px;padding:9px 14px;font-weight:800;cursor:pointer;background:#f4b416;color:#3a2200}#shp .x{position:absolute;right:10px;top:10px;padding:4px 10px;background:#e8d8b8}
+#shp .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#shp .grid a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border-radius:14px;background:#fff;color:#3a2410;text-decoration:none;font-weight:800;font-size:.78rem}#shp .grid a span{font-size:1.5rem}
+.dlc2 .dlcin{background:linear-gradient(160deg,#c8f0ff,#7ac8e8)}
 </style>
 
 <nav class="lang" aria-label="Sprache"><a href="index.html" aria-current="page" lang="de">🇩🇪 DE</a><a href="en.html" hreflang="en" lang="en">🇬🇧 EN</a></nav>
@@ -241,6 +248,7 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
       <div class="cta">
         <a class="play" id="play1" href="spiel.html">▶ Jetzt spielen</a>
         <a class="ghost" href="#app">Als App aufs Handy</a>
+        <button class="ghost shbtn" type="button" data-share>📣 Spiel teilen</button>
       </div>
       <p class="note">Keine Werbung, keine Käufe mit echtem Geld. Alles erspielst du dir selbst. Läuft direkt im Browser, am PC und auf dem Handy.</p>
     </div>
@@ -272,8 +280,9 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
     <h2>Waldlauf wird ständig größer</h2>
     <p class="lead">Jedes Update landet im Spiel auch als Nachricht in deinem Postfach.</p>
     <div class="news">
+      <div class="nw"><time>Update 0.81</time><h3>Tiefsee und Halloween</h3><ul><li>🌊 Neue Erweiterung Tiefsee mit Delfin, Oktopus und Seepferdchen</li><li>🦈 Ein Hai jagt dich und spuckt Kugelfische</li><li>🎃 Halloween in allen Welten: Kürbisse, Geister und „Süßes oder Saures“</li><li>⚙️ Einstellungen mit Seiten und 📣 Spiel teilen</li></ul></div>
       <div class="nw"><time>Update 0.79</time><h3>Dino-Tal 2.0</h3><ul><li>Eigene Urzeit-Hindernisse: Knochen, Rieseneier, Lavafelsen, Langhälse und Raptoren</li><li>Bernstein sammeln und 5 Dino-Missionen mit 3 neuen Outfits</li><li>+25 % Münzen in jedem Dino-Lauf</li><li>🔔 Neu: Benachrichtigungen für Tagesbonus, Markt und Freunde</li></ul></div>
-      <div class="nw"><time>Update 0.76</time><h3>Erweiterungen und Dino-Tal</h3><ul><li>Neu im Shop: Erweiterungen für Waldtaler</li><li>Dino-Tal mit T-Rex, Triceratops und Pteranodon</li><li>5 Dino-Outfits und der T-Rex als Boss</li><li>Ein Probelauf ist gratis</li></ul></div>
+      <div class="nw old"><time>Update 0.76</time><h3>Erweiterungen und Dino-Tal</h3><ul><li>Neu im Shop: Erweiterungen für Waldtaler</li><li>Dino-Tal mit T-Rex, Triceratops und Pteranodon</li><li>5 Dino-Outfits und der T-Rex als Boss</li><li>Ein Probelauf ist gratis</li></ul></div>
       <div class="nw old"><time>Update 0.75</time><h3>Fordere deine Freunde heraus</h3><ul><li>„Schlag mich!“-Link: Freunde laufen gegen deinen Geist</li><li>Teilen-Bilder für Legendär- und Ultra-Drops</li><li>Geschenk für neue Spieler bei 500 m</li><li>Einstellungen neu sortiert, am PC in Spalten</li></ul></div>
       <div class="nw old"><time>Update 0.74</time><h3>Ladebildschirm und Skin-Infos</h3><ul><li>Ladebildschirm mit Tipps nach dem Intro und vor jedem Lauf</li><li>Neuer Reiter „❓ Infos“ im Skin-Shop</li><li>Update-Post im Postfach</li></ul></div>
       <div class="nw old"><time>Update 0.73</time><h3>56 neue Outfits</h3><ul><li>Alle Outfits neu gezeichnet, viele animiert</li><li>Neue Ausrüstungs-Kiste mit Flügeln und Auren</li><li>Kisten-Inhalt vorher ansehen</li></ul></div>
@@ -362,7 +371,7 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
 
   <section id="erweiterungen"><div class="wrap">
     <p class="eyebrow">Neu: Erweiterungen</p>
-    <h2>Das Dino-Tal wartet auf dich</h2>
+    <h2>Dino-Tal und Tiefsee warten auf dich</h2>
     <p class="lead">Erweiterungen bringen neue Welten, Tiere und Outfits. Du kaufst sie im Shop mit Waldtalern, die du beim Laufen verdienst. Echtes Geld gibt es in Waldlauf nicht. Einen Probelauf bekommst du gratis.</p>
     <div class="dlc">
       <figure><img src="img/s-dino.jpg" alt="Dino-Tal mit Vulkan, Farnen und T-Rex" loading="lazy"></figure>
@@ -371,7 +380,14 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
         <div class="dinos"><div><img src="img/a36.png" alt="T-Rex" loading="lazy"><b>T-Rex</b></div><div><img src="img/a37.png" alt="Triceratops" loading="lazy"><b>Triceratops</b></div><div><img src="img/a38.png" alt="Pteranodon" loading="lazy"><b>Pteranodon</b></div></div>
       </div>
     </div>
-    <div class="soon3"><span>Bald da:</span><span>🌊 Tiefsee</span><span>🚀 Weltraum</span><span>🏰 Märchenwald</span></div>
+    <div class="dlc dlc2">
+      <figure><img src="img/s-sea.jpg" alt="Tiefsee mit Korallen, Seetang, versunkenem Schiff und Hai" loading="lazy"></figure>
+      <div class="dlcin"><h3>🌊 Tiefsee</h3><span class="pr">🪙 20.000 Waldtaler</span>
+        <ul><li>Neue Welt mit Korallen, Seetang, Walen und einem versunkenen Schiff</li><li>Ein Hai spuckt Kugelfische und greift alle 1.500 m als Boss an</li><li>Krakenarme, Quallen, Riesenmuscheln, Anker und Schildkröten</li><li>5 exklusive Outfits, dazu 3 weitere aus Tiefsee-Missionen</li><li>Perlen sammeln und +25 % Münzen in jedem Tiefsee-Lauf</li></ul>
+        <div class="dinos"><div><img src="img/a39.png" alt="Delfin" loading="lazy"><b>Delfin</b></div><div><img src="img/a40.png" alt="Oktopus" loading="lazy"><b>Oktopus</b></div><div><img src="img/a41.png" alt="Seepferdchen" loading="lazy"><b>Seepferdchen</b></div></div>
+      </div>
+    </div>
+    <div class="soon3"><span>Bald da:</span><span>🚀 Weltraum</span><span>🏰 Märchenwald</span></div>
   </div></section>
 
   <section id="events"><div class="wrap">
@@ -438,6 +454,13 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
     </div>
   </div></section>
 
+  <section id="tester"><div class="wrap">
+    <p class="eyebrow">Bald im Google Play Store</p>
+    <h2>Werde Android-Tester!</h2>
+    <p class="lead">Bevor Waldlauf als App in den Play Store darf, verlangt Google 12 Tester, die die App 14 Tage lang ausprobieren. Hilfst du mit? Als Dankeschön gibt es 5.000 Münzen im Spiel.</p>
+    <form class="tform" id="tform"><input type="email" id="tmail" required placeholder="Deine Gmail-Adresse"><input type="text" id="tdev" placeholder="Handy-Modell (freiwillig)"><label><input type="checkbox" id="tok" required> Meine Adresse darf für die Test-Einladung an den Entwickler geschickt werden (<a href="datenschutz.html">Datenschutz</a>).</label><button type="submit" class="play">📱 Als Tester anmelden</button><small id="tmsg"></small></form>
+  </div></section>
+
   <section id="fragen"><div class="wrap">
     <p class="eyebrow">Fragen und Antworten</p>
     <h2>Gut zu wissen</h2>
@@ -455,6 +478,7 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
     <h2>Bereit? Der Jäger wartet schon.</h2>
     <p class="lead" style="margin-inline:auto">Kostenlos, ohne Werbung, ohne Download.</p>
     <a class="play" id="play2" href="spiel.html">▶ Jetzt spielen</a>
+    <p class="shline"><button class="ghost shbtn" type="button" data-share>📣 Mit Freunden teilen</button></p>
   </div></section>
 </main>
 
@@ -462,6 +486,7 @@ details{margin-top:18px;max-width:70ch}summary{cursor:pointer;font-weight:800;co
   <div class="fgrid">
     <span>Waldlauf · Erstellt von <b>WeeDy :3</b> · Musik von <b>Penta</b></span>
     <span>Schrift: Baloo 2 und Nunito (SIL Open Font License)</span>
+    <span><button class="flink" type="button" data-share>📣 Waldlauf weiterempfehlen</button></span>
   </div>
   <details id="impressum"><summary>Impressum und Datenschutz</summary><div class="legal" id="legal"></div></details>
 </div></footer>
@@ -500,6 +525,21 @@ if(ONLINE.url&&ONLINE.key){const se=Math.floor((Date.now()-Date.UTC(2026,9,11))/
  const rs=()=>{const r=c.getBoundingClientRect();W=c.width=r.width;H=c.height=r.height};rs();addEventListener('resize',rs);
  for(let i=0;i<26;i++)L.push({x:Math.random(),y:Math.random(),s:4+Math.random()*6,v:.03+Math.random()*.05,p:Math.random()*6,c:['#e8872a','#c25a24','#e9b23a','#a8431f'][i%4]});
  const f=t=>{x.clearRect(0,0,W,H);for(const l of L){if(!R){l.y+=l.v*.016;l.p+=.02;if(l.y>1.05){l.y=-.05;l.x=Math.random()}}const px=l.x*W+Math.sin(l.p)*20,py=l.y*H;x.save();x.translate(px,py);x.rotate(l.p);x.fillStyle=l.c;x.globalAlpha=.75;x.beginPath();x.ellipse(0,0,l.s,l.s*.5,0,0,7);x.fill();x.restore()}if(!R)requestAnimationFrame(f)};requestAnimationFrame(f)}
+</script>
+<script>
+document.getElementById('tform').addEventListener('submit',async e=>{e.preventDefault();const m=document.getElementById('tmail').value.trim(),d=document.getElementById('tdev').value.trim().slice(0,60),o=document.getElementById('tmsg'),b=e.target.querySelector('button');
+ if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){o.textContent=document.documentElement.lang==='en'?'Please enter a valid email address.':'Bitte gib eine gültige E-Mail-Adresse ein.';return}b.disabled=true;o.textContent='…';
+ try{const r=await fetch('https://formsubmit.co/ajax/weedythedevil@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({_subject:'Waldlauf Tester-Anmeldung (Website)',_template:'table',_captcha:'false',Gmail:m,Handy:d||'-',Sprache:document.documentElement.lang})});const j=await r.json().catch(()=>({}));if(!r.ok||j.success==='false'||j.success===false)throw 0;o.textContent=document.documentElement.lang==='en'?'🎉 Thanks! You will get an invite as soon as the app is ready.':'🎉 Danke! Du bekommst eine Einladung, sobald die App bereit ist.';e.target.reset()}catch(_){o.textContent=document.documentElement.lang==='en'?'That did not work. Please try again.':'Das hat nicht geklappt. Bitte versuch es gleich nochmal.';b.disabled=false}});
+</script>
+<script>
+(function(){const en=document.documentElement.lang==='en',U='https://weedy59.github.io/Waldlauf-Online/'+(en?'en.html':''),T=en?'Run through the forest with me! 🦊🌲 Waldlauf is a free runner game in your browser, no download needed:':'Lauf mit mir durch den Wald! 🦊🌲 Waldlauf ist ein kostenloses Lauf-Spiel im Browser, ohne Download:',E=encodeURIComponent;
+ async function copy(b){try{await navigator.clipboard.writeText(T+' '+U);b.textContent=en?'Copied!':'Kopiert!'}catch(e){prompt(en?'Copy link:':'Link kopieren:',U)}}
+ function pop(){let d=document.getElementById('shp');if(d)d.remove();d=document.createElement('div');d.id='shp';const tu=E(T+' '+U);
+  d.innerHTML='<div class="box" role="dialog" aria-modal="true"><button class="x" aria-label="'+(en?'Close':'Schließen')+'">×</button><div style="font-size:2.4rem">📣</div><h3>'+(en?'Share Waldlauf':'Waldlauf teilen')+'</h3><p>'+(en?'Send your friends the link. More runners, more fun on the leaderboard!':'Schick deinen Freunden den Link. Mehr Läufer heißt mehr Spaß in der Rangliste!')+'</p><div class="row"><input readonly value="'+U+'"><button class="cp">'+(en?'Copy':'Kopieren')+'</button></div><div class="grid">'+
+  '<a target="_blank" rel="noopener" href="https://wa.me/?text='+tu+'"><span>💬</span>WhatsApp</a><a target="_blank" rel="noopener" href="https://t.me/share/url?url='+E(U)+'&text='+E(T)+'"><span>✈️</span>Telegram</a><a target="_blank" rel="noopener" href="https://x.com/intent/post?text='+tu+'"><span>𝕏</span>X</a>'+
+  '<a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+E(U)+'"><span>📘</span>Facebook</a><a target="_blank" rel="noopener" href="https://www.reddit.com/submit?url='+E(U)+'&title=Waldlauf"><span>👽</span>Reddit</a><a href="mailto:?subject=Waldlauf&body='+tu+'"><span>✉️</span>'+(en?'Email':'E-Mail')+'</a></div></div>';
+  document.body.appendChild(d);d.addEventListener('click',e=>{if(e.target===d||e.target.closest('.x'))d.remove()});d.querySelector('.cp').onclick=e=>copy(e.target);d.querySelector('input').onclick=e=>e.target.select()}
+ document.addEventListener('click',async e=>{const b=e.target.closest('[data-share]');if(!b)return;if(navigator.share&&/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){try{await navigator.share({title:'Waldlauf',text:T,url:U});return}catch(x){if(x&&x.name==='AbortError')return}}pop()})})();
 </script>
 
 </body>

@@ -2078,7 +2078,7 @@ revoke all on public.dlc_owned from anon, authenticated;
 -- Preise der Erweiterungen (nur hier auf dem Server, damit niemand sie ändern kann)
 create or replace function public.wl_dlc_price(p_dlc text) returns int
 language sql immutable as $$
-  select case p_dlc when 'dino' then 20000 else null end
+  select case p_dlc when 'dino' then 20000 when 'sea' then 20000 else null end
 $$;
 revoke all on function public.wl_dlc_price(text) from public, anon, authenticated;
 
@@ -2512,4 +2512,13 @@ exception when others then return null;
 end $$;
 drop trigger if exists wl_del_extra on public.profiles;
 create trigger wl_del_extra after delete on public.profiles for each row execute function public.wl_del_extra();
+
+-- ================= supabase-update-18.sql =================
+-- ===== Waldlauf Update 18: Erweiterung „Tiefsee“ =====
+-- Schaltet den Kauf der zweiten Erweiterung frei (Preis: 20.000 Waldtaler).
+create or replace function public.wl_dlc_price(p_dlc text) returns int
+language sql immutable as $$
+  select case p_dlc when 'dino' then 20000 when 'sea' then 20000 else null end
+$$;
+revoke all on function public.wl_dlc_price(text) from public, anon, authenticated;
 

@@ -1,26 +1,39 @@
-# Waldlauf v0.80: Clips, Dino-Rangliste, Statistik, Vibration, Play-Store-Paket
+# Waldlauf v0.81: Tiefsee, Halloween, neue Einstellungen, Spiel teilen, 4 neue Sprachen
 
-Enthält alles aus 0.79 und 0.79.1.
+Enthält alles aus 0.80.
 
-## 1. Supabase: supabase-update-17.sql ausführen
+## 1. Supabase: supabase-update-18.sql ausführen
 
-SQL Editor → New query → Inhalt von **supabase-update-17.sql** einfügen → **Run** (bei der Warnung „Potential issue“ auf **Run query** klicken). Ganz unten erscheint eine Zeile mit deinem Entwickler-Namen.
-(Falls Claude das schon für dich gemacht hat, kannst du diesen Schritt überspringen. Doppelt ausführen schadet nicht.)
+SQL Editor → New query → Inhalt von **supabase-update-18.sql** einfügen → **Run** (bei der Warnung „Potential issue“ auf **Run query** klicken).
+Unten erscheint `fertig | 20000`. Erst danach kann man die Tiefsee kaufen. Ein Probelauf geht auch ohne.
 
 ## 2. GitHub
 
-Hochladen: **spiel.html**, **sw.js**, **index.html**, **en.html**, **datenschutz.html**, **manifest.webmanifest** → Commit changes.
-Den Ordner **playstore** NICHT hochladen, der ist nur für dich (für nächsten Monat).
+Hochladen: **spiel.html**, **sw.js**, **index.html**, **en.html**, **datenschutz.html** → Commit changes.
+Dann in den Ordner **img** wechseln und dort **s-sea.jpg**, **a39.png**, **a40.png**, **a41.png** hochladen.
+(Die SQL-Dateien und DISCORD-EINRICHTEN.md sind nur für dich, die musst du nicht hochladen.)
 
 ## Was neu ist
 
-- 🎬 **Clip teilen:** Das Spiel nimmt automatisch die letzten Sekunden jedes Laufs auf (mit Waldlauf-Logo und Link). Nach dem Lauf: „🎬 Clip teilen“ → direkt zu TikTok, WhatsApp usw. oder als Video speichern. In den Einstellungen abschaltbar.
-- 🦖 **Dino-Wochenrangliste:** Im Shop unter Erweiterungen. Jeden Montag bekommen die besten 3 Dino-Läufer der Vorwoche 3.000 / 1.500 / 750 Waldtaler (automatisch beim nächsten Öffnen). Geschützt gegen Schummeln: Die Weite wird mit der echten Laufzeit verglichen.
-- 📊 **Statistik nur für dich:** Einstellungen → Hilfe und Rechtliches → „📊 Statistik (nur Entwickler)“. Zeigt Spieler pro Tag, neue Spieler, wie viele wiederkommen, wo die Läufe enden, beliebteste Tiere, Spielmodi und Geräte. Der Knopf erscheint nur bei Profilen mit DEV-Wappen.
-- 📳 **Vibration** bei Treffern, Bernstein, Extras, Ultra-Drops und dem T-Rex-Biss (Android; abschaltbar).
-- ⚡ **Schnellerer Start:** Die Musik lädt erst, wenn sie gebraucht wird. Ruckelt das Spiel auf einem Handy, stellt es die Grafik automatisch auf „Schnell“ (nur, wenn der Spieler das nicht selbst eingestellt hat).
-- 🔒 **Datenschutz:** Neue Seite datenschutz.html (wird für den Play Store gebraucht) und ein neuer Abschnitt zur anonymen Statistik. Beim Konto-Löschen werden jetzt auch Statistik, Rangliste und Erweiterungen gelöscht.
+- 🌊 **Erweiterung „Tiefsee“** (20.000 Waldtaler, 1 Probelauf gratis):
+  - Delfin (springt höher, Magnet zieht von weiter weg), Oktopus (Magnet +35 %, jede 8. Münze doppelt), Seepferdchen (gleitet, übersteht 1 Treffer)
+  - Ein **Hai** verfolgt dich statt des Jägers und spuckt **Kugelfische**. Alle 1.500 m greift er als Boss an.
+  - Hindernisse: **Krakenarm** über alle 3 Spuren (ducken!), Quallen, Riesenmuscheln, Korallen, Anker, Riffe, Seeigel, Schildkröten
+  - Perlen (+10 Münzen), +25 % Münzen für Besitzer, 5 Tiefsee-Missionen
+  - 8 Outfits: Taucherbrille, Muschelkette, Sauerstoff-Flaschen, Dreizack, Blasen-Aura sowie Perlenkette, Kapitänsmütze und Korallenkrone aus den Missionen
+  - Welt mit Lichtstrahlen, Wal, versunkenem Schiff, Fischschwärmen und Blasen
+- 🎃 **Halloween für das ganze Spiel** (ab 31.10.): Kürbisse, Geister, Spinnennetze und „Süßes oder Saures“-Tüten in allen normalen Welten
+- ⚙️ **Einstellungen mit Seiten:** Allgemein, Audio, Anzeige, Steuerung (mit allen Tasten und „Tutorial nochmal spielen“), Konto und Hilfe
+- 📣 **Spiel teilen** ohne Freundescode: in den Einstellungen unter Allgemein, als Werbe-Folie im Hauptmenü und auf der Webseite (oben, unten und im Footer). Auf dem Handy öffnet sich das normale Teilen-Menü, am PC ein Fenster mit WhatsApp, Telegram, X, Facebook, Reddit und E-Mail.
+- 💚 **„Zweite Chance“-Fenster neu:** Tier mit Countdown-Ring, Meter, Münzen, Rekord, „Nur noch X m bis zu deinem Rekord!“ und ein großer grüner Weiterlaufen-Knopf
+- 🌍 **Neue Sprachen:** Español, Français, Português, Türkçe. Neue Spieler bekommen automatisch die Sprache ihres Handys. Wer schon spielt, behält seine Sprache.
+- 📱 **Tester-Aufruf** für die Android-App (Folie im Menü, Knopf in den Einstellungen, Formular auf der Webseite)
+- 💬 **Discord** vorbereitet: Sobald du den Einladungslink hast, schick ihn mir, dann erscheint der Knopf im Spiel.
 
-## Play Store (nächsten Monat)
+Alle Spieler bekommen eine Update-Nachricht mit 1.000 Münzen Geschenk.
 
-Im Ordner **playstore** liegt alles fertig: Icon, Banner, 6 Screenshots (Deutsch und Englisch), Store-Texte und eine Schritt-für-Schritt-Anleitung (ANLEITUNG-PLAYSTORE.md).
+## Noch offen (für heute Abend)
+
+- GitHub-Verbindung einrichten, dann kann ich Updates selbst hochladen
+- Discord-Einladungslink
+- Code für die Tester-Belohnung (5.000 Münzen), wenn der Test startet
